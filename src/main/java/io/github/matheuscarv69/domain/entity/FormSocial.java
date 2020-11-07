@@ -20,69 +20,111 @@ public class FormSocial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name="nome", length = 100)
     private String nome;
 
-    private LocalDate dataEntrevista;
-    private Date dataNascimento;
-
+    @Column
     private int idade;
+
+    @Column(length = 15)
     private String telefone;
+
+    @Column(length = 50)
     private String email;
+
+    @Column
+    private LocalDate dataEntrevista;
+
+    @Column
+    private LocalDate dataNascimento;
+
+    @Column(length = 50)
     private String funcaoExerc;
+
+    @Column(length = 40)
     private String tempoFuncaoExerc;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil; // enum
 
-//    @Enumerated(EnumType.STRING)
-//    private Escolaridade escolaridade; // enum
-//
-//    private int numeroPessoasFam;
-//    @Enumerated(EnumType.STRING)
-//    private GrauParentesco grauParentesco; // enum
-//
-//    @Enumerated(EnumType.STRING)
-//    private Residencia residencia; // enum
-//
-//    private boolean beneficio;
-//    private String beneficioDescricao; // enum?
-//
-//    private boolean programaSocial;
-//    private String programaSocialDescricao; // enum?
-//
-//    private boolean doencaCronica;
-//    private String doencaCronicaDescricao; // enum
-//
-//    private boolean deficienteFamilia;
-//    private String deficienteFamiliaDescricao;
-//
-//    private boolean acompMedico;
-//    private String acompMedicoDescricao;
-//
-//    private boolean suicidioFamilia;
-//    //    private String suicidioFamiliaDescricao;
-//    @Enumerated(EnumType.STRING)
-//    private GrauParentesco suicidioGrauParentesco; // enum
-//
-//    @Enumerated(EnumType.STRING)
-//    private Violencia violencia; // enum
-//    private String violenciaDescricao;
-//
-//    private boolean psicoativos; // enum
-//    private String psicoativosDescricao;
-//
-//    private boolean conflitoFamiliar;
-//
-//    @Enumerated(EnumType.STRING)
-//    private AtividadeLazer atividadeLazer; // enum
-//    private String atividadeLazerDescricao;
-//
-//    private boolean atividadeFisica;
-//    private String atividadeFisicaDescricao;
-//
-//    @Enumerated(EnumType.STRING)
-//    private QualidadeVida qualidadeVida; // enum
-//
-//    @Enumerated(EnumType.STRING)
-//    private Vacinas vacinas; // enum
+    @Enumerated(EnumType.STRING)
+    private Escolaridade escolaridade; // enum
+
+    @Column
+    private int numeroPessoasFam;
+
+    @Enumerated(EnumType.STRING)
+    private GrauParentesco grauParentesco; // enum
+
+    @Enumerated(EnumType.STRING)
+    private Residencia residencia; // enum
+
+    @Column
+    private boolean beneficio;
+
+    @Column(length = 40)
+    private String beneficioDescricao; // enum?
+
+    @Column
+    private boolean programaSocial;
+
+    @Column(length = 40)
+    private String programaSocialDescricao; // enum?
+
+    @Column
+    private boolean doencaCronica;
+
+    @Column(length = 40)
+    private String doencaCronicaDescricao; // enum
+
+    @Column
+    private boolean deficienteFamilia;
+
+    @Column(length = 50)
+    private String deficienteFamiliaDescricao;
+
+    @Column
+    private boolean acompMedico;
+
+    @Column(length = 50)
+    private String acompMedicoDescricao;
+
+    @Column
+    private boolean suicidioFamilia;
+
+    @Enumerated(EnumType.STRING)
+    private GrauParentesco suicidioGrauParentesco; // enum
+
+    @Enumerated(EnumType.STRING)
+    private Violencia violencia; // enum
+
+    @Column(length = 50)
+    private String violenciaDescricao;
+
+    @Column
+    private boolean psicoativos; // enum
+
+    @Column(length = 50)
+    private String psicoativosDescricao;
+
+    @Column
+    private boolean conflitoFamiliar;
+
+    @Enumerated(EnumType.STRING)
+    private AtividadeLazer atividadeLazer; // enum
+
+    @Column(length = 40)
+    private String atividadeLazerDescricao;
+
+    @Column
+    private boolean atividadeFisica;
+
+    @Column(length = 40)
+    private String atividadeFisicaDescricao;
+
+    @Enumerated(EnumType.STRING)
+    private QualidadeVida qualidadeVida; // enum
+
+    @Enumerated(EnumType.STRING)
+    private Vacinas vacinas; // enum
 }

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("api/formsocial")
@@ -26,4 +28,8 @@ public class FormSocialController {
         return formSocial.getId();
     }
 
+    @GetMapping
+    public List<FormSocialDTO> find(){
+        return service.buscarForms();
+    }
 }
