@@ -5,12 +5,12 @@ import io.github.matheuscarv69.rest.dto.FormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.*;
 
 import java.util.List;
 
-
-@CrossOrigin
 @RestController
 @RequestMapping("api/formsocial")
 public class FormSocialController {
@@ -23,14 +23,14 @@ public class FormSocialController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody FormSocialDTO dto){
+    public Integer save(@RequestBody @Valid FormSocialDTO dto) {
         FormSocial formSocial = service.salvar(dto);
 
         return formSocial.getId();
     }
 
     @GetMapping
-    public List<FormSocialDTO> find(){
+    public List<FormSocialDTO> find() {
         return service.buscarForms();
     }
 }

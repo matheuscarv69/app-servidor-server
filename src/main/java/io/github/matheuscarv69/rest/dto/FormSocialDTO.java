@@ -2,6 +2,9 @@ package io.github.matheuscarv69.rest.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,6 +13,7 @@ public class FormSocialDTO {
 
     private int id;
 
+    @NotEmpty(message = "Campo obrigatório")
     private String nome;
 
     private int idade;
