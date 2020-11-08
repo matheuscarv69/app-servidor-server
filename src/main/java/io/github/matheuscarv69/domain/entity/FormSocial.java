@@ -127,4 +127,5 @@ public class FormSocial {
 
     @Enumerated(EnumType.STRING)
     private Vacinas vacinas; // enum
+
 }

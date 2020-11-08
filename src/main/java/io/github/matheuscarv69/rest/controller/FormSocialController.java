@@ -10,6 +10,7 @@ import static org.springframework.http.HttpStatus.*;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/formsocial")
 public class FormSocialController {
