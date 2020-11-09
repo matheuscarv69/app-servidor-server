@@ -37,49 +37,48 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setFuncaoExerc(dto.getFuncaoExerc());
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
-        formSocial.setEstadoCivil(EstadoCivil.valueOf(dto.getEstadoCivil().toUpperCase()));
-        formSocial.setEscolaridade(Escolaridade.valueOf(dto.getEscolaridade().toUpperCase()));
+        formSocial.setEstadoCivil(dto.getEstadoCivil());
+        formSocial.setEscolaridade(dto.getEscolaridade());
 
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
 
-        formSocial.setGrauParentesco(GrauParentesco.valueOf(dto.getGrauParentesco().toUpperCase()));
-        formSocial.setResidencia(Residencia.valueOf(dto.getResidencia().toUpperCase()));
+        formSocial.setGrauParentesco(dto.getGrauParentesco());
+        formSocial.setResidencia(dto.getResidencia());
 
         formSocial.setBeneficio(dto.isBeneficio());
-        formSocial.setBeneficioDescricao(dto.getBeneficioDescricao());
+        formSocial.setBeneficioDesc(dto.getBeneficioDesc());
+
         formSocial.setProgramaSocial(dto.isProgramaSocial());
-        formSocial.setProgramaSocialDescricao(dto.getProgramaSocialDescricao());
+        formSocial.setProgramaSocialDesc(dto.getProgramaSocialDesc());
+
         formSocial.setDoencaCronica(dto.isDoencaCronica());
-        formSocial.setDoencaCronicaDescricao(dto.getDoencaCronicaDescricao());
+        formSocial.setDoencaCronicaDesc(dto.getDoencaCronicaDesc());
 
         formSocial.setDeficienteFamilia(dto.isDeficienteFamilia());
-        formSocial.setDeficienteFamiliaDescricao(dto.getDeficienteFamiliaDesc());
+        formSocial.setDeficienteFamiliaDesc(dto.getDeficienteFamiliaDesc());
 
         formSocial.setAcompMedico(dto.isAcompMedico());
-        formSocial.setAcompMedicoDescricao(dto.getAcompMedicoDescricao());
+        formSocial.setAcompMedicoDesc(dto.getAcompMedicoDesc());
 
         formSocial.setSuicidioFamilia(dto.isSuicidioFamilia());
-        formSocial.setSuicidioGrauParentesco(GrauParentesco.valueOf(dto.getGrauParentesco().toUpperCase()));
+        formSocial.setSuicidioGrauParentesco(dto.getSuicidioGrauParentesco());
 
-        formSocial.setViolencia(Violencia.valueOf(dto.getViolencia().toUpperCase()));// conversar sobre isso
-        formSocial.setViolenciaDescricao(dto.getViolenciaDescricao());
+        formSocial.setViolencia(dto.isViolencia());
+        formSocial.setViolenciaDesc(dto.getViolenciaDesc());
 
         formSocial.setPsicoativos(dto.isPsicoativos());
-        formSocial.setPsicoativosDescricao(dto.getPsicoativosDescricao());
+        formSocial.setPsicoativosDesc(dto.getPsicoativosDesc());
+
         formSocial.setConflitoFamiliar(dto.isConflitoFamiliar());
 
-        formSocial.setAtividadeLazer(AtividadeLazer.valueOf(dto.getAtividadeLazer().toUpperCase()));
-        formSocial.setAtividadeLazerDescricao(dto.getAtividadeLazerDescricao());
+        formSocial.setAtividadeLazerDesc(dto.getAtividadeLazerDesc());
 
         formSocial.setAtividadeFisica(dto.isAtividadeFisica());
-        formSocial.setAtividadeFisicaDescricao(dto.getAtividadeFisicaDescricao());
+        formSocial.setAtividadeFisicaDesc(dto.getAtividadeFisicaDesc());
 
-        formSocial.setQualidadeVida(QualidadeVida.valueOf(dto.getQualidadeVida().toUpperCase()));
-        formSocial.setVacinas(Vacinas.valueOf(dto.getVacinas().toUpperCase()));
+        formSocial.setQualidadeVida(dto.getQualidadeVida());
 
-
-
-
+        formSocial.setVacinas(dto.getVacinas());
 
         repository.save(formSocial);
 
@@ -113,33 +112,32 @@ public class FormSocialServiceImpl implements FormSocialService {
                 .dataNascimento(form.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .funcaoExerc(form.getFuncaoExerc())
                 .tempoFuncaoExerc(form.getTempoFuncaoExerc())
-                .estadoCivil(form.getEstadoCivil().name())
-                .escolaridade(form.getEscolaridade().name())
+                .estadoCivil(form.getEstadoCivil())
+                .escolaridade(form.getEscolaridade())
                 .numeroPessoasFam(form.getNumeroPessoasFam())
-                .grauParentesco(form.getGrauParentesco().name())
-                .residencia(form.getResidencia().name())
+                .grauParentesco(form.getGrauParentesco())
+                .residencia(form.getResidencia())
                 .beneficio(form.isBeneficio())
-                .beneficioDescricao(form.getBeneficioDescricao())
+                .beneficioDesc(form.getBeneficioDesc())
                 .programaSocial(form.isProgramaSocial())
-                .programaSocialDescricao(form.getProgramaSocialDescricao())
+                .programaSocialDesc(form.getProgramaSocialDesc())
                 .doencaCronica(form.isDoencaCronica())
-                .doencaCronicaDescricao(form.getDoencaCronicaDescricao())
+                .doencaCronicaDesc(form.getDoencaCronicaDesc())
                 .deficienteFamilia(form.isDeficienteFamilia())
-                .deficienteFamiliaDesc(form.getDeficienteFamiliaDescricao())
+                .deficienteFamiliaDesc(form.getDeficienteFamiliaDesc())
                 .acompMedico(form.isAcompMedico())
-                .acompMedicoDescricao(form.getAcompMedicoDescricao())
+                .acompMedicoDesc(form.getAcompMedicoDesc())
                 .suicidioFamilia(form.isSuicidioFamilia())
-                .suicidioGrauParentesco(form.getSuicidioGrauParentesco().name())
-                .violencia(form.getViolencia().name())
-                .violenciaDescricao(form.getViolenciaDescricao())
+                .suicidioGrauParentesco(form.getSuicidioGrauParentesco())
+                .violencia(form.isViolencia())
+                .violenciaDesc(form.getViolenciaDesc())
                 .psicoativos(form.isPsicoativos())
-                .psicoativosDescricao(form.getPsicoativosDescricao())
-                .atividadeLazer(form.getAtividadeLazer().name())
-                .atividadeLazerDescricao(form.getAtividadeLazerDescricao())
+                .psicoativosDesc(form.getPsicoativosDesc())
+                .atividadeLazerDesc(form.getAtividadeLazerDesc())
                 .atividadeFisica(form.isAtividadeFisica())
-                .atividadeFisicaDescricao(form.getAtividadeFisicaDescricao())
-                .qualidadeVida(form.getQualidadeVida().name())
-                .vacinas(form.getVacinas().name())
+                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
+                .qualidadeVida(form.getQualidadeVida())
+                .vacinas(form.getVacinas())
                 .build();
 
 

@@ -13,7 +13,6 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
-    // falta implementar
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(BAD_REQUEST)
@@ -23,6 +22,7 @@ public class ApplicationControllerAdvice {
 
     }
 
+    // pega os errors de validacao
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiErrors handleMethodNotValidException(MethodArgumentNotValidException ex){

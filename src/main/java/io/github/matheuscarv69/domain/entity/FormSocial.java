@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ public class FormSocial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="nome", length = 100)
+    @Column(name = "nome", length = 100)
     private String nome;
 
     @Column
@@ -30,6 +31,7 @@ public class FormSocial {
     private String telefone;
 
     @Column(length = 50)
+    @Email(message = "O Email informado é inválido.")
     private String email;
 
     @Column
@@ -44,88 +46,85 @@ public class FormSocial {
     @Column(length = 40)
     private String tempoFuncaoExerc;
 
-    @Enumerated(EnumType.STRING)
-    private EstadoCivil estadoCivil; // enum
+    @Column
+    private String estadoCivil;
 
-    @Enumerated(EnumType.STRING)
-    private Escolaridade escolaridade; // enum
+    @Column
+    private String escolaridade;
 
     @Column
     private int numeroPessoasFam;
 
-    @Enumerated(EnumType.STRING)
-    private GrauParentesco grauParentesco; // enum
+    @Column
+    private String grauParentesco;
 
-    @Enumerated(EnumType.STRING)
-    private Residencia residencia; // enum
+    @Column
+    private String residencia;
 
     @Column
     private boolean beneficio;
 
     @Column(length = 40)
-    private String beneficioDescricao; // enum?
+    private String beneficioDesc;
 
     @Column
     private boolean programaSocial;
 
-    @Column(length = 40)
-    private String programaSocialDescricao; // enum?
+    @Column(length = 50)
+    private String programaSocialDesc;
 
     @Column
-    private boolean doencaCronica;
+    private boolean doencaCronica; // Nao possui no form, mas e interessante por
 
-    @Column(length = 40)
-    private String doencaCronicaDescricao; // enum
+    @Column(length = 50)
+    private String doencaCronicaDesc;
 
     @Column
     private boolean deficienteFamilia;
 
     @Column(length = 50)
-    private String deficienteFamiliaDescricao;
+    private String deficienteFamiliaDesc;
 
     @Column
     private boolean acompMedico;
 
-    @Column(length = 50)
-    private String acompMedicoDescricao;
+    @Column(length = 100)
+    private String acompMedicoDesc;
 
     @Column
     private boolean suicidioFamilia;
 
-    @Enumerated(EnumType.STRING)
-    private GrauParentesco suicidioGrauParentesco; // enum
-
-    @Enumerated(EnumType.STRING)
-    private Violencia violencia; // enum
-
-    @Column(length = 50)
-    private String violenciaDescricao;
+    @Column
+    private String suicidioGrauParentesco;
 
     @Column
-    private boolean psicoativos; // enum
+    private boolean violencia;
+
+    @Column(length = 20)
+    private String violenciaDesc;
+
+    @Column
+    private boolean psicoativos;
 
     @Column(length = 50)
-    private String psicoativosDescricao;
+    private String psicoativosDesc;
 
     @Column
     private boolean conflitoFamiliar;
 
-    @Enumerated(EnumType.STRING)
-    private AtividadeLazer atividadeLazer; // enum
-
-    @Column(length = 40)
-    private String atividadeLazerDescricao;
+    @Column(length = 30)
+    private String atividadeLazerDesc; // nao possui campo de sim, somente nao
 
     @Column
     private boolean atividadeFisica;
 
     @Column(length = 40)
-    private String atividadeFisicaDescricao;
+    private String atividadeFisicaDesc;
 
-    @Enumerated(EnumType.STRING)
-    private QualidadeVida qualidadeVida; // enum
+    @Column(length = 10)
+    private String qualidadeVida;
 
-    @Enumerated(EnumType.STRING)
-    private Vacinas vacinas; // enum
+    @Column(length = 10)
+    private String vacinas;
 
 }
