@@ -1,5 +1,7 @@
 package io.github.matheuscarv69.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,36 +9,39 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "formsocial")
+@Table(name = "formSocial", schema = "form")
 public class FormSocial {
 
+    @ApiModelProperty(value = "ID do formulário")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ApiModelProperty(value = "Nome da pessoa")
     @Column(name = "nome", length = 100)
     private String nome;
-
-    @Column
-    private Integer idade;
 
     @Column(length = 15)
     private String telefone;
 
     @Column(length = 50)
-    @Email(message = "O Email informado é inválido.")
     private String email;
 
     @Column
-    private LocalDate dataEntrevista;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dataEntrevista;
 
     @Column
-    private LocalDate dataNascimento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date dataNascimento;
 
     @Column(length = 50)
     private String funcaoExerc;
@@ -44,28 +49,28 @@ public class FormSocial {
     @Column(length = 40)
     private String tempoFuncaoExerc;
 
-    @Column
+    @Column(length = 14)
     private String estadoCivil;
 
-    @Column
+    @Column(length = 40)
     private String escolaridade;
 
     @Column
     private Integer numeroPessoasFam;
 
-    @Column
+    @Column(length = 15)
     private String grauParentesco;
 
-    @Column
+    @Column(length = 15)
     private String residencia;
 
-    @Column
+    @Column(length = 10)
     private String beneficio;
 
     @Column(length = 40)
     private String beneficioDesc;
 
-    @Column
+    @Column(length = 10)
     private String programaSocial;
 
     @Column(length = 50)
@@ -74,22 +79,22 @@ public class FormSocial {
     @Column(length = 40)
     private String doencaCronicaDesc;
 
-    @Column
+    @Column(length = 10)
     private String deficienteFamilia;
 
     @Column(length = 50)
     private String deficienteFamiliaDesc;
 
-    @Column
+    @Column(length = 10)
     private String acompMedico;
 
     @Column(length = 100)
     private String acompMedicoDesc;
 
-    @Column
+    @Column(length = 10)
     private String suicidioFamilia;
 
-    @Column
+    @Column(length = 15)
     private String suicidioGrauParentesco;
 
     @Column(length = 30)
@@ -98,13 +103,13 @@ public class FormSocial {
     @Column(length = 50)
     private String psicoativosDesc;
 
-    @Column
+    @Column(length = 10)
     private String conflitoFamiliar;
 
     @Column(length = 30)
     private String atividadeLazerDesc;
 
-    @Column
+    @Column(length = 10)
     private String atividadeFisica;
 
     @Column(length = 40)

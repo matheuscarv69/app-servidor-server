@@ -3,6 +3,7 @@ package io.github.matheuscarv69.rest.controller;
 import io.github.matheuscarv69.domain.entity.FormSocial;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/formsocial")
+@Api(value = "Api Formulário Anamnese Social")
 public class FormSocialController {
 
     private FormSocialService service;
@@ -23,14 +25,23 @@ public class FormSocialController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer save(@RequestBody @Valid FormSocialDTO dto) {
+    @ApiOperation("Salva os dados do formulário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Formulário cadastrado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro de validação"),
+    })
+    public Integer salvar(@RequestBody @Valid @ApiParam("Dados do formulário") FormSocialDTO dto) {
         FormSocial formSocial = service.salvar(dto);
 
         return formSocial.getId();
     }
 
     @GetMapping
-    public List<FormSocialDTO> find() {
+    @ApiOperation("Busca todos os formulários")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Formulários encontrados com sucesso"),
+    })
+    public List<FormSocialDTO> buscarTodos() {
         return service.buscarForms();
     }
 
