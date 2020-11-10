@@ -55,7 +55,7 @@ public class FormSocialDTO {
     @NotEmpty(message = "Campo Estado Cívil é obrigatório.")
     private String estadoCivil;
 
-    @ApiModelProperty(value = "Escolarida", allowableValues = "Analfabeto, Ensino Fundamental Incompleto, Ensino Fundamental Completo, Ensino Médio Incompleto, Ensino Médio Completo, Ensino Superior Incompleto, Ensino Superior Completo", position = 12, required = true)
+    @ApiModelProperty(value = "Escolaridade", allowableValues = "Analfabeto, Ensino Fundamental Incompleto, Ensino Fundamental Completo, Ensino Médio Incompleto, Ensino Médio Completo, Ensino Superior Incompleto, Ensino Superior Completo", position = 12, required = true)
     @NotEmpty(message = "Campo Escolaridade é obrigatório.")
     private String escolaridade;
 
