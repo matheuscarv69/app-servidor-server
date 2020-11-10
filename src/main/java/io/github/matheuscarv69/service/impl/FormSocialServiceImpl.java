@@ -1,8 +1,8 @@
 package io.github.matheuscarv69.service.impl;
 
 import io.github.matheuscarv69.domain.entity.FormSocial;
-import io.github.matheuscarv69.domain.enums.*;
 import io.github.matheuscarv69.domain.repository.FormSocialRepository;
+import io.github.matheuscarv69.exceptions.CampoInvalidoException;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,13 @@ public class FormSocialServiceImpl implements FormSocialService {
         FormSocial formSocial = new FormSocial();
 
         formSocial.setNome(dto.getNome());
-        formSocial.setIdade(dto.getIdade());
+
+//        if(dto.getIdade() > 0){
+//            formSocial.setIdade(dto.getIdade());
+//        }else{
+//            throw  new CampoInvalidoException("Valor informado é inválido.");
+//        }
+
         formSocial.setTelefone(dto.getTelefone());
         formSocial.setEmail(dto.getEmail());
 
@@ -43,42 +49,80 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
 
         formSocial.setGrauParentesco(dto.getGrauParentesco());
+
         formSocial.setResidencia(dto.getResidencia());
 
-        formSocial.setBeneficio(dto.isBeneficio());
-        formSocial.setBeneficioDesc(dto.getBeneficioDesc());
+        formSocial.setBeneficio(dto.getBeneficio());
+        if(dto.getBeneficio().equals("Sim") && dto.getBeneficioDesc().isEmpty()){
+            throw new CampoInvalidoException("Campo Benefício Descrição é obrigatório.");
+        }else if(dto.getBeneficio().equals("Não") && dto.getBeneficioDesc().isEmpty() == false){
+            throw new CampoInvalidoException("Campo Benefício deve estar com (Sim) selecionado");
+        }else{
+            formSocial.setBeneficioDesc(dto.getBeneficioDesc());
+        }
 
-        formSocial.setProgramaSocial(dto.isProgramaSocial());
-        formSocial.setProgramaSocialDesc(dto.getProgramaSocialDesc());
+        formSocial.setProgramaSocial(dto.getProgramaSocial());
+        if(dto.getProgramaSocial().equals("Sim") && dto.getProgramaSocialDesc().isEmpty()){
+            throw new CampoInvalidoException("Campo Programa Social Descrição é obrigatório.");
+        }else if(dto.getProgramaSocial().equals("Não") && dto.getProgramaSocialDesc().isEmpty() == false){
+            throw new CampoInvalidoException("Campo Programa Social deve estar com (Sim) selecionado.");
+        }else {
+            formSocial.setProgramaSocialDesc(dto.getProgramaSocialDesc());
+        }
 
-        formSocial.setDoencaCronica(dto.isDoencaCronica());
         formSocial.setDoencaCronicaDesc(dto.getDoencaCronicaDesc());
 
-        formSocial.setDeficienteFamilia(dto.isDeficienteFamilia());
-        formSocial.setDeficienteFamiliaDesc(dto.getDeficienteFamiliaDesc());
+        formSocial.setDeficienteFamilia(dto.getDeficienteFamilia());
+        if(dto.getDeficienteFamilia().equals("Sim") && dto.getDeficienteFamiliaDesc().isEmpty()){
+            throw new CampoInvalidoException("Campo Deficiente Familia Descrição é obrigatório.");
+        }else if(dto.getDeficienteFamilia().equals("Não") && dto.getDeficienteFamiliaDesc().isEmpty()==false){
+            throw new CampoInvalidoException("Campo Deficiente Familia é deve estar com o (Sim) selecionado.");
+        }else {
+            formSocial.setDeficienteFamiliaDesc(dto.getDeficienteFamiliaDesc());
+        }
 
-        formSocial.setAcompMedico(dto.isAcompMedico());
-        formSocial.setAcompMedicoDesc(dto.getAcompMedicoDesc());
+        formSocial.setAcompMedico(dto.getAcompMedico());
+        if(dto.getAcompMedico().equals("Sim") && dto.getAcompMedicoDesc().isEmpty()){
+            throw new CampoInvalidoException("Campo Acompanhamento Médico Descrição é obrigatório.");
+        }else if(dto.getAcompMedico().equals("Não") && dto.getAcompMedicoDesc().isEmpty()==false){
+            throw new CampoInvalidoException("Campo Acompanhamento Médico deve estar com o (Sim) selecionado.");
+        }else{
+            formSocial.setAcompMedicoDesc(dto.getAcompMedicoDesc());
+        }
 
-        formSocial.setSuicidioFamilia(dto.isSuicidioFamilia());
-        formSocial.setSuicidioGrauParentesco(dto.getSuicidioGrauParentesco());
 
-        formSocial.setViolencia(dto.isViolencia());
+        formSocial.setSuicidioFamilia(dto.getSuicidioFamilia());
+        if(dto.getSuicidioFamilia().equals("Sim") && dto.getSuicidioGrauParentesco().isEmpty()){
+            throw new CampoInvalidoException("Campo Grau de Parentesco da Família é obrigatório.");
+        }else if(dto.getSuicidioFamilia().equals("Não") && dto.getSuicidioGrauParentesco().isEmpty()==false){
+            throw new CampoInvalidoException("Campo Suícidio Familia deve estar com o (Sim) selecionado");
+        }else {
+            formSocial.setSuicidioGrauParentesco(dto.getSuicidioGrauParentesco());
+        }
+
         formSocial.setViolenciaDesc(dto.getViolenciaDesc());
 
-        formSocial.setPsicoativos(dto.isPsicoativos());
         formSocial.setPsicoativosDesc(dto.getPsicoativosDesc());
 
-        formSocial.setConflitoFamiliar(dto.isConflitoFamiliar());
+        formSocial.setConflitoFamiliar(dto.getConflitoFamiliar());
 
         formSocial.setAtividadeLazerDesc(dto.getAtividadeLazerDesc());
 
-        formSocial.setAtividadeFisica(dto.isAtividadeFisica());
-        formSocial.setAtividadeFisicaDesc(dto.getAtividadeFisicaDesc());
+
+        formSocial.setAtividadeFisica(dto.getAtividadeFisica());
+        if(dto.getAtividadeFisica().equals("Sim") && dto.getAtividadeFisicaDesc().isEmpty()){
+            throw new CampoInvalidoException("Campo Atividade Física Descrição é obrigátório");
+        }else if(dto.getAtividadeFisica().equals("Não") && dto.getAtividadeFisicaDesc().isEmpty()==false){
+            throw new CampoInvalidoException("Campo Atividade Física deve estar com o (Sim) selecionado.");
+        }else{
+            formSocial.setAtividadeFisicaDesc(dto.getAtividadeFisicaDesc());
+        }
 
         formSocial.setQualidadeVida(dto.getQualidadeVida());
 
         formSocial.setVacinas(dto.getVacinas());
+
+
 
         repository.save(formSocial);
 
@@ -117,30 +161,26 @@ public class FormSocialServiceImpl implements FormSocialService {
                 .numeroPessoasFam(form.getNumeroPessoasFam())
                 .grauParentesco(form.getGrauParentesco())
                 .residencia(form.getResidencia())
-                .beneficio(form.isBeneficio())
+                .beneficio(form.getBeneficio())
                 .beneficioDesc(form.getBeneficioDesc())
-                .programaSocial(form.isProgramaSocial())
+                .programaSocial(form.getProgramaSocial())
                 .programaSocialDesc(form.getProgramaSocialDesc())
-                .doencaCronica(form.isDoencaCronica())
                 .doencaCronicaDesc(form.getDoencaCronicaDesc())
-                .deficienteFamilia(form.isDeficienteFamilia())
+                .deficienteFamilia(form.getDeficienteFamilia())
                 .deficienteFamiliaDesc(form.getDeficienteFamiliaDesc())
-                .acompMedico(form.isAcompMedico())
+                .acompMedico(form.getAcompMedico())
                 .acompMedicoDesc(form.getAcompMedicoDesc())
-                .suicidioFamilia(form.isSuicidioFamilia())
+                .suicidioFamilia(form.getSuicidioFamilia())
                 .suicidioGrauParentesco(form.getSuicidioGrauParentesco())
-                .violencia(form.isViolencia())
                 .violenciaDesc(form.getViolenciaDesc())
-                .psicoativos(form.isPsicoativos())
                 .psicoativosDesc(form.getPsicoativosDesc())
+                .conflitoFamiliar(form.getConflitoFamiliar())
                 .atividadeLazerDesc(form.getAtividadeLazerDesc())
-                .atividadeFisica(form.isAtividadeFisica())
+                .atividadeFisica(form.getAtividadeFisica())
                 .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
                 .qualidadeVida(form.getQualidadeVida())
                 .vacinas(form.getVacinas())
                 .build();
-
-
     }
 
 }

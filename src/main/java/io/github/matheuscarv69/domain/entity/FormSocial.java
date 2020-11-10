@@ -1,6 +1,5 @@
 package io.github.matheuscarv69.domain.entity;
 
-import io.github.matheuscarv69.domain.enums.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +23,7 @@ public class FormSocial {
     private String nome;
 
     @Column
-    private int idade;
+    private Integer idade;
 
     @Column(length = 15)
     private String telefone;
@@ -53,7 +51,7 @@ public class FormSocial {
     private String escolaridade;
 
     @Column
-    private int numeroPessoasFam;
+    private Integer numeroPessoasFam;
 
     @Column
     private String grauParentesco;
@@ -62,61 +60,52 @@ public class FormSocial {
     private String residencia;
 
     @Column
-    private boolean beneficio;
+    private String beneficio;
 
     @Column(length = 40)
     private String beneficioDesc;
 
     @Column
-    private boolean programaSocial;
+    private String programaSocial;
 
     @Column(length = 50)
     private String programaSocialDesc;
 
-    @Column
-    private boolean doencaCronica; // Nao possui no form, mas e interessante por
-
-    @Column(length = 50)
+    @Column(length = 40)
     private String doencaCronicaDesc;
 
     @Column
-    private boolean deficienteFamilia;
+    private String deficienteFamilia;
 
     @Column(length = 50)
     private String deficienteFamiliaDesc;
 
     @Column
-    private boolean acompMedico;
+    private String acompMedico;
 
     @Column(length = 100)
     private String acompMedicoDesc;
 
     @Column
-    private boolean suicidioFamilia;
+    private String suicidioFamilia;
 
     @Column
     private String suicidioGrauParentesco;
 
-    @Column
-    private boolean violencia;
-
-    @Column(length = 20)
+    @Column(length = 30)
     private String violenciaDesc;
-
-    @Column
-    private boolean psicoativos;
 
     @Column(length = 50)
     private String psicoativosDesc;
 
     @Column
-    private boolean conflitoFamiliar;
+    private String conflitoFamiliar;
 
     @Column(length = 30)
-    private String atividadeLazerDesc; // nao possui campo de sim, somente nao
+    private String atividadeLazerDesc;
 
     @Column
-    private boolean atividadeFisica;
+    private String atividadeFisica;
 
     @Column(length = 40)
     private String atividadeFisicaDesc;

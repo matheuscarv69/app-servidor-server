@@ -1,5 +1,6 @@
 package io.github.matheuscarv69.rest.controller;
 
+import io.github.matheuscarv69.exceptions.CampoInvalidoException;
 import io.github.matheuscarv69.rest.ApiErrors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,5 +36,15 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(errors);
 
     }
+
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleCampoInvalidoException(CampoInvalidoException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+
 
 }

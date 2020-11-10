@@ -1,9 +1,13 @@
 package io.github.matheuscarv69.rest.dto;
 
+import io.github.matheuscarv69.validation.NotEmptyBoolean;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -40,8 +44,9 @@ public class FormSocialDTO {
     @NotEmpty(message = "Campo Escolaridade é obrigatório.")
     private String escolaridade;
 
-//    @NotEmpty(message = "Campo Número de Pessoas na Família é obrigatório.")
-    private int numeroPessoasFam;
+    @NotNull(message = "Campo Número de Pessoas na Família é obrigatório.")
+    @Range(min = 1,max = 30, message ="Número de pessoas informado é inválido." )
+    private Integer numeroPessoasFam;
 
     @NotEmpty(message = "Campo Grau de Parentesco é obrigatório.")
     private String grauParentesco;
@@ -49,46 +54,43 @@ public class FormSocialDTO {
     @NotEmpty(message = "Campo Residência é obrigatório.")
     private String residencia;
 
-//    @NotEmpty(message = "Campo Recebe algum Benefício é obrigatório.")
-    private boolean beneficio;
+    @NotEmpty(message = "Campo Recebe algum Benefício é obrigatório.")
+    private String beneficio;
     private String beneficioDesc;
 
-//    @NotEmpty(message = "Campo Participa de Programa Social é obrigatório.")
-    private boolean programaSocial;
+    @NotEmpty(message = "Campo Participa de Programa Social é obrigatório.")
+    private String programaSocial;
     private String programaSocialDesc;
 
-//    @NotEmpty(message = "Campo Doença Crônica na Família é obrigatório.")
-    private boolean doencaCronica; // Nao possui no form, mas e interessante por
+    @NotEmpty(message = "Campo Doença Crônica Descrição na Família é obrigatório.")
     private String doencaCronicaDesc;
 
-//    @NotEmpty(message = "Campo Deficientes na família é obrigatório.")
-    private boolean deficienteFamilia;
+    @NotEmpty(message = "Campo Deficientes na família é obrigatório.")
+    private String deficienteFamilia;
     private String deficienteFamiliaDesc;
 
-//    @NotEmpty(message = "Campo Recebe Acompanhamento Médico é obrigatório.")
-    private boolean acompMedico;
+    @NotEmpty(message = "Campo Recebe Acompanhamento Médico é obrigatório.")
+    private String acompMedico;
     private String acompMedicoDesc;
 
-//    @NotEmpty(message = "Campo Ocorrência de Suicídio é obrigatório.")
-    private boolean suicidioFamilia;
+    @NotEmpty(message = "Campo Ocorrência de Suicídio é obrigatório.")
+    private String suicidioFamilia;
     private String suicidioGrauParentesco;
 
-//    @NotEmpty(message = "Campo Ocorrência de Violência é obrigatório.")
-    private boolean violencia;
+    @NotEmpty(message = "Campo Violência Descrição é obrigatório.")
     private String violenciaDesc;
 
-//    @NotEmpty(message = "Campo Consumo de Psicoativos é obrigatório.")
-    private boolean psicoativos; // repensar a abordagem
+    @NotEmpty(message = "Campo Consumo de Psicoativos é obrigatório.")
     private String psicoativosDesc;
 
-//    @NotEmpty(message = "Campo Conflito Familiar é obrigatório.")
-    private boolean conflitoFamiliar;
+    @NotEmpty(message = "Campo Conflito Familiar é obrigatório.")
+    private String conflitoFamiliar;
 
     @NotEmpty(message = "Campo Atividades de Lazer é obrigatório.")
-    private String atividadeLazerDesc; // nao possui campo de sim, somente nao
+    private String atividadeLazerDesc;
 
-//    @NotEmpty(message = "Campo Atividades Físicas é obrigatório.")
-    private boolean atividadeFisica;
+    @NotEmpty(message = "Campo Atividades Físicas é obrigatório.")
+    private String atividadeFisica;
     private String atividadeFisicaDesc;
 
     @NotEmpty(message = "Campo Qualidade de Vida é obrigatório.")
