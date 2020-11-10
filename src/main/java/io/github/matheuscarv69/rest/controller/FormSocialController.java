@@ -7,10 +7,9 @@ import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import static org.springframework.http.HttpStatus.*;
-
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("api/formsocial")

@@ -1,7 +1,5 @@
 package io.github.matheuscarv69.Util;
 
-import ch.qos.logback.core.util.CachingDateFormatter;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,8 +11,8 @@ public class DateUtil {
 
     public final static DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-    public static final  Date formataStringData(String data){
-        if(data == null || data.equals("")) {
+    public static final Date formataStringData(String data) {
+        if (data == null || data.equals("")) {
             return null;
         }
 
@@ -30,7 +28,7 @@ public class DateUtil {
         return date;
     }
 
-    public static final int calculaIdade(Date dataNascimento){
+    public static final int calculaIdade(Date dataNascimento) {
         Calendar dateOfBirth = new GregorianCalendar();
         dateOfBirth.setTime(dataNascimento);
 
@@ -39,7 +37,7 @@ public class DateUtil {
         int idade = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
 
         dateOfBirth.add(Calendar.YEAR, idade);
-        if (today.before(dateOfBirth)){
+        if (today.before(dateOfBirth)) {
             idade--;
         }
 
