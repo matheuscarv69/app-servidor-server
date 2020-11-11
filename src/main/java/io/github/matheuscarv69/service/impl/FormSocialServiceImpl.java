@@ -7,6 +7,7 @@ import io.github.matheuscarv69.domain.repository.FormSocialRepository;
 import io.github.matheuscarv69.exceptions.ListIsEmptyException;
 import io.github.matheuscarv69.exceptions.RegraNegocioException;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
+import io.github.matheuscarv69.rest.dto.InfoFormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setFuncaoExerc(dto.getFuncaoExerc());
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
-//        formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(dto.getEstadoCivil()));
         formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(Integer.parseInt(dto.getEstadoCivil())));
 
-//        formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(dto.getEscolaridade()));
         formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(Integer.parseInt(dto.getEscolaridade())));
 
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
@@ -198,6 +197,77 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
     }
 
+    @Override
+    public List<InfoFormSocialDTO> buscarForms() {
+        List<FormSocial> listForms = repository.findAll();
+
+        List<InfoFormSocialDTO> listInfoFormSocialDTO = new ArrayList<>();
+
+        for (FormSocial formSocial : listForms) {
+            listInfoFormSocialDTO.add(converterFormInfo(formSocial));
+        }
+
+        if (listInfoFormSocialDTO.isEmpty()) {
+            throw new ListIsEmptyException("Nenhum formulário encontrado");
+        }
+
+        return listInfoFormSocialDTO;
+
+    }
+
+    public InfoFormSocialDTO converterFormInfo(FormSocial form){
+
+        return InfoFormSocialDTO.builder()
+                .id(form.getId())
+                .nome(form.getNome())
+                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
+                .dataNascismento(DateUtil.formatter.format(form.getDataNascimento()))
+                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
+                .telefone(form.getTelefone())
+                .email(form.getEmail())
+                .funcaoExerc(form.getFuncaoExerc())
+                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
+                .estadoCivil(form.getEstadoCivil().toString())
+                .escolaridade(form.getEscolaridade().toString())
+                .numeroPessoasFam(form.getNumeroPessoasFam())
+                .grauParentesco(form.getGrauParentesco().toString())
+                .residencia(form.getResidencia().toString())
+                .beneficio(form.getBeneficio().toString())
+                .beneficiosCadastrados(form.getBeneficiosCadastrados().toString())
+                .outroBeneficioDesc(form.getOutroBeneficioDesc())
+                .programaSocial(form.getProgramaSocial().toString())
+                .programasSociaisCadastrados(form.getProgramasSociaisCadastrados().toString())
+                .outroProgramaSocialDesc(form.getOutroProgramaSocialDesc())
+                .doencaCronica(form.getDoencaCronica().toString())
+                .doencaCronicaCadastradas(form.getDoencasCronicasCadastradas().toString())
+                .outraDoencaCronicaDesc(form.getOutraDoencaCronicasDesc())
+                .deficienteFamilia(form.getDeficienteFamilia().toString())
+                .deficienteFamiliaDescricao(form.getDeficienteFamiliaDescricao())
+                .acompanhamentoMedico(form.getAcompMedico().toString())
+                .acompanhamentoMedicoDesc(form.getAcompMedicoDescricao())
+                .suicidioFamilia(form.getSuicidioFamilia().toString())
+                .suicidioGrauParentesco(form.getSuicidioGrauParentesco().toString())
+                .violencia(form.getViolencia().toString())
+                .violenciasCadastradas(form.getViolenciasCadastradas().toString())
+                .outraViolenciaDescricao(form.getOutraViolenciaDescricao())
+
+                .psicoativos(form.getPsicoativos().toString())
+                .psicoativosCadastrados(form.getPsicoativosCadastrados().toString())
+                .outrosPsicoativosDescricao(form.getOutrosPsicoativosDescricao())
+
+                .conflitoFamiliar(form.getConflitoFamiliar().toString())
+
+                .atividadesLazer(form.getAtividadesLazer().toString())
+                .atividadesLazerCadastradas(form.getAtividadeLazerCadastradas().toString())
+                .outrasAtividadesLazerDesc(form.getOutrasAtividadeLazerDesc())
+                
+                .atividadeFisica(form.getAtividadeFisica().toString())
+                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
+                .qualidadeVida(form.getQualidadeVida().toString())
+                .vacinas(form.getVacinas().toString())
+                .build();
+    }
+
     public List<GrauParentesco> converterCodeGrauParList(String codes) {
         String[] indices = codes.split("-");
         List<GrauParentesco> listaGrauPar = new ArrayList<>();
@@ -286,63 +356,4 @@ public class FormSocialServiceImpl implements FormSocialService {
         return listaAtivLazerCad;
     }
 
-    @Override
-    public List<FormSocialDTO> buscarForms() {
-        List<FormSocial> listForms = repository.findAll();
-
-        List<FormSocialDTO> listFormDTO = new ArrayList<>();
-
-        for (FormSocial formSocial : listForms) {
-//            listFormDTO.add(converterForm(formSocial));
-        }
-
-        if (listFormDTO.isEmpty()) {
-            throw new ListIsEmptyException("Nenhum formulário encontrado");
-        }
-
-        return listFormDTO;
-
-    }
-
-//    public FormSocialDTO converterForm(FormSocial form) {
-//
-//        return FormSocialDTO
-//                .builder()
-//                .id(form.getId())
-//                .nome(form.getNome())
-//                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
-//                .telefone(form.getTelefone())
-//                .email(form.getEmail())
-//                .dataNascimento(DateUtil.formatter.format(form.getDataNascimento()))
-//                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
-//                .funcaoExerc(form.getFuncaoExerc())
-//                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
-////                .estadoCivil(form.getEstadoCivil().toString())
-////                .escolaridade(form.getEscolaridade())
-//                .numeroPessoasFam(form.getNumeroPessoasFam())
-//                .grauParentesco(form.getGrauParentesco().toString())
-////                .residencia(form.getResidencia().toString()) precisa de um inforDTO
-////                .beneficio(form.getBeneficio())
-//                .beneficioDesc(form.getBeneficioDesc())
-//                .programaSocial(form.getProgramaSocial())
-//                .programaSocialDesc(form.getProgramaSocialDesc())
-//                .doencaCronicaDesc(form.getDoencaCronicaDesc())
-//                .deficienteFamilia(form.getDeficienteFamilia())
-//                .deficienteFamiliaDesc(form.getDeficienteFamiliaDesc())
-//                .acompMedico(form.getAcompMedico())
-//                .acompMedicoDesc(form.getAcompMedicoDesc())
-//                .suicidioFamilia(form.getSuicidioFamilia())
-//                .suicidioGrauParentesco(form.getSuicidioGrauParentesco())
-//                .violenciaDesc(form.getViolenciaDesc())
-//                .psicoativosDesc(form.getPsicoativosDesc())
-//                .conflitoFamiliar(form.getConflitoFamiliar())
-//                .atividadeLazerDesc(form.getAtividadeLazerDesc())
-//                .atividadeFisica(form.getAtividadeFisica())
-//                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
-//                .qualidadeVida(form.getQualidadeVida())
-//                .vacinas(form.getVacinas())
-//                .build();
-//
-//
-//    }
 }

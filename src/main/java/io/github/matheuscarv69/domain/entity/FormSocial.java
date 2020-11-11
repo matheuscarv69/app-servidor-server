@@ -179,7 +179,7 @@ public class FormSocial {
     @Enumerated(EnumType.STRING)
     private Decisao atividadesLazer;
 
-    @ElementCollection(targetClass = PsicoativosCadastrados.class)
+    @ElementCollection(targetClass = AtividadeLazerCadastradas.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "tb_AtivLazer_Cadastrados",
             joinColumns = @JoinColumn(name = "formsocial_ID")
@@ -190,20 +190,17 @@ public class FormSocial {
     @Column(length = 50)
     private String outrasAtividadeLazerDesc;
 
-//
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Decisao atividadeFisica;
 
     @Column(length = 50)
     private String atividadeFisicaDesc;
-//
 
     @Column(length = 15)
     @Enumerated(EnumType.STRING)
     private QualidadeVida qualidadeVida;
-
-    //
+    
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Vacinas vacinas;

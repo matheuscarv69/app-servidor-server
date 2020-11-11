@@ -73,7 +73,7 @@ public class FormSocialDTO {
     private String beneficio;
 
     @ApiModelProperty(value = "Tipo do Benefício: [index]",
-            allowableValues = "1 - Benefício de Prestação Continuada, 2 - Bolsa familía, 3 - Crédito Social, 4 - Outros (Descrito na propriedade outroBeneficioDesc)", position = 13, required = true)
+            allowableValues = "1 - Benefício de Prestação Continuada, 2 - Bolsa familía, 3 - Crédito Social, 4 - Outros (Descrito na propriedade outroBeneficioDesc)", position = 13)
     private String beneficiosCadastrados;
 
     @ApiModelProperty(value = "Descrição do Outro Benefício: Ex: Vale Alimentação", position = 14)
@@ -85,7 +85,7 @@ public class FormSocialDTO {
     private String programaSocial;
 
     @ApiModelProperty(value = "Programas Sociais: [index]",
-            allowableValues = "1 - Jovem Aprendiz, 2 - Programa da Prefeitura, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Outros (Descrito na propriedade outroProgramaSocialDesc)", position = 16, required = true)
+            allowableValues = "1 - Jovem Aprendiz, 2 - Programa da Prefeitura, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Outros (Descrito na propriedade outroProgramaSocialDesc)", position = 16)
     private String programasSociaisCadastrados;
 
     @ApiModelProperty(value = "Descrição do Outro Programa Social: Ex: Auxílio Emergêncial", position = 17)
@@ -97,7 +97,7 @@ public class FormSocialDTO {
     private String doencaCronica;
 
     @ApiModelProperty(value = "Doenças Crônicas na familía.",
-            allowableValues = "1 - Cancêr, 2 - Diabetes, 3 - Depressão, 4 - Hipertensão, 5 - Outras(Descrito na propriedade outraDoencaCronicasDesc", position = 19, required = true)
+            allowableValues = "1 - Cancêr, 2 - Diabetes, 3 - Depressão, 4 - Hipertensão, 5 - Outras(Descrito na propriedade outraDoencaCronicasDesc", position = 19)
     private String doencasCronicasCadastradas;
 
     @ApiModelProperty(value = "Descrição da Outra Doença Crônica: Ex: Bronquite", position = 20)
@@ -110,7 +110,7 @@ public class FormSocialDTO {
 
     @ApiModelProperty(value = "Quem é o Deficiente na familía? e qual a deficiência?: ex: filho, paralítico", position = 22)
     private String deficienteFamiliaDescricao;
-    //
+
     @ApiModelProperty(value = "Faz Acompanhamento Médico?: index",
             allowableValues = "1 - Sim, 2 - Não", position = 23, required = true)
     @NotEmpty(message = "{campo.acomp-medico.obrigatorio}")
@@ -159,17 +159,16 @@ public class FormSocialDTO {
 
 
     @ApiModelProperty(value = "Realiza Atividades de lazer?: index",
-            allowableValues = "1 - Sim, 2 - Não", position = 34)
+            allowableValues = "1 - Sim, 2 - Não", position = 34, required = true)
     @NotEmpty(message = "{campo.atividade-lazer-desc.obrigatorio}")
     private String atividadesLazer;
 
     @ApiModelProperty(value = "Atividades de lazer realizadas: index",
-            allowableValues = "1 - Atividades Manuais, 2 - Atividades Sociais, 3 - Atividades Físicas/Esportivas, 4 - Atividades Culturais, 5 - Outros(Descrito na propriedade outrosAtivLazerDescricao)", position = 34, required = true)
+            allowableValues = "1 - Atividades Manuais, 2 - Atividades Sociais, 3 - Atividades Físicas/Esportivas, 4 - Atividades Culturais, 5 - Outros(Descrito na propriedade outrosAtivLazerDescricao)", position = 35)
     private String atividadeLazerCadastradas;
 
     @ApiModelProperty(value = "Descrição de outro tipo de Atividade de Lazer", position = 36)
     private String outrasAtividadeLazerDesc;
-
 
 //
     @ApiModelProperty(value = "Realiza Atividade Física: index",
