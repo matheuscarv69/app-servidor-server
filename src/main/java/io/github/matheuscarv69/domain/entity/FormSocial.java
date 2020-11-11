@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class FormSocial {
     @Column(length = 15)
     private String telefone;
 
-    @Column(length = 50)
+    @Column(length = 70)
+    @Email
     private String email;
 
     @Column
@@ -49,11 +51,11 @@ public class FormSocial {
     @Column(length = 40)
     private String tempoFuncaoExerc;
 
-    @Column(length = 14)
+    @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private EstadoCivil estadoCivil;
 
-    @Column(length = 40)
+    @Column(length = 50)
     @Enumerated(EnumType.STRING)
     private Escolaridade escolaridade;
 
@@ -65,47 +67,65 @@ public class FormSocial {
     @CollectionTable(name = "tb_grauParentesco",
             joinColumns = @JoinColumn(name = "formsocial_ID")
             , schema = "form")
-    @Column(name = "grauParentesco_ID")
+    @Column(name = "grauParentesco_ID", length = 20)
     private List<GrauParentesco> grauParentesco;
 
-
-    @Column(length = 15)
+    @Column(length = 30)
     @Enumerated(EnumType.STRING)
     private Residencia residencia;
-    //
+
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private Decisao beneficio;
-    //
 
-    //    @Column(length = 40)
-//    @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = BeneficiosCadastrados.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "tb_beneficios_Cadastrados",
             joinColumns = @JoinColumn(name = "formsocial_ID")
             , schema = "form")
-    @Column(name = "beneficiosCadastrados_ID")
+    @Column(name = "beneficiosCadastrados_ID", length = 60)
     private List<BeneficiosCadastrados> beneficiosCadastrados;
 
-    @Column(length = 40)
+    @Column(length = 70)
     private String outroBeneficioDesc;
 
     @Column(length = 10)
-    private String programaSocial;
+    @Enumerated(EnumType.STRING)
+    private Decisao programaSocial;
 
-    @Column(length = 50)
-    private String programaSocialDesc;
+    @ElementCollection(targetClass = ProgramasSociaisCadastrados.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_programasSoc_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "ProgramasSocCadastrados_ID", length = 40)
+    private List<ProgramasSociaisCadastrados> programasSociaisCadastrados;
 
-    @Column(length = 40)
-    private String doencaCronicaDesc;
+    @Column(length = 70)
+    private String outroProgramaSocialDesc;
 
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private Decisao doencaCronica;
+
+    @ElementCollection(targetClass = DoencasCronicasCadastradas.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_doencaCron_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "DoencaCronCadastrados_ID", length = 20)
+    private List<DoencasCronicasCadastradas> doencasCronicasCadastradas;
+
+    @Column(length = 70)
+    private String outraDoencaCronicasDesc;
+
+//
     @Column(length = 10)
     private String deficienteFamilia;
 
     @Column(length = 50)
     private String deficienteFamiliaDesc;
-
+//
     @Column(length = 10)
     private String acompMedico;
 

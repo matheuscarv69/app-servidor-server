@@ -8,8 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class InfoFormSocialDTO {
+
     @ApiModelProperty(value = "ID do formulário", position = 1)
-    private int id; //usado na conversao de formSocial p DTO
+    private int id;
 
     @ApiModelProperty(value = "Nome do entrevistado ", position = 2, required = true)
     @NotEmpty(message = "{campo.nome.obrigatorio}")
@@ -42,17 +43,13 @@ public class InfoFormSocialDTO {
     @NotEmpty(message = "{campo.tempo-funcao-exercicida.obrigatorio}")
     private String tempoFuncaoExerc;
 
-//    @ApiModelProperty(value = "Estado cívil", allowableValues = "Solteiro(a), Casado(a), União Estável, Separado(a), Divorciado(a), Viuvo(a)", position = 11, required = true)
-//    @NotEmpty(message = "{campo.estado-civil.obrigatorio}")
-//    private String estadoCivil;
-
     @ApiModelProperty(value = "Estado cívil", allowableValues = "Solteiro(a), Casado(a), União Estável, Separado(a), Divorciado(a), Viuvo(a)", position = 11, required = true)
     @NotNull(message = "{campo.estado-civil.obrigatorio}")
     private Integer estadoCivil;
 
     @ApiModelProperty(value = "Escolaridade", allowableValues = "Analfabeto, Ensino Fundamental Incompleto, Ensino Fundamental Completo, Ensino Médio Incompleto, Ensino Médio Completo, Ensino Superior Incompleto, Ensino Superior Completo", position = 12, required = true)
-    @NotEmpty(message = "{campo.escolaridade.obrigatorio}")
-    private String escolaridade;
+    @NotNull(message = "{campo.escolaridade.obrigatorio}")
+    private Integer escolaridade;
 
     @ApiModelProperty(value = "Quantidade de pessoas na familía", position = 13, required = true)
     @NotNull(message = "{campo.numero-pessoas-fam.obrigatorio}")
@@ -64,25 +61,34 @@ public class InfoFormSocialDTO {
     private String grauParentesco;
 
     @ApiModelProperty(value = "Tipo de Residència", allowableValues = "Própria, Alugada, Área de Invasão, Cedida", position = 15, required = true)
-    @NotEmpty(message = "{campo.residencia.obrigatorio}")
-    private String residencia;
+    @NotNull(message = "{campo.residencia.obrigatorio}")
+    private Integer residencia;
 
     @ApiModelProperty(value = "Recebe algum beneficio?", allowableValues = "Sim, Não", position = 16, required = true)
-    @NotEmpty(message = "{campo.beneficio.obrigatorio}")
-    private String beneficio;
+    @NotNull(message = "{campo.beneficio.obrigatorio}")
+    private Integer beneficio;
+
     @ApiModelProperty(value = "Tipo do Benefício", allowableValues = "Benefício de Prestação Continuada, Bolsa familía, Crédito Social, Outros (Descrito em texto)", position = 17, required = true)
-    private String beneficioDesc;
+    private String beneficiosCadastrados;
+
+    private String outroBeneficioDesc;
 
     @ApiModelProperty(value = "Participa de algum programa social?", allowableValues = "Sim, Não", position = 18, required = true)
-    @NotEmpty(message = "{campo.programa-social.obrigatorio}")
-    private String programaSocial;
+    @NotNull(message = "{campo.programa-social.obrigatorio}")
+    private Integer programaSocial;
 
     @ApiModelProperty(value = "Programas Sociais", allowableValues = "Jovem Aprendiz, CREA-CRAS, CAPS I-II-III e AD, Outros (Descrito em texto)", position = 19, required = true)
-    private String programaSocialDesc;
+    private String programasSociaisCadastrados;
+
+    private String outroProgramaSocialDesc;
+
+    @NotNull(message = "{campo.doenca-cronica.obrigatorio}")
+    private Integer doencaCronica;
 
     @ApiModelProperty(value = "Doenças Crônicas na familía.", allowableValues = "Câncer, Depressão, Diabetes, Hipertensão, Outros (Descrito em texto)", position = 20, required = true)
-    @NotEmpty(message = "{campo.doenca-cronica-desc.obrigatorio}")
-    private String doencaCronicaDesc;
+    private String doencasCronicasCadastradas;
+
+    private String outraDoencaCronicasDesc;
 
     @ApiModelProperty(value = "Há Deficientes na familía?", allowableValues = "Sim, Não", position = 21, required = true)
     @NotEmpty(message = "{campo.deficientes-fam.obrigatorio}")
@@ -135,5 +141,7 @@ public class InfoFormSocialDTO {
     @ApiModelProperty(value = "Vacinas em dia", allowableValues = "Sim, Não, Não sabe", position = 34, required = true)
     @NotEmpty(message = "{campo.vacinas.obrigatorio}")
     private String vacinas;
+
+
 
 }

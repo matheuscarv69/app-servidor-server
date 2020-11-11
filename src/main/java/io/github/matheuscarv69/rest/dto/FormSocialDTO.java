@@ -17,81 +17,92 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class FormSocialDTO {
 
-    @ApiModelProperty(value = "ID do formulário", position = 1)
-    private int id; //usado na conversao de formSocial p DTO
-
-    @ApiModelProperty(value = "Nome do entrevistado ", position = 2, required = true)
+    @ApiModelProperty(value = "Nome do entrevistado ", position = 1, required = true)
     @NotEmpty(message = "{campo.nome.obrigatorio}")
     private String nome;
 
-    @ApiModelProperty(value = "Idade do entrevistado", position = 3)
-    private int idade; //usado na conversao de formSocial p DTO
-
-    @ApiModelProperty(value = "Telefone", position = 4, required = true)
+    @ApiModelProperty(value = "Telefone", position = 2, required = true)
     @NotEmpty(message = "{campo.telefone.obrigatorio}")
     private String telefone;
 
-    @ApiModelProperty(value = "Email", position = 5, required = true)
+    @ApiModelProperty(value = "Email", position = 3, required = true)
     @NotEmpty(message = "{campo.email.obrigatorio}")
     @Email(message = "{campo.email.invalido}")
     private String email;
 
-    @ApiModelProperty(value = "Data da entrevista. Dado obtido automáticamente", position = 6)
-    private String dataEntrevista;
-
-    @ApiModelProperty(value = "Data de nascimento. Ex: 18/09/1999", position = 8, required = true)
+    @ApiModelProperty(value = "Data de nascimento. Ex: 18/09/1999", position = 4, required = true)
     @NotEmpty(message = "{campo.data-nascimento.obrigatorio}")
     private String dataNascimento;
 
-    @ApiModelProperty(value = "Função exercicida", position = 9, required = true)
+    @ApiModelProperty(value = "Função exercicida", position = 5, required = true)
     @NotEmpty(message = "{campo.funcao-exercicida.obrigatorio}")
     private String funcaoExerc;
 
-    @ApiModelProperty(value = "Tempo de exercício da função", position = 10, required = true)
+    @ApiModelProperty(value = "Tempo de exercício da função", position = 6, required = true)
     @NotEmpty(message = "{campo.tempo-funcao-exercicida.obrigatorio}")
     private String tempoFuncaoExerc;
 
-    @ApiModelProperty(value = "Estado cívil", allowableValues = "Solteiro(a), Casado(a), União Estável, Separado(a), Divorciado(a), Viuvo(a)", position = 11, required = true)
+    @ApiModelProperty(value = "Estado cívil: index",
+            allowableValues = "1 - Solteiro(a), 2 - Casado(a), 3 - União Estável, 4 - Separado(a), 5 - Divorciado(a), 6 - Viuvo(a)", position = 7, required = true)
     @NotNull(message = "{campo.estado-civil.obrigatorio}")
-    private Integer estadoCivil;
+    private String estadoCivil;
 
-    @ApiModelProperty(value = "Escolaridade", allowableValues = "Analfabeto, Ensino Fundamental Incompleto, Ensino Fundamental Completo, Ensino Médio Incompleto, Ensino Médio Completo, Ensino Superior Incompleto, Ensino Superior Completo", position = 12, required = true)
+    @ApiModelProperty(value = "Escolaridade: index",
+            allowableValues = "1 - Analfabeto, 2 - Ensino Fundamental Incompleto, 3 - Ensino Fundamental Completo, 4 - Ensino Médio Incompleto, 5 - Ensino Médio Completo, 6 - Ensino Superior Incompleto, 7 - Ensino Superior Completo", position = 8, required = true)
     @NotNull(message = "{campo.escolaridade.obrigatorio}")
-    private Integer escolaridade;
+    private String escolaridade;
 
-    @ApiModelProperty(value = "Quantidade de pessoas na familía", position = 13, required = true)
+    @ApiModelProperty(value = "Quantidade de pessoas na familía", position = 9, required = true)
     @NotNull(message = "{campo.numero-pessoas-fam.obrigatorio}")
     @Range(min = 1, max = 30, message = "{campo.numero-pessoas-fam.invalido}")
     private Integer numeroPessoasFam;
-    //
-    @ApiModelProperty(value = "Grau de parentesco do entrevistado em relação à familía", allowableValues = "Pai, Mãe, Esposo(a), Avos, Filho(a), Irmão(ã), Tio(a), Sobrinho(a), Primo(a), Sogro(a), Enteado(a), Outros", position = 14, required = true)
+
+    @ApiModelProperty(value = "Parentes da família do entrevistado: [index]",
+            allowableValues = "1 - Esposo(a), 2 - Filhos(as), 3 - Sogro(a), 4 - Irmão(ã), 5 - Pai, 6 - Mãe, 7 - Tio(a), 8 - Sobrinho(a), 9 - Avos, 10 - Enteado(a), 11 - Primo(a), 12 - Outros", position = 10, required = true)
     @NotEmpty(message = "{campo.grau-parentesco.obrigatorio}")
     private String grauParentesco;
-    //
-    @ApiModelProperty(value = "Tipo de Residència", allowableValues = "Própria, Alugada, Área de Invasão, Cedida", position = 15, required = true)
+
+    @ApiModelProperty(value = "Tipo de Residència: index",
+            allowableValues = "1 - Própria, 2 - Alugada, 3 - Área de Invasão, 4 - Cedida", position = 11, required = true)
     @NotNull(message = "{campo.residencia.obrigatorio}")
-    private Integer residencia;
+    private String residencia;
 
-    @ApiModelProperty(value = "Recebe algum beneficio?", allowableValues = "Sim, Não", position = 16, required = true)
+    @ApiModelProperty(value = "Recebe algum beneficio?: index",
+            allowableValues = "1 - Sim, 2 -Não", position = 12, required = true)
     @NotNull(message = "{campo.beneficio.obrigatorio}")
-    private Integer beneficio;
+    private String beneficio;
 
-    @ApiModelProperty(value = "Tipo do Benefício", allowableValues = "Benefício de Prestação Continuada, Bolsa familía, Crédito Social, Outros (Descrito em texto)", position = 17, required = true)
+    @ApiModelProperty(value = "Tipo do Benefício: [index]",
+            allowableValues = "1 - Benefício de Prestação Continuada, 2 - Bolsa familía, 3 - Crédito Social, 4 - Outros (Descrito na propriedade outroBeneficioDesc)", position = 13, required = true)
     private String beneficiosCadastrados;
 
-    // caso beneficio nao esteja listado
+    @ApiModelProperty(value = "Descrição do Outro Benefício: Ex: Vale Alimentação", position = 14)
     private String outroBeneficioDesc;
 
-    @ApiModelProperty(value = "Participa de algum programa social?", allowableValues = "Sim, Não", position = 18, required = true)
-    @NotEmpty(message = "{campo.programa-social.obrigatorio}")
+    @ApiModelProperty(value = "Participa de algum programa social?: index",
+            allowableValues = "1 - Sim, 2 - Não", position = 15, required = true)
+    @NotNull(message = "{campo.programa-social.obrigatorio}")
     private String programaSocial;
 
-    @ApiModelProperty(value = "Programas Sociais", allowableValues = "Jovem Aprendiz, CREA-CRAS, CAPS I-II-III e AD, Outros (Descrito em texto)", position = 19, required = true)
-    private String programaSocialDesc;
+    @ApiModelProperty(value = "Programas Sociais: [index]",
+            allowableValues = "1 - Jovem Aprendiz, 2 - Programa da Prefeitura, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Outros (Descrito na propriedade outroProgramaSocialDesc)", position = 16, required = true)
+    private String programasSociaisCadastrados;
 
-    @ApiModelProperty(value = "Doenças Crônicas na familía.", allowableValues = "Câncer, Depressão, Diabetes, Hipertensão, Outros (Descrito em texto)", position = 20, required = true)
-    @NotEmpty(message = "{campo.doenca-cronica-desc.obrigatorio}")
-    private String doencaCronicaDesc;
+    @ApiModelProperty(value = "Descrição do Outro Programa Social: Ex: Auxílio Emergêncial", position = 17)
+    private String outroProgramaSocialDesc;
+
+    @ApiModelProperty(value = "Possui algum Doença Crônica na família: index",
+            allowableValues = "1 - Sim, 2 - Não", position = 18, required = true)
+
+    @NotNull(message = "{campo.doenca-cronica.obrigatorio}")
+    private String doencaCronica;
+    @ApiModelProperty(value = "Doenças Crônicas na familía.",
+            allowableValues = "1 - Cancêr, 2 - Diabetes, 3 - Depressão, 4 - Hipertensão, 5 - Outras(Descrito na propriedade outraDoencaCronicasDesc", position = 19, required = true)
+    private String doencasCronicasCadastradas;
+
+    @ApiModelProperty(value = "Descrição da Outra Doença Crônica: Ex: Bronquite")
+    private String outraDoencaCronicasDesc;
+    // parei aqui
 
     @ApiModelProperty(value = "Há Deficientes na familía?", allowableValues = "Sim, Não", position = 21, required = true)
     @NotEmpty(message = "{campo.deficientes-fam.obrigatorio}")

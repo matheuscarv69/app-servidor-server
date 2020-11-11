@@ -39,9 +39,11 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setFuncaoExerc(dto.getFuncaoExerc());
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
-        formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(dto.getEstadoCivil()));
+//        formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(dto.getEstadoCivil()));
+        formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(Integer.parseInt(dto.getEstadoCivil())));
 
-        formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(dto.getEscolaridade()));
+//        formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(dto.getEscolaridade()));
+        formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(Integer.parseInt(dto.getEscolaridade())));
 
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
 
@@ -49,13 +51,12 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         formSocial.setGrauParentesco(listGrauParentesco);
 
-        formSocial.setResidencia(Residencia.getResidenciaCode(dto.getResidencia()));
+        formSocial.setResidencia(Residencia.getResidenciaCode(Integer.parseInt(dto.getResidencia())));
 
-        formSocial.setBeneficio(Decisao.getDecisaoCode(dto.getBeneficio()));
-
-        if (dto.getBeneficio() == 1 && dto.getBeneficiosCadastrados().isEmpty()) {
+        formSocial.setBeneficio(Decisao.getDecisaoCode(Integer.parseInt(dto.getBeneficio())));
+        if (Integer.parseInt(dto.getBeneficio()) == 1 && dto.getBeneficiosCadastrados().isEmpty()) {
             throw new RegraNegocioException("Campo Benefícios Cadastrados é obrigatório.");
-        } else if (dto.getBeneficio() == 2 && dto.getBeneficiosCadastrados().isEmpty() == false) {
+        } else if (Integer.parseInt(dto.getBeneficio()) == 2 && dto.getBeneficiosCadastrados().isEmpty() == false) {
             throw new RegraNegocioException("Campo Benefício deve estar com (Sim == 1) selecionado");
         } else if (dto.getBeneficiosCadastrados().contains("4") && dto.getOutroBeneficioDesc().isEmpty()) {
             throw new RegraNegocioException("Campo Outro Benefício Descrição deve estar preenchido");
@@ -66,18 +67,40 @@ public class FormSocialServiceImpl implements FormSocialService {
             formSocial.setBeneficiosCadastrados(listBeneficiosCadastrados);
             formSocial.setOutroBeneficioDesc(dto.getOutroBeneficioDesc());
         }
-//
-        formSocial.setProgramaSocial(dto.getProgramaSocial());
-        if (dto.getProgramaSocial().equals("Sim") && dto.getProgramaSocialDesc().isEmpty()) {
-            throw new RegraNegocioException("Campo Programa Social Descrição é obrigatório.");
-        } else if (dto.getProgramaSocial().equals("Não") && dto.getProgramaSocialDesc().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Programa Social deve estar com (Sim) selecionado.");
+
+
+        formSocial.setProgramaSocial(Decisao.getDecisaoCode(Integer.parseInt(dto.getProgramaSocial())));
+        if (Integer.parseInt(dto.getProgramaSocial()) == 1 && dto.getProgramasSociaisCadastrados().isEmpty()) {
+            throw new RegraNegocioException("Campo Programas Sociais Cadastrados é obrigatório.");
+        } else if (Integer.parseInt(dto.getProgramaSocial()) == 2 && dto.getProgramasSociaisCadastrados().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Programa Social deve estar com (Sim == 1) selecionado");
+        } else if (dto.getProgramasSociaisCadastrados().contains("5") && dto.getOutroProgramaSocialDesc().isEmpty()) {
+            throw new RegraNegocioException("Campo Outro Programa Social Descrição deve estar preenchido");
+        } else if (!dto.getProgramasSociaisCadastrados().contains("5") && dto.getOutroProgramaSocialDesc().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Programas Sociais Cadastrados deve estar preenchido com (Outros == 5)");
         } else {
-            formSocial.setProgramaSocialDesc(dto.getProgramaSocialDesc());
+            List<ProgramasSociaisCadastrados> listProgramasSociaisCadastrados = converterCodeProgSocialParaList(dto.getProgramasSociaisCadastrados());
+            formSocial.setProgramasSociaisCadastrados(listProgramasSociaisCadastrados);
+            formSocial.setOutroProgramaSocialDesc(dto.getOutroProgramaSocialDesc());
         }
 
-        formSocial.setDoencaCronicaDesc(dto.getDoencaCronicaDesc());
 
+        formSocial.setDoencaCronica(Decisao.getDecisaoCode(Integer.parseInt(dto.getDoencaCronica())));
+        if (Integer.parseInt(dto.getDoencaCronica()) == 1 && dto.getDoencasCronicasCadastradas().isEmpty()) {
+            throw new RegraNegocioException("Campo Doenças Crônicas Cadastradas é obrigatório.");
+        } else if (Integer.parseInt(dto.getDoencaCronica()) == 2 && dto.getDoencasCronicasCadastradas().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Doença Crônica deve estar com (Sim == 1) selecionado");
+        } else if (dto.getDoencasCronicasCadastradas().contains("5") && dto.getOutraDoencaCronicasDesc().isEmpty()) {
+            throw new RegraNegocioException("Campo Outra Doença Crônica Descrição deve estar preenchido");
+        } else if (!dto.getDoencasCronicasCadastradas().contains("5") && dto.getOutraDoencaCronicasDesc().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Doenças Crônicas Cadastradas deve estar preenchido com (Outras == 5)");
+        } else {
+            List<DoencasCronicasCadastradas> listDoencasCronicaCadastradas = converterCodeDoencaCronicaParaList(dto.getDoencasCronicasCadastradas());
+            formSocial.setDoencasCronicasCadastradas(listDoencasCronicaCadastradas);
+            formSocial.setOutraDoencaCronicasDesc(dto.getOutraDoencaCronicasDesc());
+        }
+
+        // Fazer quando acordar
         formSocial.setDeficienteFamilia(dto.getDeficienteFamilia());
         if (dto.getDeficienteFamilia().equals("Sim") && dto.getDeficienteFamiliaDesc().isEmpty()) {
             throw new RegraNegocioException("Campo Deficiente Familia Descrição é obrigatório.");
@@ -153,6 +176,32 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return listaBeneficiosCad;
+    }
+
+    public List<ProgramasSociaisCadastrados> converterCodeProgSocialParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<ProgramasSociaisCadastrados> listaProgramasSociaisCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaProgramasSociaisCad.add(ProgramasSociaisCadastrados.getProgramasSociaisCadCode(num));
+            }
+        }
+
+        return listaProgramasSociaisCad;
+    }
+
+    public List<DoencasCronicasCadastradas> converterCodeDoencaCronicaParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<DoencasCronicasCadastradas> listaDoencaCronicasCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaDoencaCronicasCad.add(DoencasCronicasCadastradas.getDoencaCronicaCode(num));
+            }
+        }
+
+        return listaDoencaCronicasCad;
     }
 
     @Override
