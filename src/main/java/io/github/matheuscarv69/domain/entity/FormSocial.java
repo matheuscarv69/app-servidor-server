@@ -119,47 +119,93 @@ public class FormSocial {
     @Column(length = 70)
     private String outraDoencaCronicasDesc;
 
-//
     @Column(length = 10)
-    private String deficienteFamilia;
+    @Enumerated(EnumType.STRING)
+    private Decisao deficienteFamilia;
 
     @Column(length = 50)
-    private String deficienteFamiliaDesc;
-//
+    private String deficienteFamiliaDescricao;
+
     @Column(length = 10)
-    private String acompMedico;
+    @Enumerated(EnumType.STRING)
+    private Decisao acompMedico;
 
     @Column(length = 100)
-    private String acompMedicoDesc;
+    private String acompMedicoDescricao;
 
     @Column(length = 10)
-    private String suicidioFamilia;
+    @Enumerated(EnumType.STRING)
+    private Decisao suicidioFamilia;
 
-    @Column(length = 15)
-    private String suicidioGrauParentesco;
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private GrauParentesco suicidioGrauParentesco;
 
-    @Column(length = 30)
-    private String violenciaDesc;
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private Decisao violencia;
+
+    @ElementCollection(targetClass = ViolenciasCadastradas.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_Violencias_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "Violencias_ID", length = 20)
+    private List<ViolenciasCadastradas> violenciasCadastradas;
 
     @Column(length = 50)
-    private String psicoativosDesc;
+    private String outraViolenciaDescricao;
 
     @Column(length = 10)
-    private String conflitoFamiliar;
+    @Enumerated(EnumType.STRING)
+    private Decisao psicoativos;
 
-    @Column(length = 30)
-    private String atividadeLazerDesc;
+    @ElementCollection(targetClass = PsicoativosCadastrados.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_Psicoativos_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "Psicoativos_ID", length = 20)
+    private List<PsicoativosCadastrados> psicoativosCadastrados;
+
+    @Column(length = 50)
+    private String outrosPsicoativosDescricao;
 
     @Column(length = 10)
-    private String atividadeFisica;
+    @Enumerated(EnumType.STRING)
+    private Decisao conflitoFamiliar;
 
-    @Column(length = 40)
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private Decisao atividadesLazer;
+
+    @ElementCollection(targetClass = PsicoativosCadastrados.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_AtivLazer_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "AtivLazer_ID", length = 40)
+    private List<AtividadeLazerCadastradas> atividadeLazerCadastradas;
+
+    @Column(length = 50)
+    private String outrasAtividadeLazerDesc;
+
+//
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private Decisao atividadeFisica;
+
+    @Column(length = 50)
     private String atividadeFisicaDesc;
+//
 
-    @Column(length = 10)
-    private String qualidadeVida;
+    @Column(length = 15)
+    @Enumerated(EnumType.STRING)
+    private QualidadeVida qualidadeVida;
 
+    //
     @Column(length = 10)
-    private String vacinas;
+    @Enumerated(EnumType.STRING)
+    private Vacinas vacinas;
 
 }

@@ -28,7 +28,7 @@ public enum Escolaridade {
         } else if (opcao == 7) {
             return ENSINO_SUPERIOR_COMPLETO;
         } else {
-            throw new RegraNegocioException("Campo Estado Civil é inválido");
+            throw new RegraNegocioException("Campo Escolaridade é inválido");
         }
     }
 }

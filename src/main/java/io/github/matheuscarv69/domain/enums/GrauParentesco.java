@@ -14,7 +14,8 @@ public enum GrauParentesco {
     AVOS,
     ENTEADO_A,
     PRIMO_A,
-    OUTROS;
+    OUTROS,
+    NENHUM_PARENTE;
 
     public static GrauParentesco getGrauParentescoCode(int opcao) {
         if (opcao == 1) {

@@ -22,7 +22,7 @@ public enum DoencasCronicasCadastradas {
         } else if (opcao == 5) {
             return OUTRAS;
         } else {
-            throw new RegraNegocioException("Campo Doença Crônica é inválido");
+            throw new RegraNegocioException("Campo Doenças Crônicas Cadastradas inválido");
         }
     }
 }

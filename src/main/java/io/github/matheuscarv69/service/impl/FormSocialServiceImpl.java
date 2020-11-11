@@ -100,55 +100,98 @@ public class FormSocialServiceImpl implements FormSocialService {
             formSocial.setOutraDoencaCronicasDesc(dto.getOutraDoencaCronicasDesc());
         }
 
-        // Fazer quando acordar
-        formSocial.setDeficienteFamilia(dto.getDeficienteFamilia());
-        if (dto.getDeficienteFamilia().equals("Sim") && dto.getDeficienteFamiliaDesc().isEmpty()) {
+
+        formSocial.setDeficienteFamilia(Decisao.getDecisaoCode(Integer.parseInt(dto.getDeficienteFamilia())));
+        if (Integer.parseInt(dto.getDeficienteFamilia()) == 1 && dto.getDeficienteFamiliaDescricao().isEmpty()) {
             throw new RegraNegocioException("Campo Deficiente Familia Descrição é obrigatório.");
-        } else if (dto.getDeficienteFamilia().equals("Não") && dto.getDeficienteFamiliaDesc().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Deficiente Familia é deve estar com o (Sim) selecionado.");
+        } else if (Integer.parseInt(dto.getDeficienteFamilia()) == 2 && dto.getDeficienteFamiliaDescricao().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Deficiente Familia deve estar com o (Sim == 1) selecionado.");
         } else {
-            formSocial.setDeficienteFamiliaDesc(dto.getDeficienteFamiliaDesc());
+            formSocial.setDeficienteFamiliaDescricao(dto.getDeficienteFamiliaDescricao());
         }
 
-        formSocial.setAcompMedico(dto.getAcompMedico());
-        if (dto.getAcompMedico().equals("Sim") && dto.getAcompMedicoDesc().isEmpty()) {
+        formSocial.setAcompMedico(Decisao.getDecisaoCode(Integer.parseInt(dto.getAcompMedico())));
+        if (Integer.parseInt(dto.getAcompMedico()) == 1 && dto.getAcompMedicoDescricao().isEmpty()) {
             throw new RegraNegocioException("Campo Acompanhamento Médico Descrição é obrigatório.");
-        } else if (dto.getAcompMedico().equals("Não") && dto.getAcompMedicoDesc().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Acompanhamento Médico deve estar com o (Sim) selecionado.");
+        } else if (Integer.parseInt(dto.getAcompMedico()) == 2 && dto.getAcompMedicoDescricao().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Acompanhamento Médico deve estar com o (Sim == 1) selecionado.");
         } else {
-            formSocial.setAcompMedicoDesc(dto.getAcompMedicoDesc());
+            formSocial.setAcompMedicoDescricao(dto.getAcompMedicoDescricao());
         }
 
-
-        formSocial.setSuicidioFamilia(dto.getSuicidioFamilia());
-        if (dto.getSuicidioFamilia().equals("Sim") && dto.getSuicidioGrauParentesco().isEmpty()) {
-            throw new RegraNegocioException("Campo Grau de Parentesco da Família é obrigatório.");
-        } else if (dto.getSuicidioFamilia().equals("Não") && dto.getSuicidioGrauParentesco().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Suícidio Familia deve estar com o (Sim) selecionado");
-        } else {
-            formSocial.setSuicidioGrauParentesco(dto.getSuicidioGrauParentesco());
+        formSocial.setSuicidioFamilia(Decisao.getDecisaoCode(Integer.parseInt(dto.getSuicidioFamilia())));
+        if (Integer.parseInt(dto.getSuicidioFamilia()) == 1 && dto.getSuicidioGrauParentesco().isEmpty()) {
+            throw new RegraNegocioException("Campo Grau de Parentesco do Suicidio da Família é obrigatório.");
+        } else if (Integer.parseInt(dto.getSuicidioFamilia()) == 2 && dto.getSuicidioGrauParentesco().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Suícidio Familia deve estar com o (Sim == 1) selecionado");
+        } else if(Integer.parseInt(dto.getSuicidioFamilia()) == 2 && dto.getSuicidioGrauParentesco().isEmpty()){
+            formSocial.setSuicidioGrauParentesco(GrauParentesco.NENHUM_PARENTE);
+            System.out.println("Campo nao e grau vazio");
+        }else{
+            formSocial.setSuicidioGrauParentesco(GrauParentesco.getGrauParentescoCode(Integer.parseInt(dto.getSuicidioGrauParentesco())));
         }
 
-        formSocial.setViolenciaDesc(dto.getViolenciaDesc());
+        formSocial.setViolencia(Decisao.getDecisaoCode(Integer.parseInt(dto.getViolencia())));
+        if (Integer.parseInt(dto.getViolencia()) == 1 && dto.getViolenciasCadastradas().isEmpty()) {
+            throw new RegraNegocioException("Campo Violências Cadastradas é obrigatório.");
+        } else if (Integer.parseInt(dto.getViolencia()) == 2 && dto.getViolenciasCadastradas().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Violência deve estar com (Sim == 1) selecionado");
+        } else if (dto.getViolenciasCadastradas().contains("6") && dto.getOutraViolenciaDescricao().isEmpty()) {
+            throw new RegraNegocioException("Campo Outra Violência Descrição deve estar preenchido");
+        } else if (!dto.getViolenciasCadastradas().contains("6") && dto.getOutraViolenciaDescricao().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Violências Cadastradas deve estar preenchido com (Outras == 6)");
+        } else {
+            List<ViolenciasCadastradas> listViolenciasCadastradas = converterCodeViolenciasCadParaList(dto.getViolenciasCadastradas());
+            formSocial.setViolenciasCadastradas(listViolenciasCadastradas);
+            formSocial.setOutraViolenciaDescricao(dto.getOutraViolenciaDescricao());
+        }
 
-        formSocial.setPsicoativosDesc(dto.getPsicoativosDesc());
+        formSocial.setPsicoativos(Decisao.getDecisaoCode(Integer.parseInt(dto.getPsicoativos())));
+        if (Integer.parseInt(dto.getPsicoativos()) == 1 && dto.getPsicoativosCadastrados().isEmpty()) {
+            throw new RegraNegocioException("Campo Psicoativos Cadastradas é obrigatório.");
+        } else if (Integer.parseInt(dto.getPsicoativos()) == 2 && dto.getPsicoativosCadastrados().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Psicoativos deve estar com (Sim == 1) selecionado");
+        } else if (dto.getPsicoativosCadastrados().contains("4") && dto.getOutrosPsicoativosDescricao().isEmpty()) {
+            throw new RegraNegocioException("Campo Outros Psicoativos Descrição deve estar preenchido");
+        } else if (!dto.getPsicoativosCadastrados().contains("4") && dto.getOutrosPsicoativosDescricao().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Psicoativos Cadastradas deve estar preenchido com (Outros == 4)");
+        } else {
+            List<PsicoativosCadastrados> listPsicoativosCadastradas = converterCodePsicoativosCadParaList(dto.getPsicoativosCadastrados());
+            formSocial.setPsicoativosCadastrados(listPsicoativosCadastradas);
+            formSocial.setOutrosPsicoativosDescricao(dto.getOutrosPsicoativosDescricao());
+        }
 
-        formSocial.setConflitoFamiliar(dto.getConflitoFamiliar());
+        formSocial.setConflitoFamiliar(Decisao.getDecisaoCode(Integer.parseInt(dto.getConflitoFamiliar())));
 
-        formSocial.setAtividadeLazerDesc(dto.getAtividadeLazerDesc());
+        formSocial.setAtividadesLazer(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadesLazer())));
+        if (Integer.parseInt(dto.getAtividadesLazer()) == 1 && dto.getAtividadeLazerCadastradas().isEmpty()) {
+            throw new RegraNegocioException("Campo Atividades Lazer Cadastradas é obrigatório.");
+        } else if (Integer.parseInt(dto.getAtividadesLazer()) == 2 && dto.getAtividadeLazerCadastradas().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Atividades Lazer deve estar com (Sim == 1) selecionado");
+        } else if (dto.getAtividadeLazerCadastradas().contains("5") && dto.getOutrasAtividadeLazerDesc().isEmpty()) {
+            throw new RegraNegocioException("Campo Outras Atividades Lazer Descrição deve estar preenchido");
+        } else if (!dto.getAtividadeLazerCadastradas().contains("5") && dto.getOutrasAtividadeLazerDesc().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Atividades Lazer Cadastradas deve estar preenchido com (Outras == 5)");
+        } else {
+            List<AtividadeLazerCadastradas> listAtivLazeradastradas = converterCodeAtivLazerCadParaList(dto.getAtividadeLazerCadastradas());
+            formSocial.setAtividadeLazerCadastradas(listAtivLazeradastradas);
+            formSocial.setOutrasAtividadeLazerDesc(dto.getOutrasAtividadeLazerDesc());
+        }
 
-        formSocial.setAtividadeFisica(dto.getAtividadeFisica());
-        if (dto.getAtividadeFisica().equals("Sim") && dto.getAtividadeFisicaDesc().isEmpty()) {
-            throw new RegraNegocioException("Campo Atividade Física Descrição é obrigátório");
-        } else if (dto.getAtividadeFisica().equals("Não") && dto.getAtividadeFisicaDesc().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Atividade Física deve estar com o (Sim) selecionado.");
+        formSocial.setAtividadeFisica(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadeFisica())));
+        if (Integer.parseInt(dto.getAtividadeFisica()) == 1 && dto.getAtividadeFisicaDesc().isEmpty()) {
+            throw new RegraNegocioException("Campo Atividade Física Descrição é obrigatório.");
+        } else if (Integer.parseInt(dto.getAtividadeFisica()) == 2 && dto.getAtividadeFisicaDesc().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Atividade Física deve estar com o (Sim == 1) selecionado.");
         } else {
             formSocial.setAtividadeFisicaDesc(dto.getAtividadeFisicaDesc());
         }
 
-        formSocial.setQualidadeVida(dto.getQualidadeVida());
 
-        formSocial.setVacinas(dto.getVacinas());
+//        formSocial.setQualidadeVida(dto.getQualidadeVida());
+        formSocial.setQualidadeVida(QualidadeVida.getQualidadeVIdaCode(Integer.parseInt(dto.getQualidadeVida())));
+
+        formSocial.setVacinas(Vacinas.getVacinasCode(Integer.parseInt(dto.getVacinas())));
 
         repository.save(formSocial);
 
@@ -202,6 +245,45 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return listaDoencaCronicasCad;
+    }
+
+    public List<ViolenciasCadastradas> converterCodeViolenciasCadParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<ViolenciasCadastradas> listaViolenciasCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaViolenciasCad.add(ViolenciasCadastradas.getViolenciaCode(num));
+            }
+        }
+
+        return listaViolenciasCad;
+    }
+
+    public List<PsicoativosCadastrados> converterCodePsicoativosCadParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<PsicoativosCadastrados> listaPsicoativosCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaPsicoativosCad.add(PsicoativosCadastrados.getPsicoativosCode(num));
+            }
+        }
+
+        return listaPsicoativosCad;
+    }
+
+    public List<AtividadeLazerCadastradas> converterCodeAtivLazerCadParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<AtividadeLazerCadastradas> listaAtivLazerCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaAtivLazerCad.add(AtividadeLazerCadastradas.getAtividadeLazerCadastradasCode(num));
+            }
+        }
+
+        return listaAtivLazerCad;
     }
 
     @Override
