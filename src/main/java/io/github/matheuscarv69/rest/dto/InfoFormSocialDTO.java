@@ -1,22 +1,13 @@
 package io.github.matheuscarv69.rest.dto;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class FormSocialDTO {
-
+public class InfoFormSocialDTO {
     @ApiModelProperty(value = "ID do formulário", position = 1)
     private int id; //usado na conversao de formSocial p DTO
 
@@ -51,36 +42,36 @@ public class FormSocialDTO {
     @NotEmpty(message = "{campo.tempo-funcao-exercicida.obrigatorio}")
     private String tempoFuncaoExerc;
 
+//    @ApiModelProperty(value = "Estado cívil", allowableValues = "Solteiro(a), Casado(a), União Estável, Separado(a), Divorciado(a), Viuvo(a)", position = 11, required = true)
+//    @NotEmpty(message = "{campo.estado-civil.obrigatorio}")
+//    private String estadoCivil;
+
     @ApiModelProperty(value = "Estado cívil", allowableValues = "Solteiro(a), Casado(a), União Estável, Separado(a), Divorciado(a), Viuvo(a)", position = 11, required = true)
     @NotNull(message = "{campo.estado-civil.obrigatorio}")
     private Integer estadoCivil;
 
     @ApiModelProperty(value = "Escolaridade", allowableValues = "Analfabeto, Ensino Fundamental Incompleto, Ensino Fundamental Completo, Ensino Médio Incompleto, Ensino Médio Completo, Ensino Superior Incompleto, Ensino Superior Completo", position = 12, required = true)
-    @NotNull(message = "{campo.escolaridade.obrigatorio}")
-    private Integer escolaridade;
+    @NotEmpty(message = "{campo.escolaridade.obrigatorio}")
+    private String escolaridade;
 
     @ApiModelProperty(value = "Quantidade de pessoas na familía", position = 13, required = true)
     @NotNull(message = "{campo.numero-pessoas-fam.obrigatorio}")
     @Range(min = 1, max = 30, message = "{campo.numero-pessoas-fam.invalido}")
     private Integer numeroPessoasFam;
-    //
+
     @ApiModelProperty(value = "Grau de parentesco do entrevistado em relação à familía", allowableValues = "Pai, Mãe, Esposo(a), Avos, Filho(a), Irmão(ã), Tio(a), Sobrinho(a), Primo(a), Sogro(a), Enteado(a), Outros", position = 14, required = true)
     @NotEmpty(message = "{campo.grau-parentesco.obrigatorio}")
     private String grauParentesco;
-    //
+
     @ApiModelProperty(value = "Tipo de Residència", allowableValues = "Própria, Alugada, Área de Invasão, Cedida", position = 15, required = true)
-    @NotNull(message = "{campo.residencia.obrigatorio}")
-    private Integer residencia;
+    @NotEmpty(message = "{campo.residencia.obrigatorio}")
+    private String residencia;
 
     @ApiModelProperty(value = "Recebe algum beneficio?", allowableValues = "Sim, Não", position = 16, required = true)
-    @NotNull(message = "{campo.beneficio.obrigatorio}")
-    private Integer beneficio;
-
+    @NotEmpty(message = "{campo.beneficio.obrigatorio}")
+    private String beneficio;
     @ApiModelProperty(value = "Tipo do Benefício", allowableValues = "Benefício de Prestação Continuada, Bolsa familía, Crédito Social, Outros (Descrito em texto)", position = 17, required = true)
-    private String beneficiosCadastrados;
-
-    // caso beneficio nao esteja listado
-    private String outroBeneficioDesc;
+    private String beneficioDesc;
 
     @ApiModelProperty(value = "Participa de algum programa social?", allowableValues = "Sim, Não", position = 18, required = true)
     @NotEmpty(message = "{campo.programa-social.obrigatorio}")
@@ -144,6 +135,5 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Vacinas em dia", allowableValues = "Sim, Não, Não sabe", position = 34, required = true)
     @NotEmpty(message = "{campo.vacinas.obrigatorio}")
     private String vacinas;
-
 
 }

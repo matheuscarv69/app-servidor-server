@@ -2,6 +2,7 @@ package io.github.matheuscarv69.service.impl;
 
 import io.github.matheuscarv69.Util.DateUtil;
 import io.github.matheuscarv69.domain.entity.FormSocial;
+import io.github.matheuscarv69.domain.enums.*;
 import io.github.matheuscarv69.domain.repository.FormSocialRepository;
 import io.github.matheuscarv69.exceptions.ListIsEmptyException;
 import io.github.matheuscarv69.exceptions.RegraNegocioException;
@@ -28,10 +29,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         FormSocial formSocial = new FormSocial();
 
         formSocial.setNome(dto.getNome());
-
         formSocial.setTelefone(dto.getTelefone());
         formSocial.setEmail(dto.getEmail());
-
         formSocial.setDataEntrevista(new Date());
 
         Date date = DateUtil.formataStringData(dto.getDataNascimento());
@@ -40,24 +39,34 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setFuncaoExerc(dto.getFuncaoExerc());
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
-        formSocial.setEstadoCivil(dto.getEstadoCivil());
-        formSocial.setEscolaridade(dto.getEscolaridade());
+        formSocial.setEstadoCivil(EstadoCivil.getEstadoCode(dto.getEstadoCivil()));
+
+        formSocial.setEscolaridade(Escolaridade.getEscolaridadeCode(dto.getEscolaridade()));
 
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
 
-        formSocial.setGrauParentesco(dto.getGrauParentesco());
+        List<GrauParentesco> listGrauParentesco = converterCodeGrauParList(dto.getGrauParentesco());
 
-        formSocial.setResidencia(dto.getResidencia());
+        formSocial.setGrauParentesco(listGrauParentesco);
 
-        formSocial.setBeneficio(dto.getBeneficio());
-        if (dto.getBeneficio().equals("Sim") && dto.getBeneficioDesc().isEmpty()) {
-            throw new RegraNegocioException("Campo Benefício Descrição é obrigatório.");
-        } else if (dto.getBeneficio().equals("Não") && dto.getBeneficioDesc().isEmpty() == false) {
-            throw new RegraNegocioException("Campo Benefício deve estar com (Sim) selecionado");
+        formSocial.setResidencia(Residencia.getResidenciaCode(dto.getResidencia()));
+
+        formSocial.setBeneficio(Decisao.getDecisaoCode(dto.getBeneficio()));
+
+        if (dto.getBeneficio() == 1 && dto.getBeneficiosCadastrados().isEmpty()) {
+            throw new RegraNegocioException("Campo Benefícios Cadastrados é obrigatório.");
+        } else if (dto.getBeneficio() == 2 && dto.getBeneficiosCadastrados().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Benefício deve estar com (Sim == 1) selecionado");
+        } else if (dto.getBeneficiosCadastrados().contains("4") && dto.getOutroBeneficioDesc().isEmpty()) {
+            throw new RegraNegocioException("Campo Outro Benefício Descrição deve estar preenchido");
+        } else if (!dto.getBeneficiosCadastrados().contains("4") && dto.getOutroBeneficioDesc().isEmpty() == false) {
+            throw new RegraNegocioException("Campo Benefícios Cadastrados deve estar preenchido com (Outros == 4");
         } else {
-            formSocial.setBeneficioDesc(dto.getBeneficioDesc());
+            List<BeneficiosCadastrados> listBeneficiosCadastrados = converterCodeBenefParaList(dto.getBeneficiosCadastrados());
+            formSocial.setBeneficiosCadastrados(listBeneficiosCadastrados);
+            formSocial.setOutroBeneficioDesc(dto.getOutroBeneficioDesc());
         }
-
+//
         formSocial.setProgramaSocial(dto.getProgramaSocial());
         if (dto.getProgramaSocial().equals("Sim") && dto.getProgramaSocialDesc().isEmpty()) {
             throw new RegraNegocioException("Campo Programa Social Descrição é obrigatório.");
@@ -123,6 +132,29 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
     }
 
+    public List<GrauParentesco> converterCodeGrauParList(String codes) {
+        String[] indices = codes.split("-");
+        List<GrauParentesco> listaGrauPar = new ArrayList<>();
+        for (String code : indices) {
+            int num = Integer.parseInt(code);
+            listaGrauPar.add(GrauParentesco.getGrauParentescoCode(num));
+        }
+        return listaGrauPar;
+    }
+
+    public List<BeneficiosCadastrados> converterCodeBenefParaList(String codes) {
+        String[] indices = codes.split("-");
+        List<BeneficiosCadastrados> listaBeneficiosCad = new ArrayList<>();
+        if (!codes.isEmpty()) {
+            for (String code : indices) {
+                int num = Integer.parseInt(code);
+                listaBeneficiosCad.add(BeneficiosCadastrados.getBeneficiosCadastradosCode(num));
+            }
+        }
+
+        return listaBeneficiosCad;
+    }
+
     @Override
     public List<FormSocialDTO> buscarForms() {
         List<FormSocial> listForms = repository.findAll();
@@ -130,10 +162,10 @@ public class FormSocialServiceImpl implements FormSocialService {
         List<FormSocialDTO> listFormDTO = new ArrayList<>();
 
         for (FormSocial formSocial : listForms) {
-            listFormDTO.add(converterForm(formSocial));
+//            listFormDTO.add(converterForm(formSocial));
         }
 
-        if( listFormDTO.isEmpty()){
+        if (listFormDTO.isEmpty()) {
             throw new ListIsEmptyException("Nenhum formulário encontrado");
         }
 
@@ -141,45 +173,45 @@ public class FormSocialServiceImpl implements FormSocialService {
 
     }
 
-    public FormSocialDTO converterForm(FormSocial form) {
-
-        return FormSocialDTO
-                .builder()
-                .id(form.getId())
-                .nome(form.getNome())
-                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
-                .telefone(form.getTelefone())
-                .email(form.getEmail())
-                .dataNascimento(DateUtil.formatter.format(form.getDataNascimento()))
-                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
-                .funcaoExerc(form.getFuncaoExerc())
-                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
-                .estadoCivil(form.getEstadoCivil())
-                .escolaridade(form.getEscolaridade())
-                .numeroPessoasFam(form.getNumeroPessoasFam())
-                .grauParentesco(form.getGrauParentesco())
-                .residencia(form.getResidencia())
-                .beneficio(form.getBeneficio())
-                .beneficioDesc(form.getBeneficioDesc())
-                .programaSocial(form.getProgramaSocial())
-                .programaSocialDesc(form.getProgramaSocialDesc())
-                .doencaCronicaDesc(form.getDoencaCronicaDesc())
-                .deficienteFamilia(form.getDeficienteFamilia())
-                .deficienteFamiliaDesc(form.getDeficienteFamiliaDesc())
-                .acompMedico(form.getAcompMedico())
-                .acompMedicoDesc(form.getAcompMedicoDesc())
-                .suicidioFamilia(form.getSuicidioFamilia())
-                .suicidioGrauParentesco(form.getSuicidioGrauParentesco())
-                .violenciaDesc(form.getViolenciaDesc())
-                .psicoativosDesc(form.getPsicoativosDesc())
-                .conflitoFamiliar(form.getConflitoFamiliar())
-                .atividadeLazerDesc(form.getAtividadeLazerDesc())
-                .atividadeFisica(form.getAtividadeFisica())
-                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
-                .qualidadeVida(form.getQualidadeVida())
-                .vacinas(form.getVacinas())
-                .build();
-
-
-    }
+//    public FormSocialDTO converterForm(FormSocial form) {
+//
+//        return FormSocialDTO
+//                .builder()
+//                .id(form.getId())
+//                .nome(form.getNome())
+//                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
+//                .telefone(form.getTelefone())
+//                .email(form.getEmail())
+//                .dataNascimento(DateUtil.formatter.format(form.getDataNascimento()))
+//                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
+//                .funcaoExerc(form.getFuncaoExerc())
+//                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
+////                .estadoCivil(form.getEstadoCivil().toString())
+////                .escolaridade(form.getEscolaridade())
+//                .numeroPessoasFam(form.getNumeroPessoasFam())
+//                .grauParentesco(form.getGrauParentesco().toString())
+////                .residencia(form.getResidencia().toString()) precisa de um inforDTO
+////                .beneficio(form.getBeneficio())
+//                .beneficioDesc(form.getBeneficioDesc())
+//                .programaSocial(form.getProgramaSocial())
+//                .programaSocialDesc(form.getProgramaSocialDesc())
+//                .doencaCronicaDesc(form.getDoencaCronicaDesc())
+//                .deficienteFamilia(form.getDeficienteFamilia())
+//                .deficienteFamiliaDesc(form.getDeficienteFamiliaDesc())
+//                .acompMedico(form.getAcompMedico())
+//                .acompMedicoDesc(form.getAcompMedicoDesc())
+//                .suicidioFamilia(form.getSuicidioFamilia())
+//                .suicidioGrauParentesco(form.getSuicidioGrauParentesco())
+//                .violenciaDesc(form.getViolenciaDesc())
+//                .psicoativosDesc(form.getPsicoativosDesc())
+//                .conflitoFamiliar(form.getConflitoFamiliar())
+//                .atividadeLazerDesc(form.getAtividadeLazerDesc())
+//                .atividadeFisica(form.getAtividadeFisica())
+//                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
+//                .qualidadeVida(form.getQualidadeVida())
+//                .vacinas(form.getVacinas())
+//                .build();
+//
+//
+//    }
 }

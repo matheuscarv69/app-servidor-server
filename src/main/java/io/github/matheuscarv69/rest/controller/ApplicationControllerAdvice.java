@@ -1,8 +1,10 @@
 package io.github.matheuscarv69.rest.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import io.github.matheuscarv69.exceptions.ListIsEmptyException;
 import io.github.matheuscarv69.exceptions.RegraNegocioException;
 import io.github.matheuscarv69.rest.ApiErrors;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +53,14 @@ public class ApplicationControllerAdvice {
     @ResponseStatus(OK)
     public ApiErrors handleListIsEmptyException(ListIsEmptyException ex){
         String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleListIsEmptyException(HttpMessageNotReadableException ex){
+        String mensagemErro = "Código de campo inválido";
 
         return new ApiErrors(mensagemErro);
     }

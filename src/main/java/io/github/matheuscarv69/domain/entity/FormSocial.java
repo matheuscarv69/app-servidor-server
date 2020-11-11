@@ -1,6 +1,7 @@
 package io.github.matheuscarv69.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.matheuscarv69.domain.enums.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -48,25 +50,46 @@ public class FormSocial {
     private String tempoFuncaoExerc;
 
     @Column(length = 14)
-    private String estadoCivil;
+    @Enumerated(EnumType.STRING)
+    private EstadoCivil estadoCivil;
 
     @Column(length = 40)
-    private String escolaridade;
+    @Enumerated(EnumType.STRING)
+    private Escolaridade escolaridade;
 
     @Column
     private Integer numeroPessoasFam;
 
-    @Column(length = 15)
-    private String grauParentesco;
+    @ElementCollection(targetClass = GrauParentesco.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_grauParentesco",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "grauParentesco_ID")
+    private List<GrauParentesco> grauParentesco;
+
 
     @Column(length = 15)
-    private String residencia;
-
+    @Enumerated(EnumType.STRING)
+    private Residencia residencia;
+    //
     @Column(length = 10)
-    private String beneficio;
+    @Enumerated(EnumType.STRING)
+    private Decisao beneficio;
+    //
+
+    //    @Column(length = 40)
+//    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = BeneficiosCadastrados.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tb_beneficios_Cadastrados",
+            joinColumns = @JoinColumn(name = "formsocial_ID")
+            , schema = "form")
+    @Column(name = "beneficiosCadastrados_ID")
+    private List<BeneficiosCadastrados> beneficiosCadastrados;
 
     @Column(length = 40)
-    private String beneficioDesc;
+    private String outroBeneficioDesc;
 
     @Column(length = 10)
     private String programaSocial;
