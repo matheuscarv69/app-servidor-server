@@ -89,7 +89,7 @@ As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 
 🚧 Em construção... 🚧
 
->Repositório:<a href="https://github.com/douglasgomes98/app-servidor-mobile">app-servidor-mobile</a>
+>Repositório:<a href="https://github.com/douglasgomes98/app-servidor-mobile"> app-servidor-mobile</a>
 
 ### 👥 Contribuidores
 ---
