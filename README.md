@@ -8,7 +8,7 @@ Esta é a uma API Restful de envios e busca de formulários.
 ![GitHub](https://img.shields.io/github/license/matheuscarv69/app-servidor-server?color=1)
 
 ## 🤔 O que é o App Servidor ?
-Visando auxiliar os cursos de Educação física, Enfermagem e Biomedicina que diariamente realizam o atendimento de muitas pessoas, dessa maneira preenchendo inúmeros documentos e formulários referentes aos seus pacientes, foi feito o desenvolvimento de uma API que é responsável pelo recebimento e envio de formulários dos cursos citados, para facilitar o processo de entrevista dos pacientes e tornando menos burocrático o procedimento de consultas.
+Visando auxiliar os cursos de Educação física, Enfermagem e Biomedicina que diariamente realizam o atendimento de muitas pessoas, dessa maneira preenchendo inúmeros documentos e formulários referentes aos seus pacientes, foi feito o desenvolvimento de uma API que é responsável pelo recebimento e envio de formulários dos cursos citados, para facilitar o processo de entrevista dos pacientes, assim tornando menos burocrático o procedimento de consultas.
 
 ## 🔧 Pré-Requisitos 
 
@@ -63,7 +63,7 @@ Temos dois métodos no controller do Formulário Social: Salvar e Buscar formul�
 ### 💾 Salvar
 Esse método recebe um arquivo .JSON com os dados do formulário preenchido e salva na base de dados.
 
-Você pode testar a API usando o [Insomnia](https://insomnia.rest/download/) e importando este [arquivo](https://liveestacio-my.sharepoint.com/:u:/g/personal/201901296441_alunos_estacio_br/EUmEAmyN8KFPiVFjasLfMDsBuIChWAmIRB9DDKa-ihxGyw?e=X1q91X), ou pode usar o próprio Swagger clicando em Try it Out e preenchendo os dados.
+Você pode testar a API usando o [Insomnia](https://insomnia.rest/download/) e importando este [arquivo](https://liveestacio-my.sharepoint.com/:u:/g/personal/201901296441_alunos_estacio_br/Ea6R9rpwqt5MsMXp0GpjulsBhnkMZXJtlJ23_HP-XXQz4w?e=nnphGV), ou pode usar o próprio Swagger clicando em Try it Out e preenchendo os dados.
 
 ![Swagger-saveform](https://i.imgur.com/vKWRvUs.png)
 ### Insomnia
@@ -85,7 +85,14 @@ As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 - [Tomcat](http://tomcat.apache.org/) (Embutido no Spring Boot na versão JAR)
 - [Swagger](https://swagger.io/)
 
-## 👥 Contribuidores
+## 📱 Versão mobile
+
+🚧 Em construção... 🚧
+
+>Repositório:<a href="https://github.com/douglasgomes98/app-servidor-mobile">app-servidor-mobile</a>
+
+### 👥 Contribuidores
+---
 <table>
   <tr>
     <td align="center">
@@ -105,12 +112,9 @@ As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
 
 Feito por Matheus Carvalho, entre em contato!✌🏻
 
-
-[![Linkedin Badge](https://img.shields.io/badge/-Matheus-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/tgmarinho/)](https://www.linkedin.com/in/matheus-carvalho-a5018a164/)
+[![Linkedin Badge](https://img.shields.io/badge/-Matheus_Carvalho-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https:https://www.linkedin.com/in/matheus-carvalho69//)](https://www.linkedin.com/in/matheus-carvalho69/)
 [![Gmail Badge](https://img.shields.io/badge/-matheus9126@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:matheus9126@gmail.com)](mailto:matheus9126@gmail.com)
 
 ## 📝 Licença
 
-Este projeto esta sobe a licença MIT.
-
-[MIT](https://choosealicense.com/licenses/mit/)
+Este projeto esta sob a licença MIT.
