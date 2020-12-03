@@ -11,6 +11,6 @@ public interface FormSocialService {
 
     FormSocial salvar(FormSocialDTO dto);
 
-    List<InfoFormSocialDTO> buscarForms();
+    List<FormSocial> buscarForms();
 
 }

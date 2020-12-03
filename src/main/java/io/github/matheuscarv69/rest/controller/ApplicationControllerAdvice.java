@@ -1,8 +1,7 @@
 package io.github.matheuscarv69.rest.controller;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import io.github.matheuscarv69.exceptions.ListIsEmptyException;
-import io.github.matheuscarv69.exceptions.RegraNegocioException;
+import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.ApiErrors;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -65,5 +64,36 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(EstadoCivilException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleEstadoCivilException(EstadoCivilException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(EscolaridadeException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleEscolaridadeException(EscolaridadeException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(ResidenciaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleResidenciaException(ResidenciaException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(GrauParentescoException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleGrauParentescoException(GrauParentescoException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
 
 }

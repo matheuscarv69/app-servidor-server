@@ -1,4 +1,4 @@
-package io.github.matheuscarv69.Util;
+package io.github.matheuscarv69.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
