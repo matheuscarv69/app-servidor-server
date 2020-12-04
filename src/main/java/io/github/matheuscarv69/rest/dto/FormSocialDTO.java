@@ -80,6 +80,9 @@ public class FormSocialDTO {
             allowableValues = "1 - Nenhum, 2 - Prestação Continuada, 3 - Bolsa Família, 4 - Crédito Social, 5 - Outros", position = 12, required = true)
     private List<Integer> beneficio;
 
+    @ApiModelProperty(value = "Outro Benefício: texto")
+    private String outroBeneficio;
+
 
 
 

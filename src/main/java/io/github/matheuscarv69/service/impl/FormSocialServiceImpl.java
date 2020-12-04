@@ -231,6 +231,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     }
 
 
+
     @Override
     public List<FormSocial> buscarForms() {
         List<FormSocial> listForms = repository.findAll();
@@ -313,26 +314,39 @@ public class FormSocialServiceImpl implements FormSocialService {
         for (Integer index : dto.getBeneficio()) {
             Beneficio beneficio = new Beneficio();
 
-            if (index < 1 || index > 4) {
-                throw new BeneficioException("Algum dos ID's de Beneficio é inválido. (1-4)");
+            if (index < 1 || index > 5) {
+                throw new BeneficioException("Algum dos ID's de Beneficio é inválido. (1-5)");
             }
 
             if (index == 1 && dto.getBeneficio().size() > 1) {
-                throw new BeneficioNenhumSelecionadoException("O campo Nenhum (ID-1) está selecionado, por isso não é possível adicionar outros benefícios");
+                throw new BeneficioNenhumSelecionadoException("O campo Nenhum (ID - 1) está selecionado, por isso não é possível adicionar outros benefícios");
+            }
+
+            if(index == 5 && dto.getOutroBeneficio().isEmpty()){
+                throw new BeneficioException("O ID 5 está selecionado e o campo Outro Benefício está vazio, preencha-o");
+            }else if(index != 5 && !dto.getOutroBeneficio().isEmpty()){
+                throw new BeneficioException("O ID 5 não está selecionado, selecione-o para poder preencher o campo Outro Benefício");
             }
 
             Optional<Beneficio> beneficioBD = beneficioRepository.findById(index);
 
-            if (beneficioBD.isPresent()) {
+            if (beneficioBD.isPresent() && beneficioBD.get().getId() != 5) {
                 beneficio.setId(beneficioBD.get().getId());
                 beneficio.setBeneficio(beneficioBD.get().getBeneficio());
 
+                listBeneficios.add(beneficio);
+            }
+
+            if(beneficioBD.get().getId() == 5){
+                beneficio.setBeneficio(dto.getOutroBeneficio());
+                beneficioRepository.save(beneficio);
                 listBeneficios.add(beneficio);
             }
         }
 
         return listBeneficios;
     }
+
 
 
 //

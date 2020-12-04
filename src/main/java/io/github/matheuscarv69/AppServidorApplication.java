@@ -141,9 +141,9 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             primo.setId(11);
             primo.setGrauParentesco("Primo (a)");
 
-            GrauParentesco outros = new GrauParentesco();
-            outros.setId(12);
-            outros.setGrauParentesco("Outros");
+            GrauParentesco outrosGraus = new GrauParentesco();
+            outrosGraus.setId(12);
+            outrosGraus.setGrauParentesco("Outros");
 
             ///
 
@@ -164,42 +164,17 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             creditoSocial.setBeneficio("Crédito Social");
 
 
+            Beneficio outrosBeneficio = new Beneficio();
+            outrosBeneficio.setId(5);
+            outrosBeneficio.setBeneficio("Outros");
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro,casado,uniaoEstavel,separado,divorciado,viuvo));
             escolaridadeRepository.saveAll(Arrays.asList(analfabeto,ensinoFundamentalInc,ensinoFundamentalComp,ensinoMedioInc,ensinoMedioComp,ensinoSuperiorInc,ensinoSuperiorComp));
             residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
-            grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outros));
-            beneficioRepository.saveAll(Arrays.asList(nenhum,prestacaoCont,bolsaFamilia,creditoSocial));
-
-
-
-            //
-//            escolaridadeRepository.save(analfabeto);
-//            escolaridadeRepository.save(ensinoFundamentalInc);
-//            escolaridadeRepository.save(ensinoFundamentalComp);
-//            escolaridadeRepository.save(ensinoMedioInc);
-//            escolaridadeRepository.save(ensinoMedioComp);
-//            escolaridadeRepository.save(ensinoSuperiorInc);
-//            escolaridadeRepository.save(ensinoSuperiorComp);
-//            //
-//            residenciaRepository.save(propria);
-//            residenciaRepository.save(alugada);
-//            residenciaRepository.save(areaInvasao);
-//            residenciaRepository.save(cedida);
-            //
-//            grauParentescoRepository.save(esposo);
-//            grauParentescoRepository.save(filhos);
-//            grauParentescoRepository.save(sogro);
-//            grauParentescoRepository.save(irmao);
-//            grauParentescoRepository.save(pai);
-//            grauParentescoRepository.save(mae);
-//            grauParentescoRepository.save(tio);
-//            grauParentescoRepository.save(sobrinho);
-//            grauParentescoRepository.save(avos);
-//            grauParentescoRepository.save(enteado);
-//            grauParentescoRepository.save(primo);
-//            grauParentescoRepository.save(outros);
+            grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outrosGraus));
+            beneficioRepository.saveAll(Arrays.asList(nenhum,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
+            
         };
     }
 

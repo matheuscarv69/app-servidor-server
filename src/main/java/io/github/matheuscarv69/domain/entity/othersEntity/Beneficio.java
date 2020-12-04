@@ -19,6 +19,7 @@ import java.util.List;
 public class Beneficio {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column
