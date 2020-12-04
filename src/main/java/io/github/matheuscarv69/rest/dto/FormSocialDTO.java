@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -59,15 +60,27 @@ public class FormSocialDTO {
     @Range(min = 1, max = 30, message = "{campo.numero-pessoas-fam.invalido}")
     private Integer numeroPessoasFam;
 
-    // grau
     @ApiModelProperty(value = "Parentes da família do entrevistado: [index]",
             allowableValues = "1 - Esposo(a), 2 - Filhos(as), 3 - Sogro(a), 4 - Irmão(ã), 5 - Pai, 6 - Mãe, 7 - Tio(a), 8 - Sobrinho(a), 9 - Avos, 10 - Enteado(a), 11 - Primo(a), 12 - Outros", position = 10, required = true)
     @NotNull(message = "{campo.grau-parentesco.obrigatorio}")
     private List<Integer> grauParentesco;
 
-
     @ApiModelProperty(value = "Tipo de Residència: index",
             allowableValues = "1 - Própria, 2 - Alugada, 3 - Área de Invasão, 4 - Cedida", position = 11, required = true)
     @NotNull(message = "{campo.residencia.obrigatorio}")
     private Integer residencia;
+
+
+//    @ApiModelProperty(value = "Tipo do Benefício: [index]",
+//            allowableValues = "1 - Benefício de Prestação Continuada, 2 - Bolsa familía, 3 - Crédito Social, 4 - Outros (Descrito na propriedade outroBeneficioDesc)", position = 13)
+//    private String beneficiosCadastrados;
+
+
+    @ApiModelProperty(value = "Tipo de Benefício: index",
+            allowableValues = "1 - Nenhum, 2 - Prestação Continuada, 3 - Bolsa Família, 4 - Crédito Social, 5 - Outros", position = 12, required = true)
+    private List<Integer> beneficio;
+
+
+
+
 }

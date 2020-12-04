@@ -1,15 +1,9 @@
 package io.github.matheuscarv69.service.impl;
 
 import io.github.matheuscarv69.domain.entity.FormSocial;
-import io.github.matheuscarv69.domain.entity.othersEntity.Escolaridade;
-import io.github.matheuscarv69.domain.entity.othersEntity.EstadoCivil;
-import io.github.matheuscarv69.domain.entity.othersEntity.GrauParentesco;
-import io.github.matheuscarv69.domain.entity.othersEntity.Residencia;
+import io.github.matheuscarv69.domain.entity.othersEntity.*;
 import io.github.matheuscarv69.domain.repository.*;
-import io.github.matheuscarv69.exceptions.EscolaridadeException;
-import io.github.matheuscarv69.exceptions.EstadoCivilException;
-import io.github.matheuscarv69.exceptions.GrauParentescoException;
-import io.github.matheuscarv69.exceptions.ResidenciaException;
+import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import io.github.matheuscarv69.util.DateUtil;
@@ -31,6 +25,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final EscolaridadeRepository escolaridadeRepository;
     private final ResidenciaRepository residenciaRepository;
     private final GrauParentescoRepository grauParentescoRepository;
+    private final BeneficioRepository beneficioRepository;
 
     @Override
     @Transactional
@@ -50,20 +45,20 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
         //estadoCivil
-        if(dto.getEstadoCivil() < 1 || dto.getEstadoCivil() > 6){
+        if (dto.getEstadoCivil() < 1 || dto.getEstadoCivil() > 6) {
             throw new EscolaridadeException("ID do Estado Civil é inválido. (1-6)");
         }
         formSocial.setEstadoCivil(persistEstadoCivil(dto));
 
         // escolaridade
-        if(dto.getEscolaridade() < 1 || dto.getEscolaridade() > 7){
+        if (dto.getEscolaridade() < 1 || dto.getEscolaridade() > 7) {
             throw new EscolaridadeException("ID da Escolaridade é inválido. (1-7)");
         }
         formSocial.setEscolaridade(persistEscolaridade(dto));
 
         // grauParentesco
-        for(Integer index: dto.getGrauParentesco()){
-            if(index < 1 || index > 12){
+        for (Integer index : dto.getGrauParentesco()) {
+            if (index < 1 || index > 12) {
                 throw new GrauParentescoException("Algum dos ID's de Grau Parentesco é inválido. (1-12)");
             }
         }
@@ -73,10 +68,13 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setNumeroPessoasFam(dto.getNumeroPessoasFam());
 
         // residencia
-        if(dto.getResidencia() < 1 || dto.getResidencia() > 4){
+        if (dto.getResidencia() < 1 || dto.getResidencia() > 4) {
             throw new ResidenciaException("ID da Residência é inválido. (1-4)");
         }
         formSocial.setResidencia(persistResidencia(dto));
+
+        // beneficios
+        List<Beneficio> listBeneficios = convertIndexBeneficio(dto);
 
 
 
@@ -86,6 +84,7 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         // salva os ids na table associativa
         formSocial.getGrauParentescos().addAll(listParentescos);
+        formSocial.getBeneficios().addAll(listBeneficios);
         repository.save(formSocial);
 
         return formSocial;
@@ -232,7 +231,6 @@ public class FormSocialServiceImpl implements FormSocialService {
     }
 
 
-
     @Override
     public List<FormSocial> buscarForms() {
         List<FormSocial> listForms = repository.findAll();
@@ -240,7 +238,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         return listForms;
     }
 
-    public EstadoCivil persistEstadoCivil(FormSocialDTO dto){
+    public EstadoCivil persistEstadoCivil(FormSocialDTO dto) {
         EstadoCivil estadoCivil = new EstadoCivil();
 
         if (dto.getEstadoCivil() < 1 || dto.getEstadoCivil() > 6) {
@@ -256,7 +254,8 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         return estadoCivil;
     }
-    public Escolaridade persistEscolaridade(FormSocialDTO dto){
+
+    public Escolaridade persistEscolaridade(FormSocialDTO dto) {
         Escolaridade escolaridade = new Escolaridade();
 
         if (dto.getEscolaridade() < 1 || dto.getEscolaridade() > 7) {
@@ -272,7 +271,8 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         return escolaridade;
     }
-    public Residencia persistResidencia(FormSocialDTO dto){
+
+    public Residencia persistResidencia(FormSocialDTO dto) {
         Residencia residencia = new Residencia();
 
         if (dto.getResidencia() < 1 || dto.getResidencia() > 4) {
@@ -289,23 +289,51 @@ public class FormSocialServiceImpl implements FormSocialService {
         return residencia;
     }
 
-    public List<GrauParentesco> convertIndexGrauParentesco(FormSocialDTO dto){
+    public List<GrauParentesco> convertIndexGrauParentesco(FormSocialDTO dto) {
         List<GrauParentesco> listGrauParentesco = new ArrayList<>();
 
-        for(Integer index: dto.getGrauParentesco()){
+        for (Integer index : dto.getGrauParentesco()) {
             GrauParentesco grauParentesco = new GrauParentesco();
 
-            Optional<GrauParentesco> optionalGrauParentesco = grauParentescoRepository.findById(index);
+            Optional<GrauParentesco> grauParentescoBD = grauParentescoRepository.findById(index);
 
-            if(optionalGrauParentesco.isPresent()){
-                grauParentesco.setId(optionalGrauParentesco.get().getId());
-                grauParentesco.setGrauParentesco(optionalGrauParentesco.get().getGrauParentesco());
+            if (grauParentescoBD.isPresent()) {
+                grauParentesco.setId(grauParentescoBD.get().getId());
+                grauParentesco.setGrauParentesco(grauParentescoBD.get().getGrauParentesco());
                 listGrauParentesco.add(grauParentesco);
             }
         }
 
         return listGrauParentesco;
     }
+
+    public List<Beneficio> convertIndexBeneficio(FormSocialDTO dto) {
+        List<Beneficio> listBeneficios = new ArrayList<>();
+
+        for (Integer index : dto.getBeneficio()) {
+            Beneficio beneficio = new Beneficio();
+
+            if (index < 1 || index > 4) {
+                throw new BeneficioException("Algum dos ID's de Beneficio é inválido. (1-4)");
+            }
+
+            if (index == 1 && dto.getBeneficio().size() > 1) {
+                throw new BeneficioNenhumSelecionadoException("O campo Nenhum (ID-1) está selecionado, por isso não é possível adicionar outros benefícios");
+            }
+
+            Optional<Beneficio> beneficioBD = beneficioRepository.findById(index);
+
+            if (beneficioBD.isPresent()) {
+                beneficio.setId(beneficioBD.get().getId());
+                beneficio.setBeneficio(beneficioBD.get().getBeneficio());
+
+                listBeneficios.add(beneficio);
+            }
+        }
+
+        return listBeneficios;
+    }
+
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

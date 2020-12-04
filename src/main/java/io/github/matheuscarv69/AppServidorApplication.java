@@ -1,13 +1,7 @@
 package io.github.matheuscarv69;
 
-import io.github.matheuscarv69.domain.entity.othersEntity.Escolaridade;
-import io.github.matheuscarv69.domain.entity.othersEntity.EstadoCivil;
-import io.github.matheuscarv69.domain.entity.othersEntity.GrauParentesco;
-import io.github.matheuscarv69.domain.entity.othersEntity.Residencia;
-import io.github.matheuscarv69.domain.repository.EscolaridadeRepository;
-import io.github.matheuscarv69.domain.repository.EstadoCivilRepository;
-import io.github.matheuscarv69.domain.repository.GrauParentescoRepository;
-import io.github.matheuscarv69.domain.repository.ResidenciaRepository;
+import io.github.matheuscarv69.domain.entity.othersEntity.*;
+import io.github.matheuscarv69.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 @RestController
@@ -24,7 +20,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
     public CommandLineRunner commandLineRunner(@Autowired EstadoCivilRepository estadoCivilRepository,
                                                @Autowired EscolaridadeRepository escolaridadeRepository,
                                                @Autowired ResidenciaRepository residenciaRepository,
-                                               @Autowired GrauParentescoRepository grauParentescoRepository) {
+                                               @Autowired GrauParentescoRepository grauParentescoRepository,
+                                               @Autowired BeneficioRepository beneficioRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -150,38 +147,59 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
-            estadoCivilRepository.save(solteiro);
-            estadoCivilRepository.save(casado);
-            estadoCivilRepository.save(uniaoEstavel);
-            estadoCivilRepository.save(separado);
-            estadoCivilRepository.save(divorciado);
-            estadoCivilRepository.save(viuvo);
+            Beneficio nenhum =  new Beneficio();
+            nenhum.setId(1);
+            nenhum.setBeneficio("Nenhum");
+
+            Beneficio prestacaoCont = new Beneficio();
+            prestacaoCont.setId(2);
+            prestacaoCont.setBeneficio("Prestação Continuada");
+
+            Beneficio bolsaFamilia = new Beneficio();
+            bolsaFamilia.setId(3);
+            bolsaFamilia.setBeneficio("Bolsa Família");
+
+            Beneficio creditoSocial = new Beneficio();
+            creditoSocial.setId(4);
+            creditoSocial.setBeneficio("Crédito Social");
+
+
+
+            ///
+            estadoCivilRepository.saveAll(Arrays.asList(solteiro,casado,uniaoEstavel,separado,divorciado,viuvo));
+            escolaridadeRepository.saveAll(Arrays.asList(analfabeto,ensinoFundamentalInc,ensinoFundamentalComp,ensinoMedioInc,ensinoMedioComp,ensinoSuperiorInc,ensinoSuperiorComp));
+            residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
+            grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outros));
+            beneficioRepository.saveAll(Arrays.asList(nenhum,prestacaoCont,bolsaFamilia,creditoSocial));
+
+
+
             //
-            escolaridadeRepository.save(analfabeto);
-            escolaridadeRepository.save(ensinoFundamentalInc);
-            escolaridadeRepository.save(ensinoFundamentalComp);
-            escolaridadeRepository.save(ensinoMedioInc);
-            escolaridadeRepository.save(ensinoMedioComp);
-            escolaridadeRepository.save(ensinoSuperiorInc);
-            escolaridadeRepository.save(ensinoSuperiorComp);
+//            escolaridadeRepository.save(analfabeto);
+//            escolaridadeRepository.save(ensinoFundamentalInc);
+//            escolaridadeRepository.save(ensinoFundamentalComp);
+//            escolaridadeRepository.save(ensinoMedioInc);
+//            escolaridadeRepository.save(ensinoMedioComp);
+//            escolaridadeRepository.save(ensinoSuperiorInc);
+//            escolaridadeRepository.save(ensinoSuperiorComp);
+//            //
+//            residenciaRepository.save(propria);
+//            residenciaRepository.save(alugada);
+//            residenciaRepository.save(areaInvasao);
+//            residenciaRepository.save(cedida);
             //
-            residenciaRepository.save(propria);
-            residenciaRepository.save(alugada);
-            residenciaRepository.save(areaInvasao);
-            residenciaRepository.save(cedida);
-            //
-            grauParentescoRepository.save(esposo);
-            grauParentescoRepository.save(filhos);
-            grauParentescoRepository.save(sogro);
-            grauParentescoRepository.save(irmao);
-            grauParentescoRepository.save(pai);
-            grauParentescoRepository.save(mae);
-            grauParentescoRepository.save(tio);
-            grauParentescoRepository.save(sobrinho);
-            grauParentescoRepository.save(avos);
-            grauParentescoRepository.save(enteado);
-            grauParentescoRepository.save(primo);
-            grauParentescoRepository.save(outros);
+//            grauParentescoRepository.save(esposo);
+//            grauParentescoRepository.save(filhos);
+//            grauParentescoRepository.save(sogro);
+//            grauParentescoRepository.save(irmao);
+//            grauParentescoRepository.save(pai);
+//            grauParentescoRepository.save(mae);
+//            grauParentescoRepository.save(tio);
+//            grauParentescoRepository.save(sobrinho);
+//            grauParentescoRepository.save(avos);
+//            grauParentescoRepository.save(enteado);
+//            grauParentescoRepository.save(primo);
+//            grauParentescoRepository.save(outros);
         };
     }
 

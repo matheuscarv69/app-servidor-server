@@ -1,34 +1,31 @@
 package io.github.matheuscarv69.domain.entity.othersEntity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.matheuscarv69.domain.entity.FormSocial;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(schema = "form")
-public class GrauParentesco {
+public class Beneficio {
 
     @Id
-    private Integer id;
+    Integer id;
 
-    @Column(length = 30)
-    private String grauParentesco;
+    @Column
+    String beneficio;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "grauParentescos")
-    private List<FormSocial> forms = new ArrayList<>() ;
-
+    @ManyToMany(mappedBy = "beneficios")
+    private List<FormSocial> forms = new ArrayList<>();
 
 }

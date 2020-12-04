@@ -1,10 +1,7 @@
 package io.github.matheuscarv69.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.matheuscarv69.domain.entity.othersEntity.Escolaridade;
-import io.github.matheuscarv69.domain.entity.othersEntity.EstadoCivil;
-import io.github.matheuscarv69.domain.entity.othersEntity.GrauParentesco;
-import io.github.matheuscarv69.domain.entity.othersEntity.Residencia;
+import io.github.matheuscarv69.domain.entity.othersEntity.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -66,20 +63,24 @@ public class FormSocial{
     @Column
     private Integer numeroPessoasFam;
 
-
-    // grau
     @ManyToMany
     @JoinTable(schema = "form", name = "form_grauparentesco",
     joinColumns = @JoinColumn(name = "form_id"),
     inverseJoinColumns = @JoinColumn(name = "grauparentesco_id"))
     private List<GrauParentesco> grauParentescos = new ArrayList<>();
-    // filé
-
-
 
     @OneToOne
     @JoinColumn(name = "residencia_id")
     private Residencia residencia;
+
+    @ManyToMany
+    @JoinTable(schema = "form", name = "form_beneficios",
+    joinColumns = @JoinColumn(name = "form_id"),
+    inverseJoinColumns = @JoinColumn(name = "beneficios_id"))
+    private List<Beneficio> beneficios =  new ArrayList<>();
+
+
+
 
 
 }
