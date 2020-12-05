@@ -10,8 +10,6 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -70,16 +68,21 @@ public class FormSocialDTO {
     @NotNull(message = "{campo.residencia.obrigatorio}")
     private Integer residencia;
 
-
     @ApiModelProperty(value = "Tipo de Benefício: index",
             allowableValues = "1 - Nenhum, 2 - Prestação Continuada, 3 - Bolsa Família, 4 - Crédito Social, 5 - Outros", position = 12, required = true)
     @NotEmpty(message = "{campo.beneficio.obrigatorio}")
     private List<Integer> beneficio;
 
-    @ApiModelProperty(value = "Outro Benefício: texto")
+    @ApiModelProperty(value = "Outro Benefício: text", position = 13)
     private String outroBeneficio;
 
+    @ApiModelProperty(value = "Programas Sociais: [index]",
+            allowableValues = "1 - Nenhum, 2 - Jovem Aprendiz, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Programa da Prefeitura ou Outros (Descrito na propriedade outroProgramaSocial)", position = 14)
+    @NotEmpty(message = "{campo.programa-social.obrigatorio}")
+    private List<Integer> programaSocial;
 
+    @ApiModelProperty(value = "Outro Programa Social: text")
+    private String outroProgramaSocial;
 
 
 }

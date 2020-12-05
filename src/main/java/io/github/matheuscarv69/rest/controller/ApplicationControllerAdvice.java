@@ -96,4 +96,20 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(BeneficioException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleBeneficioException(BeneficioException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(ProgramaSocialException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleProgramaSocialException(ProgramaSocialException ex){
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
 }

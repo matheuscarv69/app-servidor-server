@@ -21,7 +21,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired EscolaridadeRepository escolaridadeRepository,
                                                @Autowired ResidenciaRepository residenciaRepository,
                                                @Autowired GrauParentescoRepository grauParentescoRepository,
-                                               @Autowired BeneficioRepository beneficioRepository) {
+                                               @Autowired BeneficioRepository beneficioRepository,
+                                               @Autowired ProgramaSocialRepository programaSocialRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -147,9 +148,9 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
-            Beneficio nenhum =  new Beneficio();
-            nenhum.setId(1);
-            nenhum.setBeneficio("Nenhum");
+            Beneficio nenhumBeneficio =  new Beneficio();
+            nenhumBeneficio.setId(1);
+            nenhumBeneficio.setBeneficio("Nenhum");
 
             Beneficio prestacaoCont = new Beneficio();
             prestacaoCont.setId(2);
@@ -163,17 +164,39 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             creditoSocial.setId(4);
             creditoSocial.setBeneficio("Crédito Social");
 
-
             Beneficio outrosBeneficio = new Beneficio();
             outrosBeneficio.setId(5);
             outrosBeneficio.setBeneficio("Outros");
+
+            ///
+
+            ProgramaSocial nenhumPrograma = new ProgramaSocial();
+            nenhumPrograma.setId(1);
+            nenhumPrograma.setProgramaSocial("Nenhum");
+
+            ProgramaSocial jovemAprendiz = new ProgramaSocial();
+            jovemAprendiz.setId(2);
+            jovemAprendiz.setProgramaSocial("Jovem Aprendiz");
+
+            ProgramaSocial crea_cras = new ProgramaSocial();
+            crea_cras.setId(3);
+            crea_cras.setProgramaSocial("CREA-CRAS");
+
+            ProgramaSocial caps_ad = new ProgramaSocial();
+            caps_ad.setId(4);
+            caps_ad.setProgramaSocial("CAPS I-II-III e AD");
+
+            ProgramaSocial prefeitura_outros =  new ProgramaSocial();
+            prefeitura_outros.setId(5);
+            prefeitura_outros.setProgramaSocial("Programa da Prefeitura ou Outros");
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro,casado,uniaoEstavel,separado,divorciado,viuvo));
             escolaridadeRepository.saveAll(Arrays.asList(analfabeto,ensinoFundamentalInc,ensinoFundamentalComp,ensinoMedioInc,ensinoMedioComp,ensinoSuperiorInc,ensinoSuperiorComp));
             residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
             grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outrosGraus));
-            beneficioRepository.saveAll(Arrays.asList(nenhum,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
+            beneficioRepository.saveAll(Arrays.asList(nenhumBeneficio,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
+            programaSocialRepository.saveAll(Arrays.asList(nenhumPrograma,jovemAprendiz,crea_cras,caps_ad, prefeitura_outros));
             
         };
     }
