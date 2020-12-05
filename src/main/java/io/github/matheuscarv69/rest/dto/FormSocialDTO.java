@@ -62,7 +62,7 @@ public class FormSocialDTO {
 
     @ApiModelProperty(value = "Parentes da família do entrevistado: [index]",
             allowableValues = "1 - Esposo(a), 2 - Filhos(as), 3 - Sogro(a), 4 - Irmão(ã), 5 - Pai, 6 - Mãe, 7 - Tio(a), 8 - Sobrinho(a), 9 - Avos, 10 - Enteado(a), 11 - Primo(a), 12 - Outros", position = 10, required = true)
-    @NotNull(message = "{campo.grau-parentesco.obrigatorio}")
+    @NotEmpty(message = "{campo.grau-parentesco.obrigatorio}")
     private List<Integer> grauParentesco;
 
     @ApiModelProperty(value = "Tipo de Residència: index",
@@ -71,13 +71,9 @@ public class FormSocialDTO {
     private Integer residencia;
 
 
-//    @ApiModelProperty(value = "Tipo do Benefício: [index]",
-//            allowableValues = "1 - Benefício de Prestação Continuada, 2 - Bolsa familía, 3 - Crédito Social, 4 - Outros (Descrito na propriedade outroBeneficioDesc)", position = 13)
-//    private String beneficiosCadastrados;
-
-
     @ApiModelProperty(value = "Tipo de Benefício: index",
             allowableValues = "1 - Nenhum, 2 - Prestação Continuada, 3 - Bolsa Família, 4 - Crédito Social, 5 - Outros", position = 12, required = true)
+    @NotEmpty(message = "{campo.beneficio.obrigatorio}")
     private List<Integer> beneficio;
 
     @ApiModelProperty(value = "Outro Benefício: texto")
