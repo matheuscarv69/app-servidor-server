@@ -26,6 +26,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final ResidenciaRepository residenciaRepository;
     private final GrauParentescoRepository grauParentescoRepository;
     private final BeneficioRepository beneficioRepository;
+    private final ProgramaSocialRepository programaSocialRepository;
 
     @Override
     @Transactional
@@ -62,7 +63,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         // beneficios
         List<Beneficio> listBeneficios = convertIndexBeneficio(dto);
 
-
+        // criar lógica para inserir os programas sociais
+        List<ProgramaSocial> listProgramas = convertIndexProgramaSocial(dto);
 
 
         repository.save(formSocial);
@@ -71,6 +73,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         // salva os ids na table associativa
         formSocial.getGrauParentescos().addAll(listParentescos);
         formSocial.getBeneficios().addAll(listBeneficios);
+        formSocial.getProgramasSociais().addAll(listProgramas);
         repository.save(formSocial);
 
         return formSocial;
@@ -292,7 +295,7 @@ public class FormSocialServiceImpl implements FormSocialService {
             if (index < 1 || index > 5) {
                 throw new BeneficioException("Algum dos ID's de Beneficio é inválido. (1-5)");
             } else if (index == 1 && dto.getBeneficio().size() > 1) {
-                throw new BeneficioNenhumSelecionadoException("O campo ID 1 (Nenhum) está selecionado, por isso não é possível adicionar os outros benefícios disponíveis (1-5)");
+                throw new BeneficioException("O campo ID 1 (Nenhum) está selecionado, por isso não é possível adicionar os outros benefícios disponíveis (1-5)");
             } else if (index == 5 && dto.getOutroBeneficio().isEmpty()) {
                 throw new BeneficioException("O ID 5 (Outros) está selecionado e o campo Outro Benefício está vazio, preencha-o");
             } else if (!dto.getBeneficio().contains(5) && !dto.getOutroBeneficio().isEmpty()) {
@@ -314,8 +317,41 @@ public class FormSocialServiceImpl implements FormSocialService {
                 listBeneficios.add(beneficio);
             }
         }
-
         return listBeneficios;
+    }
+
+    public List<ProgramaSocial> convertIndexProgramaSocial(FormSocialDTO dto) {
+        List<ProgramaSocial> listProgramas = new ArrayList<>();
+
+        for (Integer index : dto.getProgramaSocial()) {
+            ProgramaSocial programaSocial = new ProgramaSocial();
+
+            if (index < 1 || index > 5) {
+                throw new ProgramaSocialException("Algum dos ID's dos Programas Sociais é inválido. (1-5)");
+            } else if (index == 1 && dto.getProgramaSocial().size() > 1) {
+                throw new ProgramaSocialException("O campo ID 1 (Não) está selecionado, por isso não é possível adicionar os outros Programas Sociais disponíveis (1-5)");
+            } else if (index == 5 && dto.getOutroProgramaSocial().isEmpty()) {
+                throw new ProgramaSocialException("O ID 5 (Outros) está selecionado e o campo Outro Programa Social está vazio, preencha-o ");
+            } else if (!dto.getProgramaSocial().contains(5) && !dto.getOutroProgramaSocial().isEmpty()) {
+                throw new ProgramaSocialException("O ID 5 (Outros) não está selecionado, selecione-o para poder preencher o campo Outro Programa Social");
+            }
+
+            Optional<ProgramaSocial> programaSocialBD = programaSocialRepository.findById(index);
+
+            if (programaSocialBD.isPresent() && programaSocialBD.get().getId() != 5) {
+                programaSocial.setId(programaSocialBD.get().getId());
+                programaSocial.setProgramaSocial(programaSocialBD.get().getProgramaSocial());
+
+                listProgramas.add(programaSocial);
+            }
+
+            if (programaSocialBD.get().getId() == 5) {
+                programaSocial.setProgramaSocial(dto.getOutroProgramaSocial());
+                programaSocialRepository.save(programaSocial);
+                listProgramas.add(programaSocial);
+            }
+        }
+        return listProgramas;
     }
 
 

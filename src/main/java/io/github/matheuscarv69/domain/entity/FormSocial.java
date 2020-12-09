@@ -79,12 +79,13 @@ public class FormSocial{
     inverseJoinColumns = @JoinColumn(name = "beneficios_id"))
     private List<Beneficio> beneficios =  new ArrayList<>();
 
-
     @ManyToMany
     @JoinTable(schema = "form", name = "form_programa_social",
             joinColumns = @JoinColumn(name = "form_id"),
     inverseJoinColumns = @JoinColumn(name = "programaSocial_id"))
     private List<ProgramaSocial> programasSociais = new ArrayList<>();
+
+
 
 
 

@@ -77,11 +77,11 @@ public class FormSocialDTO {
     private String outroBeneficio;
 
     @ApiModelProperty(value = "Programas Sociais: [index]",
-            allowableValues = "1 - Nenhum, 2 - Jovem Aprendiz, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Programa da Prefeitura ou Outros (Descrito na propriedade outroProgramaSocial)", position = 14)
+            allowableValues = "1 - Não, 2 - Jovem Aprendiz, 3 - CREA-CRAS, 4 - CAPS I-II-III e AD, 5 - Programa da Prefeitura ou Outros (Descrito na propriedade outroProgramaSocial)", position = 14)
     @NotEmpty(message = "{campo.programa-social.obrigatorio}")
     private List<Integer> programaSocial;
 
-    @ApiModelProperty(value = "Outro Programa Social: text")
+    @ApiModelProperty(value = "Outro Programa Social: text", position = 15)
     private String outroProgramaSocial;
 
 

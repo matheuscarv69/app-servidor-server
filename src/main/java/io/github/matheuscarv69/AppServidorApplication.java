@@ -170,9 +170,9 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
-            ProgramaSocial nenhumPrograma = new ProgramaSocial();
-            nenhumPrograma.setId(1);
-            nenhumPrograma.setProgramaSocial("Nenhum");
+            ProgramaSocial naoPrograma = new ProgramaSocial();
+            naoPrograma.setId(1);
+            naoPrograma.setProgramaSocial("Não");
 
             ProgramaSocial jovemAprendiz = new ProgramaSocial();
             jovemAprendiz.setId(2);
@@ -196,7 +196,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
             grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outrosGraus));
             beneficioRepository.saveAll(Arrays.asList(nenhumBeneficio,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
-            programaSocialRepository.saveAll(Arrays.asList(nenhumPrograma,jovemAprendiz,crea_cras,caps_ad, prefeitura_outros));
+            programaSocialRepository.saveAll(Arrays.asList(naoPrograma,jovemAprendiz,crea_cras,caps_ad, prefeitura_outros));
             
         };
     }
