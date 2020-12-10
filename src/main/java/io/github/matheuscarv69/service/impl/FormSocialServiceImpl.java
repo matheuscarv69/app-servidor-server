@@ -31,6 +31,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final DeficienteFamiliaRepository deficienteFamiliaRepository;
     private final AcompMedicoRepository acompMedicoRepository;
     private final SuicidioFamiliaRepository suicidioFamiliaRepository;
+    private final ViolenciaRepository violenciaRepository;
 
     @Override
     @Transactional
@@ -81,7 +82,9 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         // suicidio familia
         formSocial.setSuicidioFamilia(persistSuicidioFam(dto));
-//        persistSuicidioFam(dto);
+
+        // violencias
+        List<Violencia> listViolencia = convertIndexViolencia(dto);
 
 
         ///
@@ -93,38 +96,12 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.getBeneficios().addAll(listBeneficios);
         formSocial.getProgramasSociais().addAll(listProgramas);
         formSocial.getDoencaCronicas().addAll(listDoenca);
+        formSocial.getViolencias().addAll(listViolencia);
         repository.save(formSocial);
 
         return formSocial;
 
 
-//        formSocial.setSuicidioFamilia(Decisao.getDecisaoCode(Integer.parseInt(dto.getSuicidioFamilia())));
-//        if (Integer.parseInt(dto.getSuicidioFamilia()) == 1 && dto.getSuicidioGrauParentesco().isEmpty()) {
-//            throw new RegraNegocioException("Campo Grau de Parentesco do Suicidio da Família é obrigatório.");
-//        } else if (Integer.parseInt(dto.getSuicidioFamilia()) == 2 && dto.getSuicidioGrauParentesco().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Suícidio Familia deve estar com o (Sim == 1) selecionado");
-//        } else if(Integer.parseInt(dto.getSuicidioFamilia()) == 2 && dto.getSuicidioGrauParentesco().isEmpty()){
-//            formSocial.setSuicidioGrauParentesco(GrauParentesco.NENHUM_PARENTE);
-//            System.out.println("Campo nao e grau vazio");
-//        }else{
-//            formSocial.setSuicidioGrauParentesco(GrauParentesco.getGrauParentescoCode(Integer.parseInt(dto.getSuicidioGrauParentesco())));
-//        }
-//
-//        formSocial.setViolencia(Decisao.getDecisaoCode(Integer.parseInt(dto.getViolencia())));
-//        if (Integer.parseInt(dto.getViolencia()) == 1 && dto.getViolenciasCadastradas().isEmpty()) {
-//            throw new RegraNegocioException("Campo Violências Cadastradas é obrigatório.");
-//        } else if (Integer.parseInt(dto.getViolencia()) == 2 && dto.getViolenciasCadastradas().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Violência deve estar com (Sim == 1) selecionado");
-//        } else if (dto.getViolenciasCadastradas().contains("6") && dto.getOutraViolenciaDescricao().isEmpty()) {
-//            throw new RegraNegocioException("Campo Outra Violência Descrição deve estar preenchido");
-//        } else if (!dto.getViolenciasCadastradas().contains("6") && dto.getOutraViolenciaDescricao().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Violências Cadastradas deve estar preenchido com (Outras == 6)");
-//        } else {
-//            List<ViolenciasCadastradas> listViolenciasCadastradas = converterCodeViolenciasCadParaList(dto.getViolenciasCadastradas());
-//            formSocial.setViolenciasCadastradas(listViolenciasCadastradas);
-//            formSocial.setOutraViolenciaDescricao(dto.getOutraViolenciaDescricao());
-//        }
-//
 //        formSocial.setPsicoativos(Decisao.getDecisaoCode(Integer.parseInt(dto.getPsicoativos())));
 //        if (Integer.parseInt(dto.getPsicoativos()) == 1 && dto.getPsicoativosCadastrados().isEmpty()) {
 //            throw new RegraNegocioException("Campo Psicoativos Cadastradas é obrigatório.");
@@ -332,7 +309,7 @@ public class FormSocialServiceImpl implements FormSocialService {
             if (index < 1 || index > 6) {
                 throw new DoencaCronicaException("Algum dos ID's das Doenças Crônicas é inválido. (1-6)");
             } else if (index == 1 && dto.getDoencaCronica().size() > 1) {
-                throw new DoencaCronicaException("O campo ID 1 (Nenhuma) está selecionado, por isso não é possível adicionar as outras Doenças Crônicas disponíveis (1-6)");
+                throw new DoencaCronicaException("O ID 1 (Nenhuma) está selecionado, por isso não é possível adicionar as outras Doenças Crônicas disponíveis (1-6)");
             } else if (index == 6 && dto.getOutraDoencaCronica().isEmpty()) {
                 throw new DoencaCronicaException("O ID 6 (Outras) está selecionado e o campo Outra Doença Crônica está vazio, preencha-o ");
             } else if (!dto.getDoencaCronica().contains(6) && !dto.getOutraDoencaCronica().isEmpty()) {
@@ -447,6 +424,40 @@ public class FormSocialServiceImpl implements FormSocialService {
 
     }
 
+    public List<Violencia> convertIndexViolencia(FormSocialDTO dto) {
+        List<Violencia> listViolencia = new ArrayList<>();
+
+        for (Integer index : dto.getViolencia()) {
+            Violencia violencia = new Violencia();
+
+            if (index < 1 || index > 7) {
+                throw new ViolenciaException("Algum dos ID's das Violências é inválido. (1-7)");
+            } else if (index == 1 && dto.getViolencia().size() > 1) {
+                throw new ViolenciaException("O ID 1 (Nenhuma) está selecionado, por isso não é possível adicionar as outras Violências disponíveis (1-7)");
+            } else if (index == 7 && dto.getOutraViolencia().isEmpty()) {
+                throw new ViolenciaException("O ID 7 (Outras) está selecionado e o campo Outra Violência está vazio, preencha-o ");
+            } else if (!dto.getViolencia().contains(7) && !dto.getOutraViolencia().isEmpty()) {
+                throw new ViolenciaException("O ID 7 (Outras) não está selecionado, selecione-o para poder preencher o campo Outra Violência");
+            }
+
+            Optional<Violencia> violenciaBD = violenciaRepository.findById(index);
+
+            if (violenciaBD.isPresent() && violenciaBD.get().getId() != 7) {
+                violencia.setId(violenciaBD.get().getId());
+                violencia.setViolencia(violenciaBD.get().getViolencia());
+
+                listViolencia.add(violencia);
+            }
+
+            if (violenciaBD.get().getId() == 7) {
+                violencia.setViolencia(dto.getOutraViolencia());
+                violenciaRepository.save(violencia);
+                listViolencia.add(violencia);
+            }
+        }
+
+        return listViolencia;
+    }
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

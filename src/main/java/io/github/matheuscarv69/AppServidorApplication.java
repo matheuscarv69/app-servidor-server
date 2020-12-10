@@ -26,7 +26,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired DoencaCronicaRepository doencaCronicaRepository,
                                                @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository,
                                                @Autowired AcompMedicoRepository acompMedicoRepository,
-                                               @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository) {
+                                               @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository,
+                                               @Autowired ViolenciaRepository violenciaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -252,6 +253,40 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             simSuicidio.setId(2);
             simSuicidio.setSuicidio("Sim, há casos e tentativas de Suicídio");
 
+            ///
+
+            Violencia nenhumaViolencia = new Violencia();
+            nenhumaViolencia.setId(1);
+            nenhumaViolencia.setViolencia("Nenhuma");
+
+            Violencia fisica = new Violencia();
+            fisica.setId(2);
+            fisica.setViolencia("Física");
+
+            Violencia verbal = new Violencia();
+            verbal.setId(3);
+            verbal.setViolencia("Verbal");
+
+            Violencia psicologica = new Violencia();
+            psicologica.setId(4);
+            psicologica.setViolencia("Psicológica");
+
+            Violencia sexual = new Violencia();
+            sexual.setId(5);
+            sexual.setViolencia("Sexual");
+
+            Violencia patrimonial = new Violencia();
+            patrimonial.setId(6);
+            patrimonial.setViolencia("Patrimonial");
+
+            Violencia outraViolencia = new Violencia();
+            outraViolencia.setId(7);
+            outraViolencia.setViolencia("Outra");
+
+            ///
+
+
+
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -264,6 +299,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             deficienteFamiliaRepository.saveAll(Arrays.asList(naoDeficienteFamilia, simDeficienteFamilia));
             acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico, simAcompMedico));
             suicidioFamiliaRepository.saveAll(Arrays.asList(naoSuicidio, simSuicidio));
+            violenciaRepository.saveAll(Arrays.asList(nenhumaViolencia, fisica, verbal, psicologica, sexual, patrimonial, outraViolencia));
         };
     }
 

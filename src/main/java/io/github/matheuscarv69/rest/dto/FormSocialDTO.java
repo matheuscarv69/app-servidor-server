@@ -129,6 +129,13 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Grau Parentesco do Suicídio: index:", position = 24)
     private Optional<Integer> grauParentescoSuicidio;
 
+    @ApiModelProperty(value = "Violências: [index]: \n 1 - Nenhuma, 2 - Física, 3 - Verbal, 4 - Psicologica, " +
+            "5 - Sexual, 6 - Patrimonial, 7 - Outra(Se selecionado, é preciso preencher o campo: Outra Violência)",
+            position = 25, required = true)
+    @NotEmpty(message = "{campo.violencia-desc.obrigatorio}")
+    private List<Integer> violencia;
 
+    @ApiModelProperty(value = "Outro Violência: text", position = 26)
+    private String outraViolencia;
 
 }

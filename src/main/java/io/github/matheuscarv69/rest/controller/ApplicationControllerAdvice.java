@@ -127,4 +127,13 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(ViolenciaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleViolenciaException(ViolenciaException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+
 }

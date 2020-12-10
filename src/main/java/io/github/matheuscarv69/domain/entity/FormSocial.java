@@ -89,8 +89,7 @@ public class FormSocial {
     @JoinTable(schema = "form", name = "form_doenca_cronica",
             joinColumns = @JoinColumn(name = "form_id"),
             inverseJoinColumns = @JoinColumn(name = "doencaCronica_id"))
-    private List<DoencaCronica> doencaCronicas =  new ArrayList<>();
-
+    private List<DoencaCronica> doencaCronicas = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "deficiente_familia_id")
@@ -100,11 +99,15 @@ public class FormSocial {
     @JoinColumn(name = "acomp_medico_id")
     private AcompMedico acompMedico;
 
-
     @OneToOne
     @JoinColumn(name = "suicidio_familia_id")
     private SuicidioFamilia suicidioFamilia;
 
+    @ManyToMany
+    @JoinTable(schema = "form", name = "form_violencias",
+    joinColumns = @JoinColumn(name = "form_id"),
+    inverseJoinColumns = @JoinColumn(name = "violencia_id"))
+    private List<Violencia> violencias = new ArrayList<>();
 
 
 }
