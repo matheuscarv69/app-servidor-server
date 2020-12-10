@@ -28,6 +28,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final BeneficioRepository beneficioRepository;
     private final ProgramaSocialRepository programaSocialRepository;
     private final DoencaCronicaRepository doencaCronicaRepository;
+    private final DeficienteFamiliaRepository deficienteFamiliaRepository;
 
     @Override
     @Transactional
@@ -70,12 +71,15 @@ public class FormSocialServiceImpl implements FormSocialService {
         // doenca cronicas
         List<DoencaCronica> listDoenca = convertIndexDoencaCronica(dto);
 
+        // deficiente na familia
 
+        formSocial.setDeficienteFamilia(persistDeficienteFamilia(dto));
+
+        ///
 
         repository.save(formSocial);
-        System.out.println("Form salvo: " + formSocial.toString());
 
-        // salva os ids na table associativa
+        // salva os ids nas tabelas associativas
         formSocial.getGrauParentescos().addAll(listParentescos);
         formSocial.getBeneficios().addAll(listBeneficios);
         formSocial.getProgramasSociais().addAll(listProgramas);
@@ -85,47 +89,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
 
 
-//        formSocial.setProgramaSocial(Decisao.getDecisaoCode(Integer.parseInt(dto.getProgramaSocial())));
-//        if (Integer.parseInt(dto.getProgramaSocial()) == 1 && dto.getProgramasSociaisCadastrados().isEmpty()) {
-//            throw new RegraNegocioException("Campo Programas Sociais Cadastrados é obrigatório.");
-//        } else if (Integer.parseInt(dto.getProgramaSocial()) == 2 && dto.getProgramasSociaisCadastrados().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Programa Social deve estar com (Sim == 1) selecionado");
-//        } else if (dto.getProgramasSociaisCadastrados().contains("5") && dto.getOutroProgramaSocialDesc().isEmpty()) {
-//            throw new RegraNegocioException("Campo Outro Programa Social Descrição deve estar preenchido");
-//        } else if (!dto.getProgramasSociaisCadastrados().contains("5") && dto.getOutroProgramaSocialDesc().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Programas Sociais Cadastrados deve estar preenchido com (Outros == 5)");
-//        } else {
-//            List<ProgramasSociaisCadastrados> listProgramasSociaisCadastrados = converterCodeProgSocialParaList(dto.getProgramasSociaisCadastrados());
-//            formSocial.setProgramasSociaisCadastrados(listProgramasSociaisCadastrados);
-//            formSocial.setOutroProgramaSocialDesc(dto.getOutroProgramaSocialDesc());
-//        }
-//
-//
-//        formSocial.setDoencaCronica(Decisao.getDecisaoCode(Integer.parseInt(dto.getDoencaCronica())));
-//        if (Integer.parseInt(dto.getDoencaCronica()) == 1 && dto.getDoencasCronicasCadastradas().isEmpty()) {
-//            throw new RegraNegocioException("Campo Doenças Crônicas Cadastradas é obrigatório.");
-//        } else if (Integer.parseInt(dto.getDoencaCronica()) == 2 && dto.getDoencasCronicasCadastradas().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Doença Crônica deve estar com (Sim == 1) selecionado");
-//        } else if (dto.getDoencasCronicasCadastradas().contains("5") && dto.getOutraDoencaCronicasDesc().isEmpty()) {
-//            throw new RegraNegocioException("Campo Outra Doença Crônica Descrição deve estar preenchido");
-//        } else if (!dto.getDoencasCronicasCadastradas().contains("5") && dto.getOutraDoencaCronicasDesc().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Doenças Crônicas Cadastradas deve estar preenchido com (Outras == 5)");
-//        } else {
-//            List<DoencasCronicasCadastradas> listDoencasCronicaCadastradas = converterCodeDoencaCronicaParaList(dto.getDoencasCronicasCadastradas());
-//            formSocial.setDoencasCronicasCadastradas(listDoencasCronicaCadastradas);
-//            formSocial.setOutraDoencaCronicasDesc(dto.getOutraDoencaCronicasDesc());
-//        }
-//
-//
-//        formSocial.setDeficienteFamilia(Decisao.getDecisaoCode(Integer.parseInt(dto.getDeficienteFamilia())));
-//        if (Integer.parseInt(dto.getDeficienteFamilia()) == 1 && dto.getDeficienteFamiliaDescricao().isEmpty()) {
-//            throw new RegraNegocioException("Campo Deficiente Familia Descrição é obrigatório.");
-//        } else if (Integer.parseInt(dto.getDeficienteFamilia()) == 2 && dto.getDeficienteFamiliaDescricao().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Deficiente Familia deve estar com o (Sim == 1) selecionado.");
-//        } else {
-//            formSocial.setDeficienteFamiliaDescricao(dto.getDeficienteFamiliaDescricao());
-//        }
-//
 //        formSocial.setAcompMedico(Decisao.getDecisaoCode(Integer.parseInt(dto.getAcompMedico())));
 //        if (Integer.parseInt(dto.getAcompMedico()) == 1 && dto.getAcompMedicoDescricao().isEmpty()) {
 //            throw new RegraNegocioException("Campo Acompanhamento Médico Descrição é obrigatório.");
@@ -234,6 +197,32 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return estadoCivil;
+    }
+
+    public DeficienteFamilia persistDeficienteFamilia(FormSocialDTO dto) {
+        DeficienteFamilia deficienteFamilia = new DeficienteFamilia();
+
+        if (dto.getDeficienteFamilia() < 1 || dto.getDeficienteFamilia() > 2) {
+            throw new DeficienteFamiliaException("ID do Deficiente da Familia é inválido");
+        } else if (dto.getDeficienteFamilia() == 2 && dto.getPessoaDeficiente().isEmpty() && dto.getDeficiencia().isEmpty()) {
+            throw new DeficienteFamiliaException("O ID 2 (Sim) está selecionado, mas os campos Pessoa Deficiente e Deficiência estão vazios, preencha-os");
+        } else if (dto.getDeficienteFamilia() != 2 && !dto.getPessoaDeficiente().isEmpty() && !dto.getDeficiencia().isEmpty()) {
+            throw new DeficienteFamiliaException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher os campos Pessoa Deficiente e Deficiência");
+        }
+
+        Optional<DeficienteFamilia> deficienteBD = deficienteFamiliaRepository.findById(dto.getDeficienteFamilia());
+
+        if (deficienteBD.get().getId() == 1) {
+            deficienteFamilia.setId(deficienteBD.get().getId());
+            deficienteFamilia.setPessoa(deficienteBD.get().getPessoa());
+            deficienteFamilia.setDeficiencia(deficienteBD.get().getDeficiencia());
+        } else if (deficienteBD.get().getId() == 2) {
+            deficienteFamilia.setPessoa(dto.getPessoaDeficiente());
+            deficienteFamilia.setDeficiencia(dto.getDeficiencia());
+        }
+
+        deficienteFamiliaRepository.save(deficienteFamilia);
+        return deficienteFamilia;
     }
 
     public Escolaridade persistEscolaridade(FormSocialDTO dto) {

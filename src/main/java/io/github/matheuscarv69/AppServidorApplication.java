@@ -23,7 +23,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired GrauParentescoRepository grauParentescoRepository,
                                                @Autowired BeneficioRepository beneficioRepository,
                                                @Autowired ProgramaSocialRepository programaSocialRepository,
-                                               @Autowired DoencaCronicaRepository doencaCronicaRepository) {
+                                               @Autowired DoencaCronicaRepository doencaCronicaRepository,
+                                               @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -149,7 +150,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
-            Beneficio nenhumBeneficio =  new Beneficio();
+            Beneficio nenhumBeneficio = new Beneficio();
             nenhumBeneficio.setId(1);
             nenhumBeneficio.setBeneficio("Nenhum");
 
@@ -187,7 +188,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             caps_ad.setId(4);
             caps_ad.setProgramaSocial("CAPS I-II-III e AD");
 
-            ProgramaSocial prefeitura_outros =  new ProgramaSocial();
+            ProgramaSocial prefeitura_outros = new ProgramaSocial();
             prefeitura_outros.setId(5);
             prefeitura_outros.setProgramaSocial("Programa da Prefeitura ou Outros");
 
@@ -197,37 +198,49 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             nenhumaDoenca.setId(1);
             nenhumaDoenca.setDoencaCronica("Nenhuma");
 
-            DoencaCronica cancer =  new DoencaCronica();
+            DoencaCronica cancer = new DoencaCronica();
             cancer.setId(2);
             cancer.setDoencaCronica("Câncer");
 
-            DoencaCronica diabetes =  new DoencaCronica();
+            DoencaCronica diabetes = new DoencaCronica();
             diabetes.setId(3);
             diabetes.setDoencaCronica("Diabetes");
 
-            DoencaCronica depressao =  new DoencaCronica();
+            DoencaCronica depressao = new DoencaCronica();
             depressao.setId(4);
             depressao.setDoencaCronica("Depressão");
 
-            DoencaCronica hipertensao =  new DoencaCronica();
+            DoencaCronica hipertensao = new DoencaCronica();
             hipertensao.setId(5);
             hipertensao.setDoencaCronica("Hipertensão");
 
-            DoencaCronica outraDoenca =  new DoencaCronica();
+            DoencaCronica outraDoenca = new DoencaCronica();
             outraDoenca.setId(6);
             outraDoenca.setDoencaCronica("Outras");
 
+            ///
+
+            DeficienteFamilia naoDeficienteFamilia = new DeficienteFamilia();
+            naoDeficienteFamilia.setId(1);
+            naoDeficienteFamilia.setPessoa("Ninguém");
+            naoDeficienteFamilia.setDeficiencia("Nenhuma Deficiência");
+
+            DeficienteFamilia simDeficienteFamilia = new DeficienteFamilia();
+            simDeficienteFamilia.setId(2);
+            simDeficienteFamilia.setPessoa("Sim");
+            simDeficienteFamilia.setDeficiencia("Tem Deficiência");
 
 
             ///
-            estadoCivilRepository.saveAll(Arrays.asList(solteiro,casado,uniaoEstavel,separado,divorciado,viuvo));
-            escolaridadeRepository.saveAll(Arrays.asList(analfabeto,ensinoFundamentalInc,ensinoFundamentalComp,ensinoMedioInc,ensinoMedioComp,ensinoSuperiorInc,ensinoSuperiorComp));
-            residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
-            grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outrosGraus));
-            beneficioRepository.saveAll(Arrays.asList(nenhumBeneficio,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
-            programaSocialRepository.saveAll(Arrays.asList(naoPrograma,jovemAprendiz,crea_cras,caps_ad, prefeitura_outros));
-            doencaCronicaRepository.saveAll(Arrays.asList(nenhumaDoenca,cancer,diabetes,depressao,hipertensao,outraDoenca));
-            
+            estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
+            escolaridadeRepository.saveAll(Arrays.asList(analfabeto, ensinoFundamentalInc, ensinoFundamentalComp, ensinoMedioInc, ensinoMedioComp, ensinoSuperiorInc, ensinoSuperiorComp));
+            residenciaRepository.saveAll(Arrays.asList(propria, alugada, areaInvasao, cedida));
+            grauParentescoRepository.saveAll(Arrays.asList(esposo, filhos, sogro, irmao, pai, mae, tio, sobrinho, avos, enteado, primo, outrosGraus));
+            beneficioRepository.saveAll(Arrays.asList(nenhumBeneficio, prestacaoCont, bolsaFamilia, creditoSocial, outrosBeneficio));
+            programaSocialRepository.saveAll(Arrays.asList(naoPrograma, jovemAprendiz, crea_cras, caps_ad, prefeitura_outros));
+            doencaCronicaRepository.saveAll(Arrays.asList(nenhumaDoenca, cancer, diabetes, depressao, hipertensao, outraDoenca));
+            deficienteFamiliaRepository.saveAll(Arrays.asList(naoDeficienteFamilia, simDeficienteFamilia));
+
         };
     }
 

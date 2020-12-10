@@ -119,4 +119,12 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(DeficienteFamiliaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleDeficienteFamiliaException(DeficienteFamiliaException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
 }
