@@ -30,6 +30,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final DoencaCronicaRepository doencaCronicaRepository;
     private final DeficienteFamiliaRepository deficienteFamiliaRepository;
     private final AcompMedicoRepository acompMedicoRepository;
+    private final SuicidioFamiliaRepository suicidioFamiliaRepository;
 
     @Override
     @Transactional
@@ -79,10 +80,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setAcompMedico(persistAcompMedico(dto));
 
         // suicidio familia
-
-
-
-
+        formSocial.setSuicidioFamilia(persistSuicidioFam(dto));
+//        persistSuicidioFam(dto);
 
 
         ///
@@ -99,15 +98,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
 
 
-//        formSocial.setAcompMedico(Decisao.getDecisaoCode(Integer.parseInt(dto.getAcompMedico())));
-//        if (Integer.parseInt(dto.getAcompMedico()) == 1 && dto.getAcompMedicoDescricao().isEmpty()) {
-//            throw new RegraNegocioException("Campo Acompanhamento Médico Descrição é obrigatório.");
-//        } else if (Integer.parseInt(dto.getAcompMedico()) == 2 && dto.getAcompMedicoDescricao().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Acompanhamento Médico deve estar com o (Sim == 1) selecionado.");
-//        } else {
-//            formSocial.setAcompMedicoDescricao(dto.getAcompMedicoDescricao());
-//        }
-//
 //        formSocial.setSuicidioFamilia(Decisao.getDecisaoCode(Integer.parseInt(dto.getSuicidioFamilia())));
 //        if (Integer.parseInt(dto.getSuicidioFamilia()) == 1 && dto.getSuicidioGrauParentesco().isEmpty()) {
 //            throw new RegraNegocioException("Campo Grau de Parentesco do Suicidio da Família é obrigatório.");
@@ -417,6 +407,49 @@ public class FormSocialServiceImpl implements FormSocialService {
 
     }
 
+    public SuicidioFamilia persistSuicidioFam(FormSocialDTO dto) {
+        SuicidioFamilia suicidioFamilia = new SuicidioFamilia();
+        GrauParentesco grauParentesco = new GrauParentesco();
+
+        if (dto.getSuicidioFamilia() < 1 || dto.getSuicidioFamilia() > 2) {
+            throw new SuicidioFamiliaException("ID do Suicidio Familia é inválido");
+        }
+
+        if (dto.getSuicidioFamilia() == 2 && !dto.getGrauParentescoSuicidio().isPresent()) {
+            throw new SuicidioFamiliaException("O ID 2 (Sim) está selecionado, mas o campo Grau Parentesco Suicidio está vazio, preencha-o");
+        } else if (dto.getSuicidioFamilia() != 2 && dto.getGrauParentescoSuicidio().isPresent()) {
+            throw new SuicidioFamiliaException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher o campo Grau Parentesco Suicídio");
+        }
+        // verifica se o grau parentesco suicidio não é vazio e se é válido
+        if (dto.getGrauParentescoSuicidio().isPresent()) {
+            if (dto.getGrauParentescoSuicidio().get() < 1 || dto.getGrauParentescoSuicidio().get() > 12) {
+                throw new GrauParentescoException("ID do Grau Parentesco Suicídio é inválido. (1-12)");
+            }
+        }
+
+        Optional<SuicidioFamilia> suicidioBD = suicidioFamiliaRepository.findById(dto.getSuicidioFamilia());
+
+        if (dto.getGrauParentescoSuicidio().isPresent()) {
+            Optional<GrauParentesco> grauParentescoBD = grauParentescoRepository.findById(dto.getGrauParentescoSuicidio().get());
+
+            grauParentesco.setId(grauParentescoBD.get().getId());
+            grauParentesco.setGrauParentesco(grauParentescoBD.get().getGrauParentesco());
+        }
+
+        if (suicidioBD.get().getId() == 1) {
+            suicidioFamilia.setId(suicidioBD.get().getId());
+            suicidioFamilia.setSuicidio(suicidioBD.get().getSuicidio());
+        } else if (suicidioBD.get().getId() == 2) {
+            suicidioFamilia.setSuicidio(suicidioBD.get().getSuicidio());
+            suicidioFamilia.setGrauParentescoSuicidio(grauParentesco);
+        }
+
+        suicidioFamiliaRepository.save(suicidioFamilia);
+
+
+        return suicidioFamilia;
+
+    }
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

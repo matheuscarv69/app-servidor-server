@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -120,12 +121,13 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Especialidade do Acompanhamento: text", position = 22)
     private String especialidadeAcompMedico;
 
-    @ApiModelProperty(value = "Suicídio na Familia: index \n 1 - Não, 2 - Sim (Se selecionado, é preciso " +
+    @ApiModelProperty(value = "Suicídio na Familia: index: \n 1 - Não, 2 - Sim (Se selecionado, é preciso " +
             "preencher o campo: Grau Parentesco do Suicídio", position = 23, required = true)
+    @NotNull(message = "{campo.suicidio-fam.obrigatorio}")
     private Integer suicidioFamilia;
 
-    @ApiModelProperty(value = "Grau Parentesco do Suicídio", position = 24)
-    private Integer grauParentescoSuicidio;
+    @ApiModelProperty(value = "Grau Parentesco do Suicídio: index:", position = 24)
+    private Optional<Integer> grauParentescoSuicidio;
 
 
 
