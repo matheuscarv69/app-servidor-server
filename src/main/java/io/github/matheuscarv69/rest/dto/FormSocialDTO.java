@@ -112,4 +112,14 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Deficiência: text", position = 20)
     private String deficiencia;
 
+    @ApiModelProperty(value = "Acompanhamento Médico: index: \n 1 - Não, 2 - Sim (Se selecionado, é preciso " +
+            "preencher o campo: Especialidade Acompanhamento Médico", position = 21, required = true)
+    @NotNull(message = "{campo.acomp-medico.obrigatorio}")
+    private Integer acompMedico;
+
+    @ApiModelProperty(value = "Especialidade do Acompanhamento: text", position = 22)
+    private String especialidadeAcompMedico;
+
+
+
 }

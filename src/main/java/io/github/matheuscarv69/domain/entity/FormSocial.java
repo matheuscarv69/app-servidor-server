@@ -96,5 +96,9 @@ public class FormSocial {
     @JoinColumn(name = "deficiente_familia_id")
     private DeficienteFamilia deficienteFamilia;
 
+    @OneToOne
+    @JoinColumn(name = "acomp_medico_id")
+    private AcompMedico acompMedico;
+
 
 }

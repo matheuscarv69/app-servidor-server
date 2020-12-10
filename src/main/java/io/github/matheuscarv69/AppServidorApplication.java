@@ -24,7 +24,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired BeneficioRepository beneficioRepository,
                                                @Autowired ProgramaSocialRepository programaSocialRepository,
                                                @Autowired DoencaCronicaRepository doencaCronicaRepository,
-                                               @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository) {
+                                               @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository,
+                                               @Autowired AcompMedicoRepository acompMedicoRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -230,6 +231,16 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             simDeficienteFamilia.setPessoa("Sim");
             simDeficienteFamilia.setDeficiencia("Tem Deficiência");
 
+            ///
+
+            AcompMedico naoAcompMedico = new AcompMedico();
+            naoAcompMedico.setId(1);
+            naoAcompMedico.setEspecialidadeMedica("Não realiza Acompanhamento Médico");
+
+            AcompMedico simAcompMedico = new AcompMedico();
+            simAcompMedico.setId(2);
+            simAcompMedico.setEspecialidadeMedica("Sim, realiza Acompanhamento Médico");
+
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -240,6 +251,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             programaSocialRepository.saveAll(Arrays.asList(naoPrograma, jovemAprendiz, crea_cras, caps_ad, prefeitura_outros));
             doencaCronicaRepository.saveAll(Arrays.asList(nenhumaDoenca, cancer, diabetes, depressao, hipertensao, outraDoenca));
             deficienteFamiliaRepository.saveAll(Arrays.asList(naoDeficienteFamilia, simDeficienteFamilia));
+            acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico,simAcompMedico));
 
         };
     }

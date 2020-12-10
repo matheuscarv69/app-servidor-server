@@ -29,6 +29,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final ProgramaSocialRepository programaSocialRepository;
     private final DoencaCronicaRepository doencaCronicaRepository;
     private final DeficienteFamiliaRepository deficienteFamiliaRepository;
+    private final AcompMedicoRepository acompMedicoRepository;
 
     @Override
     @Transactional
@@ -72,8 +73,12 @@ public class FormSocialServiceImpl implements FormSocialService {
         List<DoencaCronica> listDoenca = convertIndexDoencaCronica(dto);
 
         // deficiente na familia
-
         formSocial.setDeficienteFamilia(persistDeficienteFamilia(dto));
+
+        // acompanhamento medico
+        formSocial.setAcompMedico(persistAcompMedico(dto));
+
+        // suicidio familia
 
         ///
 
@@ -197,32 +202,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return estadoCivil;
-    }
-
-    public DeficienteFamilia persistDeficienteFamilia(FormSocialDTO dto) {
-        DeficienteFamilia deficienteFamilia = new DeficienteFamilia();
-
-        if (dto.getDeficienteFamilia() < 1 || dto.getDeficienteFamilia() > 2) {
-            throw new DeficienteFamiliaException("ID do Deficiente da Familia é inválido");
-        } else if (dto.getDeficienteFamilia() == 2 && dto.getPessoaDeficiente().isEmpty() && dto.getDeficiencia().isEmpty()) {
-            throw new DeficienteFamiliaException("O ID 2 (Sim) está selecionado, mas os campos Pessoa Deficiente e Deficiência estão vazios, preencha-os");
-        } else if (dto.getDeficienteFamilia() != 2 && !dto.getPessoaDeficiente().isEmpty() && !dto.getDeficiencia().isEmpty()) {
-            throw new DeficienteFamiliaException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher os campos Pessoa Deficiente e Deficiência");
-        }
-
-        Optional<DeficienteFamilia> deficienteBD = deficienteFamiliaRepository.findById(dto.getDeficienteFamilia());
-
-        if (deficienteBD.get().getId() == 1) {
-            deficienteFamilia.setId(deficienteBD.get().getId());
-            deficienteFamilia.setPessoa(deficienteBD.get().getPessoa());
-            deficienteFamilia.setDeficiencia(deficienteBD.get().getDeficiencia());
-        } else if (deficienteBD.get().getId() == 2) {
-            deficienteFamilia.setPessoa(dto.getPessoaDeficiente());
-            deficienteFamilia.setDeficiencia(dto.getDeficiencia());
-        }
-
-        deficienteFamiliaRepository.save(deficienteFamilia);
-        return deficienteFamilia;
     }
 
     public Escolaridade persistEscolaridade(FormSocialDTO dto) {
@@ -382,6 +361,57 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
         return listDoenca;
     }
+
+    public DeficienteFamilia persistDeficienteFamilia(FormSocialDTO dto) {
+        DeficienteFamilia deficienteFamilia = new DeficienteFamilia();
+
+        if (dto.getDeficienteFamilia() < 1 || dto.getDeficienteFamilia() > 2) {
+            throw new DeficienteFamiliaException("ID do Deficiente da Familia é inválido");
+        } else if (dto.getDeficienteFamilia() == 2 && dto.getPessoaDeficiente().isEmpty() && dto.getDeficiencia().isEmpty()) {
+            throw new DeficienteFamiliaException("O ID 2 (Sim) está selecionado, mas os campos Pessoa Deficiente e Deficiência estão vazios, preencha-os");
+        } else if (dto.getDeficienteFamilia() != 2 && !dto.getPessoaDeficiente().isEmpty() && !dto.getDeficiencia().isEmpty()) {
+            throw new DeficienteFamiliaException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher os campos Pessoa Deficiente e Deficiência");
+        }
+
+        Optional<DeficienteFamilia> deficienteBD = deficienteFamiliaRepository.findById(dto.getDeficienteFamilia());
+
+        if (deficienteBD.get().getId() == 1) {
+            deficienteFamilia.setId(deficienteBD.get().getId());
+            deficienteFamilia.setPessoa(deficienteBD.get().getPessoa());
+            deficienteFamilia.setDeficiencia(deficienteBD.get().getDeficiencia());
+        } else if (deficienteBD.get().getId() == 2) {
+            deficienteFamilia.setPessoa(dto.getPessoaDeficiente());
+            deficienteFamilia.setDeficiencia(dto.getDeficiencia());
+        }
+
+        deficienteFamiliaRepository.save(deficienteFamilia);
+        return deficienteFamilia;
+    }
+
+    public AcompMedico persistAcompMedico(FormSocialDTO dto) {
+        AcompMedico acompMedico = new AcompMedico();
+
+        if (dto.getAcompMedico() < 1 || dto.getAcompMedico() > 2) {
+            throw new AcompMedicoException("ID do Acompanhamento Médico é inválido");
+        } else if (dto.getAcompMedico() == 2 && dto.getEspecialidadeAcompMedico().isEmpty()) {
+            throw new AcompMedicoException("O ID 2 (Sim) está selecionado, mas o campo Especialidade Acompanhamento Médico esta vazio, preencha-o");
+        } else if (dto.getAcompMedico() != 2 && !dto.getEspecialidadeAcompMedico().isEmpty()) {
+            throw new AcompMedicoException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher o campo Especialidade Acompanhamento Médico");
+        }
+
+        Optional<AcompMedico> acompanhamentoBD = acompMedicoRepository.findById(dto.getAcompMedico());
+
+        if (acompanhamentoBD.get().getId() == 1) {
+            acompMedico.setId(acompanhamentoBD.get().getId());
+            acompMedico.setEspecialidadeMedica(acompanhamentoBD.get().getEspecialidadeMedica());
+        } else if (acompanhamentoBD.get().getId() == 2) {
+            acompMedico.setEspecialidadeMedica(dto.getEspecialidadeAcompMedico());
+        }
+        acompMedicoRepository.save(acompMedico);
+        return acompMedico;
+
+    }
+
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){
