@@ -25,7 +25,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired ProgramaSocialRepository programaSocialRepository,
                                                @Autowired DoencaCronicaRepository doencaCronicaRepository,
                                                @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository,
-                                               @Autowired AcompMedicoRepository acompMedicoRepository) {
+                                               @Autowired AcompMedicoRepository acompMedicoRepository,
+                                               @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -241,6 +242,16 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             simAcompMedico.setId(2);
             simAcompMedico.setEspecialidadeMedica("Sim, realiza Acompanhamento Médico");
 
+            ///
+
+            SuicidioFamilia naoSuicidio = new SuicidioFamilia();
+            naoSuicidio.setId(1);
+            naoSuicidio.setSuicidio("Não, há casos e nem tentativas de Suicídio");
+
+            SuicidioFamilia simSuicidio = new SuicidioFamilia();
+            simSuicidio.setId(2);
+            simSuicidio.setSuicidio("Sim, há casos e tentativas de Suicídio");
+
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -251,8 +262,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             programaSocialRepository.saveAll(Arrays.asList(naoPrograma, jovemAprendiz, crea_cras, caps_ad, prefeitura_outros));
             doencaCronicaRepository.saveAll(Arrays.asList(nenhumaDoenca, cancer, diabetes, depressao, hipertensao, outraDoenca));
             deficienteFamiliaRepository.saveAll(Arrays.asList(naoDeficienteFamilia, simDeficienteFamilia));
-            acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico,simAcompMedico));
-
+            acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico, simAcompMedico));
+            suicidioFamiliaRepository.saveAll(Arrays.asList(naoSuicidio, simSuicidio));
         };
     }
 

@@ -120,6 +120,13 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Especialidade do Acompanhamento: text", position = 22)
     private String especialidadeAcompMedico;
 
+    @ApiModelProperty(value = "Suicídio na Familia: index \n 1 - Não, 2 - Sim (Se selecionado, é preciso " +
+            "preencher o campo: Grau Parentesco do Suicídio", position = 23, required = true)
+    private Integer suicidioFamilia;
+
+    @ApiModelProperty(value = "Grau Parentesco do Suicídio", position = 24)
+    private Integer grauParentescoSuicidio;
+
 
 
 }

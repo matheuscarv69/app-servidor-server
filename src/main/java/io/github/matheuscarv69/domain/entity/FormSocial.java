@@ -101,4 +101,10 @@ public class FormSocial {
     private AcompMedico acompMedico;
 
 
+    @OneToOne
+    @JoinColumn(name = "suicidio_familia_id")
+    private SuicidioFamilia suicidioFamilia;
+
+
+
 }
