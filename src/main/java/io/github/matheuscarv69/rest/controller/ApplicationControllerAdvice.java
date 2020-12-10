@@ -1,6 +1,5 @@
 package io.github.matheuscarv69.rest.controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.ApiErrors;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -50,7 +49,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(ListIsEmptyException.class)
     @ResponseStatus(OK)
-    public ApiErrors handleListIsEmptyException(ListIsEmptyException ex){
+    public ApiErrors handleListIsEmptyException(ListIsEmptyException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -58,7 +57,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleListIsEmptyException(HttpMessageNotReadableException ex){
+    public ApiErrors handleListIsEmptyException(HttpMessageNotReadableException ex) {
         String mensagemErro = "Código de campo inválido";
 
         return new ApiErrors(mensagemErro);
@@ -66,7 +65,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(EstadoCivilException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleEstadoCivilException(EstadoCivilException ex){
+    public ApiErrors handleEstadoCivilException(EstadoCivilException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -74,7 +73,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(EscolaridadeException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleEscolaridadeException(EscolaridadeException ex){
+    public ApiErrors handleEscolaridadeException(EscolaridadeException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -82,7 +81,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(ResidenciaException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleResidenciaException(ResidenciaException ex){
+    public ApiErrors handleResidenciaException(ResidenciaException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -90,7 +89,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(GrauParentescoException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleGrauParentescoException(GrauParentescoException ex){
+    public ApiErrors handleGrauParentescoException(GrauParentescoException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -98,7 +97,7 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(BeneficioException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleBeneficioException(BeneficioException ex){
+    public ApiErrors handleBeneficioException(BeneficioException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -106,7 +105,15 @@ public class ApplicationControllerAdvice {
 
     @ExceptionHandler(ProgramaSocialException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleProgramaSocialException(ProgramaSocialException ex){
+    public ApiErrors handleProgramaSocialException(ProgramaSocialException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(DoencaCronicaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleDoencaCronicaException(DoencaCronicaException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);

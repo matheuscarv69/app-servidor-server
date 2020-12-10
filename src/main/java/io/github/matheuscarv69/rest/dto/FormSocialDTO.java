@@ -84,5 +84,13 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Outro Programa Social: text", position = 15)
     private String outroProgramaSocial;
 
+    @ApiModelProperty(value = "Doenças Crônicas na familía: [index]",
+            allowableValues = "1 - Nenhuma, 2 - Cancêr, 3 - Diabetes, 4 - Depressão, 5 - Hipertensão, 6 - Outras(Descrito na propriedade outraDoencaCronica", position = 16)
+    @NotEmpty(message = "{campo.doenca-cronica.obrigatorio}")
+    private List<Integer> doencaCronica;
+
+    @ApiModelProperty(value = "Outro Doença Crônica: text", position = 17)
+    private String outraDoencaCronica;
+
 
 }

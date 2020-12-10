@@ -22,31 +22,32 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired ResidenciaRepository residenciaRepository,
                                                @Autowired GrauParentescoRepository grauParentescoRepository,
                                                @Autowired BeneficioRepository beneficioRepository,
-                                               @Autowired ProgramaSocialRepository programaSocialRepository) {
+                                               @Autowired ProgramaSocialRepository programaSocialRepository,
+                                               @Autowired DoencaCronicaRepository doencaCronicaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
-            solteiro.setEstado("Solteiro (a)");
+            solteiro.setEstadoCivil("Solteiro (a)");
 
             EstadoCivil casado = new EstadoCivil();
             casado.setId(2);
-            casado.setEstado("Casado (a)");
+            casado.setEstadoCivil("Casado (a)");
 
             EstadoCivil uniaoEstavel = new EstadoCivil();
             uniaoEstavel.setId(3);
-            uniaoEstavel.setEstado("União Estável");
+            uniaoEstavel.setEstadoCivil("União Estável");
 
             EstadoCivil separado = new EstadoCivil();
             separado.setId(4);
-            separado.setEstado("Separado (a)");
+            separado.setEstadoCivil("Separado (a)");
 
             EstadoCivil divorciado = new EstadoCivil();
             divorciado.setId(5);
-            divorciado.setEstado("Divorciado (a)");
+            divorciado.setEstadoCivil("Divorciado (a)");
 
             EstadoCivil viuvo = new EstadoCivil();
             viuvo.setId(6);
-            viuvo.setEstado("Viúvo (a)");
+            viuvo.setEstadoCivil("Viúvo (a)");
 
             ///
 
@@ -191,12 +192,41 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             prefeitura_outros.setProgramaSocial("Programa da Prefeitura ou Outros");
 
             ///
+
+            DoencaCronica nenhumaDoenca = new DoencaCronica();
+            nenhumaDoenca.setId(1);
+            nenhumaDoenca.setDoencaCronica("Nenhuma");
+
+            DoencaCronica cancer =  new DoencaCronica();
+            cancer.setId(2);
+            cancer.setDoencaCronica("Câncer");
+
+            DoencaCronica diabetes =  new DoencaCronica();
+            diabetes.setId(3);
+            diabetes.setDoencaCronica("Diabetes");
+
+            DoencaCronica depressao =  new DoencaCronica();
+            depressao.setId(4);
+            depressao.setDoencaCronica("Depressão");
+
+            DoencaCronica hipertensao =  new DoencaCronica();
+            hipertensao.setId(5);
+            hipertensao.setDoencaCronica("Hipertensão");
+
+            DoencaCronica outraDoenca =  new DoencaCronica();
+            outraDoenca.setId(6);
+            outraDoenca.setDoencaCronica("Outras");
+
+
+
+            ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro,casado,uniaoEstavel,separado,divorciado,viuvo));
             escolaridadeRepository.saveAll(Arrays.asList(analfabeto,ensinoFundamentalInc,ensinoFundamentalComp,ensinoMedioInc,ensinoMedioComp,ensinoSuperiorInc,ensinoSuperiorComp));
             residenciaRepository.saveAll(Arrays.asList(propria,alugada,areaInvasao,cedida));
             grauParentescoRepository.saveAll(Arrays.asList(esposo,filhos,sogro,irmao,pai,mae,tio,sobrinho,avos,enteado,primo,outrosGraus));
             beneficioRepository.saveAll(Arrays.asList(nenhumBeneficio,prestacaoCont,bolsaFamilia,creditoSocial,outrosBeneficio));
             programaSocialRepository.saveAll(Arrays.asList(naoPrograma,jovemAprendiz,crea_cras,caps_ad, prefeitura_outros));
+            doencaCronicaRepository.saveAll(Arrays.asList(nenhumaDoenca,cancer,diabetes,depressao,hipertensao,outraDoenca));
             
         };
     }

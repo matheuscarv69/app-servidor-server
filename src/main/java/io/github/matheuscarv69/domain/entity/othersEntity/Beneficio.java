@@ -22,7 +22,7 @@ public class Beneficio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @Column
+    @Column(length = 40)
     String beneficio;
 
     @JsonIgnore

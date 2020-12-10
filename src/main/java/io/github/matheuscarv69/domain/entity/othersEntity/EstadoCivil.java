@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(schema = "form")
 public class EstadoCivil {
@@ -22,6 +21,6 @@ public class EstadoCivil {
     private Integer id;
 
     @Column(name = "estadoCivil", length = 30)
-    private String estado;
+    private String estadoCivil;
 
 }

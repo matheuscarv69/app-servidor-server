@@ -27,6 +27,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final GrauParentescoRepository grauParentescoRepository;
     private final BeneficioRepository beneficioRepository;
     private final ProgramaSocialRepository programaSocialRepository;
+    private final DoencaCronicaRepository doencaCronicaRepository;
 
     @Override
     @Transactional
@@ -63,8 +64,12 @@ public class FormSocialServiceImpl implements FormSocialService {
         // beneficios
         List<Beneficio> listBeneficios = convertIndexBeneficio(dto);
 
-        // criar lógica para inserir os programas sociais
+        // programas sociais
         List<ProgramaSocial> listProgramas = convertIndexProgramaSocial(dto);
+
+        // doenca cronicas
+        List<DoencaCronica> listDoenca = convertIndexDoencaCronica(dto);
+
 
 
         repository.save(formSocial);
@@ -74,6 +79,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.getGrauParentescos().addAll(listParentescos);
         formSocial.getBeneficios().addAll(listBeneficios);
         formSocial.getProgramasSociais().addAll(listProgramas);
+        formSocial.getDoencaCronicas().addAll(listDoenca);
         repository.save(formSocial);
 
         return formSocial;
@@ -224,7 +230,7 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         if (estadoBD.isPresent()) {
             estadoCivil.setId(estadoBD.get().getId());
-            estadoCivil.setEstado(estadoBD.get().getEstado());
+            estadoCivil.setEstadoCivil(estadoBD.get().getEstadoCivil());
         }
 
         return estadoCivil;
@@ -354,6 +360,39 @@ public class FormSocialServiceImpl implements FormSocialService {
         return listProgramas;
     }
 
+    public List<DoencaCronica> convertIndexDoencaCronica(FormSocialDTO dto) {
+        List<DoencaCronica> listDoenca = new ArrayList<>();
+
+        for (Integer index : dto.getDoencaCronica()) {
+            DoencaCronica doencaCronica = new DoencaCronica();
+
+            if (index < 1 || index > 6) {
+                throw new DoencaCronicaException("Algum dos ID's das Doenças Crônicas é inválido. (1-6)");
+            } else if (index == 1 && dto.getDoencaCronica().size() > 1) {
+                throw new DoencaCronicaException("O campo ID 1 (Nenhuma) está selecionado, por isso não é possível adicionar as outras Doenças Crônicas disponíveis (1-6)");
+            } else if (index == 6 && dto.getOutraDoencaCronica().isEmpty()) {
+                throw new DoencaCronicaException("O ID 6 (Outras) está selecionado e o campo Outra Doença Crônica está vazio, preencha-o ");
+            } else if (!dto.getDoencaCronica().contains(6) && !dto.getOutraDoencaCronica().isEmpty()) {
+                throw new DoencaCronicaException("O ID 6 (Outras) não está selecionado, selecione-o para poder preencher o campo Outra Doença Crônica");
+            }
+
+            Optional<DoencaCronica> doencaCronicaBD = doencaCronicaRepository.findById(index);
+
+            if (doencaCronicaBD.isPresent() && doencaCronicaBD.get().getId() != 6) {
+                doencaCronica.setId(doencaCronicaBD.get().getId());
+                doencaCronica.setDoencaCronica(doencaCronicaBD.get().getDoencaCronica());
+
+                listDoenca.add(doencaCronica);
+            }
+
+            if (doencaCronicaBD.get().getId() == 6) {
+                doencaCronica.setDoencaCronica(dto.getOutraDoencaCronica());
+                doencaCronicaRepository.save(doencaCronica);
+                listDoenca.add(doencaCronica);
+            }
+        }
+        return listDoenca;
+    }
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

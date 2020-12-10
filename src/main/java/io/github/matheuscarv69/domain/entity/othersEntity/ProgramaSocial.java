@@ -22,7 +22,7 @@ public class ProgramaSocial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(length = 40)
     private String programaSocial;
 
     @JsonIgnore

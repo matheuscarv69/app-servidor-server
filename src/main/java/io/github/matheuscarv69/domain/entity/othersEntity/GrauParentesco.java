@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(schema = "form")
 public class GrauParentesco {

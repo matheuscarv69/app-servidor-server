@@ -18,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "formSocial", schema = "form")
-public class FormSocial{
+public class FormSocial {
 
     @ApiModelProperty(value = "ID do formulário")
     @Id
@@ -65,8 +65,8 @@ public class FormSocial{
 
     @ManyToMany
     @JoinTable(schema = "form", name = "form_grauparentesco",
-    joinColumns = @JoinColumn(name = "form_id"),
-    inverseJoinColumns = @JoinColumn(name = "grauparentesco_id"))
+            joinColumns = @JoinColumn(name = "form_id"),
+            inverseJoinColumns = @JoinColumn(name = "grauparentesco_id"))
     private List<GrauParentesco> grauParentescos = new ArrayList<>();
 
     @OneToOne
@@ -75,17 +75,22 @@ public class FormSocial{
 
     @ManyToMany
     @JoinTable(schema = "form", name = "form_beneficios",
-    joinColumns = @JoinColumn(name = "form_id"),
-    inverseJoinColumns = @JoinColumn(name = "beneficios_id"))
-    private List<Beneficio> beneficios =  new ArrayList<>();
+            joinColumns = @JoinColumn(name = "form_id"),
+            inverseJoinColumns = @JoinColumn(name = "beneficios_id"))
+    private List<Beneficio> beneficios = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(schema = "form", name = "form_programa_social",
             joinColumns = @JoinColumn(name = "form_id"),
-    inverseJoinColumns = @JoinColumn(name = "programaSocial_id"))
+            inverseJoinColumns = @JoinColumn(name = "programaSocial_id"))
     private List<ProgramaSocial> programasSociais = new ArrayList<>();
 
 
+    @ManyToMany
+    @JoinTable(schema = "form", name = "form_doenca_cronica",
+            joinColumns = @JoinColumn(name = "form_id"),
+            inverseJoinColumns = @JoinColumn(name = "doencaCronica_id"))
+    private List<DoencaCronica> doencaCronicas =  new ArrayList<>();
 
 
 
