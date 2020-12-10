@@ -425,16 +425,13 @@ public class FormSocialServiceImpl implements FormSocialService {
             if (dto.getGrauParentescoSuicidio().get() < 1 || dto.getGrauParentescoSuicidio().get() > 12) {
                 throw new GrauParentescoException("ID do Grau Parentesco Suicídio é inválido. (1-12)");
             }
-        }
 
-        Optional<SuicidioFamilia> suicidioBD = suicidioFamiliaRepository.findById(dto.getSuicidioFamilia());
-
-        if (dto.getGrauParentescoSuicidio().isPresent()) {
             Optional<GrauParentesco> grauParentescoBD = grauParentescoRepository.findById(dto.getGrauParentescoSuicidio().get());
-
             grauParentesco.setId(grauParentescoBD.get().getId());
             grauParentesco.setGrauParentesco(grauParentescoBD.get().getGrauParentesco());
         }
+
+        Optional<SuicidioFamilia> suicidioBD = suicidioFamiliaRepository.findById(dto.getSuicidioFamilia());
 
         if (suicidioBD.get().getId() == 1) {
             suicidioFamilia.setId(suicidioBD.get().getId());
@@ -446,10 +443,10 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         suicidioFamiliaRepository.save(suicidioFamilia);
 
-
         return suicidioFamilia;
 
     }
+
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){
