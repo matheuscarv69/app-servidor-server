@@ -35,6 +35,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final PsicoativoRepository psicoativoRepository;
     private final ConflitoFamiliarRepository conflitoFamiliarRepository;
     private final AtividadeLazerRepository atividadeLazerRepository;
+    private final AtividadeFisicaRepository atividadeFisicaRepository;
 
     @Override
     @Transactional
@@ -98,6 +99,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         // atividades lazer
         List<AtividadeLazer> listAtividadeLazer = convertIndexAtividadeLazer(dto);
 
+        // atividade fisica
+        formSocial.setAtividadeFisica(persistAtividadeFisica(dto));
 
         ///
 
@@ -493,7 +496,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         return conflitoFamiliar;
     }
 
-    public List<AtividadeLazer> convertIndexAtividadeLazer(FormSocialDTO dto){
+    public List<AtividadeLazer> convertIndexAtividadeLazer(FormSocialDTO dto) {
         List<AtividadeLazer> listAtividadeLazer = new ArrayList<>();
 
         for (Integer index : dto.getAtividadeLazer()) {
@@ -528,7 +531,30 @@ public class FormSocialServiceImpl implements FormSocialService {
         return listAtividadeLazer;
     }
 
-//
+    public AtividadeFisica persistAtividadeFisica(FormSocialDTO dto) {
+        AtividadeFisica atividadeFisica = new AtividadeFisica();
+
+        if (dto.getAtividadeFisica() < 1 || dto.getAtividadeFisica() > 2) {
+            throw new AtividadeFisicaException("ID do Atividade Física é inválido. (1-2)");
+        } else if (dto.getAtividadeFisica() == 2 && dto.getAtividadeFisicaDescricao().isEmpty()) {
+            throw new AtividadeFisicaException("O ID 2 (Sim) está selecionado, mas o campo Atividade Física Descrição esta vazio, preencha-o");
+        } else if (dto.getAtividadeFisica() != 2 && !dto.getAtividadeFisicaDescricao().isEmpty()) {
+            throw new AtividadeFisicaException("O ID 2 (Sim) não está selecionado, selecione-o para poder preencher o campo Atividade Física Descrição");
+        }
+
+        Optional<AtividadeFisica> atividadeFisicaBD = atividadeFisicaRepository.findById(dto.getAtividadeFisica());
+
+        if (atividadeFisicaBD.get().getId() == 1) {
+            atividadeFisica.setId(atividadeFisicaBD.get().getId());
+            atividadeFisica.setAtividadeFisica(atividadeFisicaBD.get().getAtividadeFisica());
+        } else if (atividadeFisicaBD.get().getId() == 2) {
+            atividadeFisica.setAtividadeFisica(dto.getAtividadeFisicaDescricao());
+        }
+        atividadeFisicaRepository.save(atividadeFisica);
+        return atividadeFisica;
+    }
+
+
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){
 //
 //        return InfoFormSocialDTO.builder()

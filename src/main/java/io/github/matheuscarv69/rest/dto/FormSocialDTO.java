@@ -138,7 +138,6 @@ public class FormSocialDTO {
     @ApiModelProperty(value = "Outra Violência: text", position = 26)
     private String outraViolencia;
 
-
     @ApiModelProperty(value = "Psicoativos: [index]: \n 1 - Nenhum, 2 - Álcool, 3 - Cigarro, 4 - Drogas Ilicítas, " +
             "5 - Outros(Se selecionado, é preciso preencher o campo: Outro Psicoativo)", position = 27, required = true)
     @NotEmpty(message = "{campo.psicoativos-desc.obrigatorio}")
@@ -159,5 +158,14 @@ public class FormSocialDTO {
 
     @ApiModelProperty(value = "Outra Atividade Lazer: text ", position = 31)
     private String outraAtividadeLazer;
+
+    @ApiModelProperty(value = "Atividade Física: [index]: \n 1 - Nenhuma, 2 - Sim(Se selecionado, é preciso preencher" +
+            " o campo: Atividade Física Descrição)", position = 32, required = true)
+    @NotNull(message = "{campo.atividade-fisica.obrigatorio}")
+    private Integer atividadeFisica;
+
+    @ApiModelProperty(value = "Outra Atividade Lazer: text ", position = 31)
+    private String atividadeFisicaDescricao;
+
 
 }

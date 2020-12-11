@@ -30,7 +30,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired ViolenciaRepository violenciaRepository,
                                                @Autowired PsicoativoRepository psicoativoRepository,
                                                @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository,
-                                               @Autowired AtividadeLazerRepository atividadeLazerRepository) {
+                                               @Autowired AtividadeLazerRepository atividadeLazerRepository,
+                                               @Autowired AtividadeFisicaRepository atividadeFisicaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -346,6 +347,13 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
+            AtividadeFisica nenhumaAtividadeFisica = new AtividadeFisica();
+            nenhumaAtividadeFisica.setId(1);
+            nenhumaAtividadeFisica.setAtividadeFisica("Nenhuma atividade");
+
+            AtividadeFisica simAtividadeFisica = new AtividadeFisica();
+            simAtividadeFisica.setId(2);
+            simAtividadeFisica.setAtividadeFisica("Sim, faz atividade física");
 
 
             ///
@@ -363,6 +371,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo, alcool, cigarro, drogasIlicitas, outroPsicoativo));
             conflitoFamiliarRepository.saveAll(Arrays.asList(naoConflito, simConflito));
             atividadeLazerRepository.saveAll(Arrays.asList(nenhumaAtividadeLazer,manuais,sociais,fisicas_esportivas,culturais, outrasAtividadesLazer));
+            atividadeFisicaRepository.saveAll(Arrays.asList(nenhumaAtividadeFisica,simAtividadeFisica));
 
         };
     }

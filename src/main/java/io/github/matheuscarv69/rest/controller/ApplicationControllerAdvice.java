@@ -1,5 +1,6 @@
 package io.github.matheuscarv69.rest.controller;
 
+import io.github.matheuscarv69.domain.entity.othersEntity.AtividadeFisica;
 import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.ApiErrors;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -146,6 +147,22 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(ConflitoFamiliarException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiErrors handleConflitoFamiliarException(ConflitoFamiliarException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(AtividadeLazerException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleAtividadeLazerException(AtividadeLazerException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(AtividadeFisicaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleAtividadeFisicaException(AtividadeFisicaException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);

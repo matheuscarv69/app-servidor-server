@@ -125,5 +125,8 @@ public class FormSocial {
             inverseJoinColumns = @JoinColumn(name = "atividade_lazer_id"))
     private List<AtividadeLazer> atividadesLazer = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "atividade_fisica_id")
+    private AtividadeFisica atividadeFisica;
 
 }
