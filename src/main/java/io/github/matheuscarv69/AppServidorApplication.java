@@ -31,7 +31,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired PsicoativoRepository psicoativoRepository,
                                                @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository,
                                                @Autowired AtividadeLazerRepository atividadeLazerRepository,
-                                               @Autowired AtividadeFisicaRepository atividadeFisicaRepository) {
+                                               @Autowired AtividadeFisicaRepository atividadeFisicaRepository,
+                                               @Autowired QualidadeVidaRepository qualidadeVidaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -321,7 +322,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
-            AtividadeLazer nenhumaAtividadeLazer =  new AtividadeLazer();
+            AtividadeLazer nenhumaAtividadeLazer = new AtividadeLazer();
             nenhumaAtividadeLazer.setId(1);
             nenhumaAtividadeLazer.setAtividadeLazer("Nenhuma atividade");
 
@@ -355,6 +356,26 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             simAtividadeFisica.setId(2);
             simAtividadeFisica.setAtividadeFisica("Sim, faz atividade física");
 
+            ///
+
+            QualidadeVida excelenteQualidade = new QualidadeVida();
+            excelenteQualidade.setId(1);
+            excelenteQualidade.setQualidadeVida("Excelente");
+
+            QualidadeVida boaQualidade = new QualidadeVida();
+            boaQualidade.setId(2);
+            boaQualidade.setQualidadeVida("Boa");
+
+            QualidadeVida regularQualidade = new QualidadeVida();
+            regularQualidade.setId(3);
+            regularQualidade.setQualidadeVida("Regular");
+
+            QualidadeVida ruimQualidade = new QualidadeVida();
+            ruimQualidade.setId(4);
+            ruimQualidade.setQualidadeVida("Ruim");
+
+            ///
+
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -370,8 +391,10 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             violenciaRepository.saveAll(Arrays.asList(nenhumaViolencia, fisica, verbal, psicologica, sexual, patrimonial, outraViolencia));
             psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo, alcool, cigarro, drogasIlicitas, outroPsicoativo));
             conflitoFamiliarRepository.saveAll(Arrays.asList(naoConflito, simConflito));
-            atividadeLazerRepository.saveAll(Arrays.asList(nenhumaAtividadeLazer,manuais,sociais,fisicas_esportivas,culturais, outrasAtividadesLazer));
-            atividadeFisicaRepository.saveAll(Arrays.asList(nenhumaAtividadeFisica,simAtividadeFisica));
+            atividadeLazerRepository.saveAll(Arrays.asList(nenhumaAtividadeLazer, manuais, sociais, fisicas_esportivas, culturais, outrasAtividadesLazer));
+            atividadeFisicaRepository.saveAll(Arrays.asList(nenhumaAtividadeFisica, simAtividadeFisica));
+            qualidadeVidaRepository.saveAll(Arrays.asList(excelenteQualidade, boaQualidade, regularQualidade, ruimQualidade));
+
 
         };
     }

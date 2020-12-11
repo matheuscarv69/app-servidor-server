@@ -1,6 +1,5 @@
 package io.github.matheuscarv69.rest.controller;
 
-import io.github.matheuscarv69.domain.entity.othersEntity.AtividadeFisica;
 import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.ApiErrors;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -163,6 +162,14 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(AtividadeFisicaException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiErrors handleAtividadeFisicaException(AtividadeFisicaException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
+    @ExceptionHandler(QualidadeVidaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleQualidadeVidaException(QualidadeVidaException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);

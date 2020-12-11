@@ -164,8 +164,12 @@ public class FormSocialDTO {
     @NotNull(message = "{campo.atividade-fisica.obrigatorio}")
     private Integer atividadeFisica;
 
-    @ApiModelProperty(value = "Outra Atividade Lazer: text ", position = 31)
+    @ApiModelProperty(value = "Atividade Física Descrição: text ", position = 33)
     private String atividadeFisicaDescricao;
 
+    @ApiModelProperty(value = "Qualidade de Vida: index: \n 1 - Excelente, 2 - Boa, 3 - Regular, 4 - Ruim",
+            position = 34, required = true)
+    @NotNull(message = "{campo.qualidade-vida.obrigatorio}")
+    private Integer qualidadeVida;
 
 }

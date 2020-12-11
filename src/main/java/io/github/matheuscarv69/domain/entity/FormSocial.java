@@ -129,4 +129,8 @@ public class FormSocial {
     @JoinColumn(name = "atividade_fisica_id")
     private AtividadeFisica atividadeFisica;
 
+    @OneToOne
+    @JoinColumn(name = "qualidade_vida_id")
+    private QualidadeVida qualidadeVida;
+
 }

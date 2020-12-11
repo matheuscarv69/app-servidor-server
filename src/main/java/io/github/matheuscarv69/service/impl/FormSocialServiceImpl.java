@@ -36,6 +36,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final ConflitoFamiliarRepository conflitoFamiliarRepository;
     private final AtividadeLazerRepository atividadeLazerRepository;
     private final AtividadeFisicaRepository atividadeFisicaRepository;
+    private final QualidadeVidaRepository qualidadeVidaRepository;
 
     @Override
     @Transactional
@@ -102,6 +103,10 @@ public class FormSocialServiceImpl implements FormSocialService {
         // atividade fisica
         formSocial.setAtividadeFisica(persistAtividadeFisica(dto));
 
+        // qualidade de vida
+        formSocial.setQualidadeVida(persistQualidadeVida(dto));
+
+
         ///
 
         repository.save(formSocial);
@@ -119,18 +124,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
 
 
-//        formSocial.setAtividadeFisica(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadeFisica())));
-//        if (Integer.parseInt(dto.getAtividadeFisica()) == 1 && dto.getAtividadeFisicaDesc().isEmpty()) {
-//            throw new RegraNegocioException("Campo Atividade Física Descrição é obrigatório.");
-//        } else if (Integer.parseInt(dto.getAtividadeFisica()) == 2 && dto.getAtividadeFisicaDesc().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Atividade Física deve estar com o (Sim == 1) selecionado.");
-//        } else {
-//            formSocial.setAtividadeFisicaDesc(dto.getAtividadeFisicaDesc());
-//        }
-//
-//
-////        formSocial.setQualidadeVida(dto.getQualidadeVida());
-//        formSocial.setQualidadeVida(QualidadeVida.getQualidadeVIdaCode(Integer.parseInt(dto.getQualidadeVida())));
 //
 //        formSocial.setVacinas(Vacinas.getVacinasCode(Integer.parseInt(dto.getVacinas())));
 
@@ -554,6 +547,22 @@ public class FormSocialServiceImpl implements FormSocialService {
         return atividadeFisica;
     }
 
+    public QualidadeVida persistQualidadeVida(FormSocialDTO dto) {
+        QualidadeVida qualidadeVida = new QualidadeVida();
+
+        if (dto.getQualidadeVida() < 1 || dto.getQualidadeVida() > 4) {
+            throw new QualidadeVidaException("ID da Qualidade de Vida é inválido. (1-4)");
+        }
+
+        Optional<QualidadeVida> qualidadeBD = qualidadeVidaRepository.findById(dto.getQualidadeVida());
+
+        if (qualidadeBD.isPresent()) {
+            qualidadeVida.setId(qualidadeBD.get().getId());
+            qualidadeVida.setQualidadeVida(qualidadeBD.get().getQualidadeVida());
+        }
+
+        return qualidadeVida;
+    }
 
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){
 //
