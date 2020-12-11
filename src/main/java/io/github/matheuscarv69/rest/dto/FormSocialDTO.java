@@ -172,4 +172,9 @@ public class FormSocialDTO {
     @NotNull(message = "{campo.qualidade-vida.obrigatorio}")
     private Integer qualidadeVida;
 
+    @ApiModelProperty(value = "Vacina: index: \n 1 - Não, 2 - Sim, 3 - Não sabe",
+            position = 35, required = true)
+    @NotNull(message = "{campo.vacina.obrigatorio}")
+    private Integer vacina;
+
 }

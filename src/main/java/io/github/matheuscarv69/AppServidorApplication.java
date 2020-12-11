@@ -32,7 +32,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository,
                                                @Autowired AtividadeLazerRepository atividadeLazerRepository,
                                                @Autowired AtividadeFisicaRepository atividadeFisicaRepository,
-                                               @Autowired QualidadeVidaRepository qualidadeVidaRepository) {
+                                               @Autowired QualidadeVidaRepository qualidadeVidaRepository,
+                                               @Autowired VacinaRepository vacinaRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -375,7 +376,18 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             ruimQualidade.setQualidadeVida("Ruim");
 
             ///
+//            1 - Não, 2 - Sim, 3 - Não sabe
+            Vacina naoVacina = new Vacina();
+            naoVacina.setId(1);
+            naoVacina.setVacina("Não");
 
+            Vacina simVacina = new Vacina();
+            simVacina.setId(2);
+            simVacina.setVacina("Sim");
+
+            Vacina naoSabeVacina = new Vacina();
+            naoSabeVacina.setId(3);
+            naoSabeVacina.setVacina("Não sabe");
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -394,6 +406,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             atividadeLazerRepository.saveAll(Arrays.asList(nenhumaAtividadeLazer, manuais, sociais, fisicas_esportivas, culturais, outrasAtividadesLazer));
             atividadeFisicaRepository.saveAll(Arrays.asList(nenhumaAtividadeFisica, simAtividadeFisica));
             qualidadeVidaRepository.saveAll(Arrays.asList(excelenteQualidade, boaQualidade, regularQualidade, ruimQualidade));
+            vacinaRepository.saveAll(Arrays.asList(naoVacina, simVacina, naoSabeVacina));
 
 
         };

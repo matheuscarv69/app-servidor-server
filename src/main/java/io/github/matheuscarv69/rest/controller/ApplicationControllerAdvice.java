@@ -175,4 +175,11 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(VacinaException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleVacinaException(VacinaException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
 }

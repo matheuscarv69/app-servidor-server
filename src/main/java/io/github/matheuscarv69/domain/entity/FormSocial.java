@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -132,5 +132,9 @@ public class FormSocial {
     @OneToOne
     @JoinColumn(name = "qualidade_vida_id")
     private QualidadeVida qualidadeVida;
+
+    @OneToOne
+    @JoinColumn(name = "vacina_id")
+    private Vacina vacina;
 
 }

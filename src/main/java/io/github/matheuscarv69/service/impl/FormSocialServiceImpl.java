@@ -37,6 +37,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final AtividadeLazerRepository atividadeLazerRepository;
     private final AtividadeFisicaRepository atividadeFisicaRepository;
     private final QualidadeVidaRepository qualidadeVidaRepository;
+    private final VacinaRepository vacinaRepository;
 
     @Override
     @Transactional
@@ -106,8 +107,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         // qualidade de vida
         formSocial.setQualidadeVida(persistQualidadeVida(dto));
 
-
-        ///
+        // vacina
+        formSocial.setVacina(persistVacina(dto));
 
         repository.save(formSocial);
 
@@ -122,11 +123,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         repository.save(formSocial);
 
         return formSocial;
-
-
-//
-//        formSocial.setVacinas(Vacinas.getVacinasCode(Integer.parseInt(dto.getVacinas())));
-
     }
 
 
@@ -562,6 +558,23 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return qualidadeVida;
+    }
+
+    public Vacina persistVacina(FormSocialDTO dto) {
+        Vacina vacina = new Vacina();
+
+        if (dto.getVacina() < 1 || dto.getVacina() > 3) {
+            throw new QualidadeVidaException("ID da Vacina é inválido. (1-3)");
+        }
+
+        Optional<Vacina> vacinaBD = vacinaRepository.findById(dto.getVacina());
+
+        if (vacinaBD.isPresent()) {
+            vacina.setId(vacinaBD.get().getId());
+            vacina.setVacina(vacinaBD.get().getVacina());
+        }
+
+        return vacina;
     }
 
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){
