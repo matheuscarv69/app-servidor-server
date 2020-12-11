@@ -19,28 +19,28 @@ import java.util.Optional;
 @Builder
 public class FormSocialDTO {
 
-    @ApiModelProperty(value = "Nome do entrevistado ", position = 1, required = true)
+    @ApiModelProperty(value = "Nome do entrevistado: text", position = 1, required = true)
     @NotEmpty(message = "{campo.nome.obrigatorio}")
     private String nome;
 
-    @ApiModelProperty(value = "Telefone", position = 2, required = true)
+    @ApiModelProperty(value = "Telefone: text", position = 2, required = true)
     @NotEmpty(message = "{campo.telefone.obrigatorio}")
     private String telefone;
 
-    @ApiModelProperty(value = "Email", position = 3, required = true)
+    @ApiModelProperty(value = "Email: text", position = 3, required = true)
     @NotEmpty(message = "{campo.email.obrigatorio}")
     @Email(message = "{campo.email.invalido}")
     private String email;
 
-    @ApiModelProperty(value = "Data de nascimento. Ex: 18/09/1999", position = 4, required = true)
+    @ApiModelProperty(value = "Data de nascimento: text Ex: 18/09/1999", position = 4, required = true)
     @NotEmpty(message = "{campo.data-nascimento.obrigatorio}")
     private String dataNascimento;
 
-    @ApiModelProperty(value = "Função exercicida", position = 5, required = true)
+    @ApiModelProperty(value = "Função exercicida: text", position = 5, required = true)
     @NotEmpty(message = "{campo.funcao-exercicida.obrigatorio}")
     private String funcaoExerc;
 
-    @ApiModelProperty(value = "Tempo de exercício da função", position = 6, required = true)
+    @ApiModelProperty(value = "Tempo de exercício da função: text", position = 6, required = true)
     @NotEmpty(message = "{campo.tempo-funcao-exercicida.obrigatorio}")
     private String tempoFuncaoExerc;
 

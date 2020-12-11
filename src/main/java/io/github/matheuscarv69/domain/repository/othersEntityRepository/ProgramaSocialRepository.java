@@ -1,4 +1,4 @@
-package io.github.matheuscarv69.domain.repository;
+package io.github.matheuscarv69.domain.repository.othersEntityRepository;
 
 import io.github.matheuscarv69.domain.entity.othersEntity.ProgramaSocial;
 import org.springframework.data.jpa.repository.JpaRepository;

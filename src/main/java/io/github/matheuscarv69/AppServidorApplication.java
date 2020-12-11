@@ -1,7 +1,7 @@
 package io.github.matheuscarv69;
 
 import io.github.matheuscarv69.domain.entity.othersEntity.*;
-import io.github.matheuscarv69.domain.repository.*;
+import io.github.matheuscarv69.domain.repository.othersEntityRepository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -243,21 +243,21 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             AcompMedico naoAcompMedico = new AcompMedico();
             naoAcompMedico.setId(1);
-            naoAcompMedico.setEspecialidadeMedica("Não realiza Acompanhamento Médico");
+            naoAcompMedico.setEspecialidadeMedica("Não");
 
             AcompMedico simAcompMedico = new AcompMedico();
             simAcompMedico.setId(2);
-            simAcompMedico.setEspecialidadeMedica("Sim, realiza Acompanhamento Médico");
+            simAcompMedico.setEspecialidadeMedica("Sim");
 
             ///
 
             SuicidioFamilia naoSuicidio = new SuicidioFamilia();
             naoSuicidio.setId(1);
-            naoSuicidio.setSuicidio("Não, há casos e nem tentativas de Suicídio");
+            naoSuicidio.setSuicidio("Não");
 
             SuicidioFamilia simSuicidio = new SuicidioFamilia();
             simSuicidio.setId(2);
-            simSuicidio.setSuicidio("Sim, há casos e tentativas de Suicídio");
+            simSuicidio.setSuicidio("Sim");
 
             ///
 
@@ -315,11 +315,11 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ConflitoFamiliar naoConflito = new ConflitoFamiliar();
             naoConflito.setId(1);
-            naoConflito.setConflito("Não há Conflito Familiar");
+            naoConflito.setConflito("Não");
 
             ConflitoFamiliar simConflito = new ConflitoFamiliar();
             simConflito.setId(2);
-            simConflito.setConflito("Sim, há Conflito Familiar");
+            simConflito.setConflito("Sim");
 
             ///
 
@@ -376,7 +376,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             ruimQualidade.setQualidadeVida("Ruim");
 
             ///
-//            1 - Não, 2 - Sim, 3 - Não sabe
+
             Vacina naoVacina = new Vacina();
             naoVacina.setId(1);
             naoVacina.setVacina("Não");
@@ -390,6 +390,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             naoSabeVacina.setVacina("Não sabe");
 
             ///
+
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
             escolaridadeRepository.saveAll(Arrays.asList(analfabeto, ensinoFundamentalInc, ensinoFundamentalComp, ensinoMedioInc, ensinoMedioComp, ensinoSuperiorInc, ensinoSuperiorComp));
             residenciaRepository.saveAll(Arrays.asList(propria, alugada, areaInvasao, cedida));

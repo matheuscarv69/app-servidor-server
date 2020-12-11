@@ -41,7 +41,7 @@ public class FormSocialController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Formulários encontrados com sucesso"),
     })
-    public List<FormSocial> buscarTodos() {
+    public List<InfoFormSocialDTO> buscarTodos() {
         return service.buscarForms();
     }
 

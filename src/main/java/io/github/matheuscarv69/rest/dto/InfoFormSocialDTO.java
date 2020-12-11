@@ -1,9 +1,13 @@
 package io.github.matheuscarv69.rest.dto;
 
+import io.github.matheuscarv69.domain.entity.othersEntity.DeficienteFamilia;
+import io.github.matheuscarv69.rest.dto.othersEntity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,44 +27,19 @@ public class InfoFormSocialDTO {
     private String estadoCivil;
     private String escolaridade;
     private Integer numeroPessoasFam;
-    private String grauParentesco;
+    private List<GrauParentescoDTO> grauParentesco;
     private String residencia;
-    private String beneficio;
-    private String beneficiosCadastrados;
-    private String outroBeneficioDesc;
-    private String programaSocial;
-    private String programasSociaisCadastrados;
-    private String outroProgramaSocialDesc;
-    private String doencaCronica;
-    private String doencaCronicaCadastradas;
-    private String outraDoencaCronicaDesc;
-
-    private String deficienteFamilia;
-    private String deficienteFamiliaDescricao;
-    private String acompanhamentoMedico;
-    private String acompanhamentoMedicoDesc;
-
-    private String suicidioFamilia;
-    private String suicidioGrauParentesco;
-
-    private String violencia;
-    private String violenciasCadastradas;
-    private String outraViolenciaDescricao;
-
-    private String psicoativos;
-    private String psicoativosCadastrados;
-    private String outrosPsicoativosDescricao;
-
+    private List<BeneficioDTO> beneficio;
+    private List<ProgramaSocialDTO> programaSocial;
+    private List<DoencaCronicaDTO> doencaCronica;
+    private DeficienteFamiliaDTO deficienteFamilia;
+    private String acompMedico;
+    private SuicidioFamiliaDTO suicidioFamilia;
+    private List<ViolenciaDTO> violencia;
+    private List<PsicoativoDTO> psicoativos;
     private String conflitoFamiliar;
-
-    private String atividadesLazer;
-    private String atividadesLazerCadastradas;
-    private String outrasAtividadesLazerDesc;
-
+    private List<AtividadeLazerDTO> atividadesLazer;
     private String atividadeFisica;
-    private String atividadeFisicaDesc;
-
     private String qualidadeVida;
-
     private String vacinas;
 }

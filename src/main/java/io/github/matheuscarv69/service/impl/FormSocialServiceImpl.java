@@ -2,9 +2,12 @@ package io.github.matheuscarv69.service.impl;
 
 import io.github.matheuscarv69.domain.entity.FormSocial;
 import io.github.matheuscarv69.domain.entity.othersEntity.*;
-import io.github.matheuscarv69.domain.repository.*;
+import io.github.matheuscarv69.domain.repository.FormSocialRepository;
+import io.github.matheuscarv69.domain.repository.othersEntityRepository.*;
 import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
+import io.github.matheuscarv69.rest.dto.InfoFormSocialDTO;
+import io.github.matheuscarv69.rest.dto.othersEntity.*;
 import io.github.matheuscarv69.service.FormSocialService;
 import io.github.matheuscarv69.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +59,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setFuncaoExerc(dto.getFuncaoExerc());
         formSocial.setTempoFuncaoExerc(dto.getTempoFuncaoExerc());
 
-        //estadoCivil
+        // estadoCivil
         formSocial.setEstadoCivil(persistEstadoCivil(dto));
 
         // escolaridade
@@ -125,13 +128,19 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
     }
 
-
     @Override
-    public List<FormSocial> buscarForms() {
-//        List<FormSocial> listForms = repository.findAll();
-//        return listForms;
-        return repository.findAll();
+    public List<InfoFormSocialDTO> buscarForms() {
+        List<FormSocial> listForms = repository.findAll();
+
+        List<InfoFormSocialDTO> listInfoForm = new ArrayList<>();
+
+        for (FormSocial form : listForms) {
+            listInfoForm.add(convertFormSocialInfo(form));
+        }
+
+        return listInfoForm;
     }
+
 
     public EstadoCivil persistEstadoCivil(FormSocialDTO dto) {
         EstadoCivil estadoCivil = new EstadoCivil();
@@ -577,145 +586,99 @@ public class FormSocialServiceImpl implements FormSocialService {
         return vacina;
     }
 
-//    public InfoFormSocialDTO converterFormInfo(FormSocial form){
-//
-//        return InfoFormSocialDTO.builder()
-//                .id(form.getId())
-//                .nome(form.getNome())
-//                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
-//                .dataNascismento(DateUtil.formatter.format(form.getDataNascimento()))
-//                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
-//                .telefone(form.getTelefone())
-//                .email(form.getEmail())
-//                .funcaoExerc(form.getFuncaoExerc())
-//                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
-//                .estadoCivil(form.getEstadoCivil().toString())
-//                .escolaridade(form.getEscolaridade().toString())
-//                .numeroPessoasFam(form.getNumeroPessoasFam())
-//                .grauParentesco(form.getGrauParentesco().toString())
-//                .residencia(form.getResidencia().toString())
-//                .beneficio(form.getBeneficio().toString())
-//                .beneficiosCadastrados(form.getBeneficiosCadastrados().toString())
-//                .outroBeneficioDesc(form.getOutroBeneficioDesc())
-//                .programaSocial(form.getProgramaSocial().toString())
-//                .programasSociaisCadastrados(form.getProgramasSociaisCadastrados().toString())
-//                .outroProgramaSocialDesc(form.getOutroProgramaSocialDesc())
-//                .doencaCronica(form.getDoencaCronica().toString())
-//                .doencaCronicaCadastradas(form.getDoencasCronicasCadastradas().toString())
-//                .outraDoencaCronicaDesc(form.getOutraDoencaCronicasDesc())
-//                .deficienteFamilia(form.getDeficienteFamilia().toString())
-//                .deficienteFamiliaDescricao(form.getDeficienteFamiliaDescricao())
-//                .acompanhamentoMedico(form.getAcompMedico().toString())
-//                .acompanhamentoMedicoDesc(form.getAcompMedicoDescricao())
-//                .suicidioFamilia(form.getSuicidioFamilia().toString())
-//                .suicidioGrauParentesco(form.getSuicidioGrauParentesco().toString())
-//                .violencia(form.getViolencia().toString())
-//                .violenciasCadastradas(form.getViolenciasCadastradas().toString())
-//                .outraViolenciaDescricao(form.getOutraViolenciaDescricao())
-//
-//                .psicoativos(form.getPsicoativos().toString())
-//                .psicoativosCadastrados(form.getPsicoativosCadastrados().toString())
-//                .outrosPsicoativosDescricao(form.getOutrosPsicoativosDescricao())
-//
-//                .conflitoFamiliar(form.getConflitoFamiliar().toString())
-//
-//                .atividadesLazer(form.getAtividadesLazer().toString())
-//                .atividadesLazerCadastradas(form.getAtividadeLazerCadastradas().toString())
-//                .outrasAtividadesLazerDesc(form.getOutrasAtividadeLazerDesc())
-//
-//                .atividadeFisica(form.getAtividadeFisica().toString())
-//                .atividadeFisicaDesc(form.getAtividadeFisicaDesc())
-//                .qualidadeVida(form.getQualidadeVida().toString())
-//                .vacinas(form.getVacinas().toString())
-//                .build();
-//    }
-//
-//    public List<GrauParentesco> converterCodeGrauParList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<GrauParentesco> listaGrauPar = new ArrayList<>();
-//        for (String code : indices) {
-//            int num = Integer.parseInt(code);
-//            listaGrauPar.add(GrauParentesco.getGrauParentescoCode(num));
-//        }
-//        return listaGrauPar;
-//    }
-//
-//    public List<BeneficiosCadastrados> converterCodeBenefParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<BeneficiosCadastrados> listaBeneficiosCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaBeneficiosCad.add(BeneficiosCadastrados.getBeneficiosCadastradosCode(num));
-//            }
-//        }
-//
-//        return listaBeneficiosCad;
-//    }
-//
-//    public List<ProgramasSociaisCadastrados> converterCodeProgSocialParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<ProgramasSociaisCadastrados> listaProgramasSociaisCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaProgramasSociaisCad.add(ProgramasSociaisCadastrados.getProgramasSociaisCadCode(num));
-//            }
-//        }
-//
-//        return listaProgramasSociaisCad;
-//    }
-//
-//    public List<DoencasCronicasCadastradas> converterCodeDoencaCronicaParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<DoencasCronicasCadastradas> listaDoencaCronicasCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaDoencaCronicasCad.add(DoencasCronicasCadastradas.getDoencaCronicaCode(num));
-//            }
-//        }
-//
-//        return listaDoencaCronicasCad;
-//    }
-//
-//    public List<ViolenciasCadastradas> converterCodeViolenciasCadParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<ViolenciasCadastradas> listaViolenciasCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaViolenciasCad.add(ViolenciasCadastradas.getViolenciaCode(num));
-//            }
-//        }
-//
-//        return listaViolenciasCad;
-//    }
-//
-//    public List<PsicoativosCadastrados> converterCodePsicoativosCadParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<PsicoativosCadastrados> listaPsicoativosCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaPsicoativosCad.add(PsicoativosCadastrados.getPsicoativosCode(num));
-//            }
-//        }
-//
-//        return listaPsicoativosCad;
-//    }
-//
-//    public List<AtividadeLazerCadastradas> converterCodeAtivLazerCadParaList(String codes) {
-//        String[] indices = codes.split("-");
-//        List<AtividadeLazerCadastradas> listaAtivLazerCad = new ArrayList<>();
-//        if (!codes.isEmpty()) {
-//            for (String code : indices) {
-//                int num = Integer.parseInt(code);
-//                listaAtivLazerCad.add(AtividadeLazerCadastradas.getAtividadeLazerCadastradasCode(num));
-//            }
-//        }
-//
-//        return listaAtivLazerCad;
-//    }
+    public InfoFormSocialDTO convertFormSocialInfo(FormSocial form) {
+
+        List<GrauParentescoDTO> listGrauParentesco = new ArrayList<>();
+        for (GrauParentesco grau : form.getGrauParentescos()) {
+            GrauParentescoDTO grauParentescoDTO = new GrauParentescoDTO();
+            grauParentescoDTO.setGrauParentesco(grau.getGrauParentesco());
+            listGrauParentesco.add(grauParentescoDTO);
+        }
+
+        List<BeneficioDTO> listBeneficios = new ArrayList<>();
+        for (Beneficio beneficio : form.getBeneficios()) {
+            BeneficioDTO beneficioDTO = new BeneficioDTO();
+            beneficioDTO.setBeneficio(beneficio.getBeneficio());
+            listBeneficios.add(beneficioDTO);
+        }
+
+        List<ProgramaSocialDTO> listProgramas = new ArrayList<>();
+        for (ProgramaSocial programa : form.getProgramasSociais()) {
+            ProgramaSocialDTO programaSocialDTO = new ProgramaSocialDTO();
+            programaSocialDTO.setProgramaSocial(programa.getProgramaSocial());
+            listProgramas.add(programaSocialDTO);
+        }
+
+        List<DoencaCronicaDTO> listDoencas = new ArrayList<>();
+        for (DoencaCronica doenca : form.getDoencaCronicas()) {
+            DoencaCronicaDTO doencaDTO = new DoencaCronicaDTO();
+            doencaDTO.setDoencaCronica(doenca.getDoencaCronica());
+            listDoencas.add(doencaDTO);
+        }
+
+        DeficienteFamiliaDTO deficienteFamiliaDTO = new DeficienteFamiliaDTO();
+        deficienteFamiliaDTO.setPessoa(form.getDeficienteFamilia().getPessoa());
+        deficienteFamiliaDTO.setDeficiencia(form.getDeficienteFamilia().getDeficiencia());
+
+        SuicidioFamiliaDTO suicidioFamiliaDTO = new SuicidioFamiliaDTO();
+        suicidioFamiliaDTO.setSuicidio(form.getSuicidioFamilia().getSuicidio());
+        if (form.getSuicidioFamilia().getGrauParentescoSuicidio() == null) {
+            suicidioFamiliaDTO.setGrauParentescoSuicidio("Não há");
+        } else {
+            suicidioFamiliaDTO.setGrauParentescoSuicidio(form.getSuicidioFamilia()
+                    .getGrauParentescoSuicidio().getGrauParentesco());
+        }
+
+        List<ViolenciaDTO> listViolencias = new ArrayList<>();
+        for (Violencia violencia : form.getViolencias()) {
+            ViolenciaDTO violenciaDTO = new ViolenciaDTO();
+            violenciaDTO.setViolencia(violencia.getViolencia());
+            listViolencias.add(violenciaDTO);
+        }
+
+        List<PsicoativoDTO> listPsicoativos = new ArrayList<>();
+        for (Psicoativo psicoativo : form.getPsicoativos()) {
+            PsicoativoDTO psicoativoDTO = new PsicoativoDTO();
+            psicoativoDTO.setPsicoativo(psicoativo.getPsicoativo());
+            listPsicoativos.add(psicoativoDTO);
+        }
+
+        List<AtividadeLazerDTO> listAtividadeLazer = new ArrayList<>();
+        for (AtividadeLazer atividadeLazer : form.getAtividadesLazer()) {
+            AtividadeLazerDTO atividadeLazerDTO = new AtividadeLazerDTO();
+            atividadeLazerDTO.setAtividadeLazer(atividadeLazer.getAtividadeLazer());
+            listAtividadeLazer.add(atividadeLazerDTO);
+        }
+
+        return InfoFormSocialDTO.builder()
+                .id(form.getId())
+                .nome(form.getNome())
+                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
+                .dataNascismento(DateUtil.formatter.format(form.getDataNascimento()))
+                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
+                .telefone(form.getTelefone())
+                .email(form.getEmail())
+                .funcaoExerc(form.getFuncaoExerc())
+                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
+                .estadoCivil(form.getEstadoCivil().getEstadoCivil())
+                .escolaridade(form.getEscolaridade().getEscolaridade())
+                .numeroPessoasFam(form.getNumeroPessoasFam())
+                .grauParentesco(listGrauParentesco)
+                .residencia(form.getResidencia().getResidencia())
+                .beneficio(listBeneficios)
+                .programaSocial(listProgramas)
+                .doencaCronica(listDoencas)
+                .deficienteFamilia(deficienteFamiliaDTO)
+                .acompMedico(form.getAcompMedico().getEspecialidadeMedica())
+                .suicidioFamilia(suicidioFamiliaDTO)
+                .violencia(listViolencias)
+                .psicoativos(listPsicoativos)
+                .conflitoFamiliar(form.getConflitoFamiliar().getConflito())
+                .atividadesLazer(listAtividadeLazer)
+                .atividadeFisica(form.getAtividadeFisica().getAtividadeFisica())
+                .qualidadeVida(form.getQualidadeVida().getQualidadeVida())
+                .vacinas(form.getVacina().getVacina())
+                .build();
+    }
 
 }
