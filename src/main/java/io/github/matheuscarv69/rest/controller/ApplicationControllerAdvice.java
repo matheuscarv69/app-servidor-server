@@ -143,4 +143,12 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(ConflitoFamiliarException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handleConflitoFamiliarException(ConflitoFamiliarException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
+
 }

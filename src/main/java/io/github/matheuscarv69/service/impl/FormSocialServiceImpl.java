@@ -33,6 +33,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final SuicidioFamiliaRepository suicidioFamiliaRepository;
     private final ViolenciaRepository violenciaRepository;
     private final PsicoativoRepository psicoativoRepository;
+    private final ConflitoFamiliarRepository conflitoFamiliarRepository;
 
     @Override
     @Transactional
@@ -91,6 +92,9 @@ public class FormSocialServiceImpl implements FormSocialService {
         List<Psicoativo> listPsicoativo = convertIndexPsicoativo(dto);
 
         // conflito familiar
+        formSocial.setConflitoFamiliar(persistConflitoFamiliar(dto));
+
+        // atividades lazer
 
         ///
 
@@ -108,23 +112,6 @@ public class FormSocialServiceImpl implements FormSocialService {
         return formSocial;
 
 
-//        formSocial.setPsicoativos(Decisao.getDecisaoCode(Integer.parseInt(dto.getPsicoativos())));
-//        if (Integer.parseInt(dto.getPsicoativos()) == 1 && dto.getPsicoativosCadastrados().isEmpty()) {
-//            throw new RegraNegocioException("Campo Psicoativos Cadastradas é obrigatório.");
-//        } else if (Integer.parseInt(dto.getPsicoativos()) == 2 && dto.getPsicoativosCadastrados().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Psicoativos deve estar com (Sim == 1) selecionado");
-//        } else if (dto.getPsicoativosCadastrados().contains("4") && dto.getOutrosPsicoativosDescricao().isEmpty()) {
-//            throw new RegraNegocioException("Campo Outros Psicoativos Descrição deve estar preenchido");
-//        } else if (!dto.getPsicoativosCadastrados().contains("4") && dto.getOutrosPsicoativosDescricao().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Psicoativos Cadastradas deve estar preenchido com (Outros == 4)");
-//        } else {
-//            List<PsicoativosCadastrados> listPsicoativosCadastradas = converterCodePsicoativosCadParaList(dto.getPsicoativosCadastrados());
-//            formSocial.setPsicoativosCadastrados(listPsicoativosCadastradas);
-//            formSocial.setOutrosPsicoativosDescricao(dto.getOutrosPsicoativosDescricao());
-//        }
-//
-//        formSocial.setConflitoFamiliar(Decisao.getDecisaoCode(Integer.parseInt(dto.getConflitoFamiliar())));
-//
 //        formSocial.setAtividadesLazer(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadesLazer())));
 //        if (Integer.parseInt(dto.getAtividadesLazer()) == 1 && dto.getAtividadeLazerCadastradas().isEmpty()) {
 //            throw new RegraNegocioException("Campo Atividades Lazer Cadastradas é obrigatório.");
@@ -169,7 +156,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         EstadoCivil estadoCivil = new EstadoCivil();
 
         if (dto.getEstadoCivil() < 1 || dto.getEstadoCivil() > 6) {
-            throw new EstadoCivilException("ID do Estado Civil é inválido");
+            throw new EstadoCivilException("ID do Estado Civil é inválido. (1-6)");
         }
 
         Optional<EstadoCivil> estadoBD = estadoCivilRepository.findById(dto.getEstadoCivil());
@@ -186,7 +173,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         Escolaridade escolaridade = new Escolaridade();
 
         if (dto.getEscolaridade() < 1 || dto.getEscolaridade() > 7) {
-            throw new EscolaridadeException("ID da Escolaridade é inválido");
+            throw new EscolaridadeException("ID da Escolaridade é inválido. (1-7)");
         }
 
         Optional<Escolaridade> escolaridadeBD = escolaridadeRepository.findById(dto.getEscolaridade());
@@ -203,7 +190,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         Residencia residencia = new Residencia();
 
         if (dto.getResidencia() < 1 || dto.getResidencia() > 4) {
-            throw new ResidenciaException("ID da Residência é inválido");
+            throw new ResidenciaException("ID da Residência é inválido. (1-4)");
         }
 
         Optional<Residencia> residenciaBD = residenciaRepository.findById(dto.getResidencia());
@@ -344,7 +331,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         DeficienteFamilia deficienteFamilia = new DeficienteFamilia();
 
         if (dto.getDeficienteFamilia() < 1 || dto.getDeficienteFamilia() > 2) {
-            throw new DeficienteFamiliaException("ID do Deficiente da Familia é inválido");
+            throw new DeficienteFamiliaException("ID do Deficiente da Familia é inválido. (1-2)");
         } else if (dto.getDeficienteFamilia() == 2 && dto.getPessoaDeficiente().isEmpty() && dto.getDeficiencia().isEmpty()) {
             throw new DeficienteFamiliaException("O ID 2 (Sim) está selecionado, mas os campos Pessoa Deficiente e Deficiência estão vazios, preencha-os");
         } else if (dto.getDeficienteFamilia() != 2 && !dto.getPessoaDeficiente().isEmpty() && !dto.getDeficiencia().isEmpty()) {
@@ -370,7 +357,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         AcompMedico acompMedico = new AcompMedico();
 
         if (dto.getAcompMedico() < 1 || dto.getAcompMedico() > 2) {
-            throw new AcompMedicoException("ID do Acompanhamento Médico é inválido");
+            throw new AcompMedicoException("ID do Acompanhamento Médico é inválido. (1-2)");
         } else if (dto.getAcompMedico() == 2 && dto.getEspecialidadeAcompMedico().isEmpty()) {
             throw new AcompMedicoException("O ID 2 (Sim) está selecionado, mas o campo Especialidade Acompanhamento Médico esta vazio, preencha-o");
         } else if (dto.getAcompMedico() != 2 && !dto.getEspecialidadeAcompMedico().isEmpty()) {
@@ -395,7 +382,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         GrauParentesco grauParentesco = new GrauParentesco();
 
         if (dto.getSuicidioFamilia() < 1 || dto.getSuicidioFamilia() > 2) {
-            throw new SuicidioFamiliaException("ID do Suicidio Familia é inválido");
+            throw new SuicidioFamiliaException("ID do Suicidio Familia é inválido. (1-2)");
         }
 
         if (dto.getSuicidioFamilia() == 2 && !dto.getGrauParentescoSuicidio().isPresent()) {
@@ -500,6 +487,22 @@ public class FormSocialServiceImpl implements FormSocialService {
         return listPsicoativo;
     }
 
+    public ConflitoFamiliar persistConflitoFamiliar(FormSocialDTO dto) {
+        ConflitoFamiliar conflitoFamiliar = new ConflitoFamiliar();
+
+        if (dto.getConflitoFamiliar() < 1 || dto.getConflitoFamiliar() > 2) {
+            throw new ConflitoFamiliarException("ID do Conflito Familiar é inválido. (1-2)");
+        }
+
+        Optional<ConflitoFamiliar> conflitoBD = conflitoFamiliarRepository.findById(dto.getConflitoFamiliar());
+
+        if (conflitoBD.isPresent()) {
+            conflitoFamiliar.setId(conflitoBD.get().getId());
+            conflitoFamiliar.setConflito(conflitoBD.get().getConflito());
+        }
+
+        return conflitoFamiliar;
+    }
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

@@ -28,7 +28,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired AcompMedicoRepository acompMedicoRepository,
                                                @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository,
                                                @Autowired ViolenciaRepository violenciaRepository,
-                                               @Autowired PsicoativoRepository psicoativoRepository) {
+                                               @Autowired PsicoativoRepository psicoativoRepository,
+                                               @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -284,9 +285,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             outraViolencia.setId(7);
             outraViolencia.setViolencia("Outra");
 
-
-//1 - Álcool, 2 - Cigarro, 3 - Drogras Ilicítas, 4 - Outros(Descrito na propriedade outrosPsicoativosDescricao)
             ///
+
             Psicoativo nenhumPsicoativo = new Psicoativo();
             nenhumPsicoativo.setId(1);
             nenhumPsicoativo.setPsicoativo("Nenhum");
@@ -308,6 +308,19 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             outroPsicoativo.setPsicoativo("Outro");
 
             ///
+
+            ConflitoFamiliar naoConflito = new ConflitoFamiliar();
+            naoConflito.setId(1);
+            naoConflito.setConflito("Não há Conflito Familiar");
+
+            ConflitoFamiliar simConflito = new ConflitoFamiliar();
+            simConflito.setId(2);
+            simConflito.setConflito("Sim, há Conflito Familiar");
+
+            ///
+
+
+            ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
             escolaridadeRepository.saveAll(Arrays.asList(analfabeto, ensinoFundamentalInc, ensinoFundamentalComp, ensinoMedioInc, ensinoMedioComp, ensinoSuperiorInc, ensinoSuperiorComp));
             residenciaRepository.saveAll(Arrays.asList(propria, alugada, areaInvasao, cedida));
@@ -319,7 +332,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico, simAcompMedico));
             suicidioFamiliaRepository.saveAll(Arrays.asList(naoSuicidio, simSuicidio));
             violenciaRepository.saveAll(Arrays.asList(nenhumaViolencia, fisica, verbal, psicologica, sexual, patrimonial, outraViolencia));
-            psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo,alcool,cigarro,drogasIlicitas,outroPsicoativo));
+            psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo, alcool, cigarro, drogasIlicitas, outroPsicoativo));
+            conflitoFamiliarRepository.saveAll(Arrays.asList(naoConflito, simConflito));
 
         };
     }
