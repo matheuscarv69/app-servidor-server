@@ -29,7 +29,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository,
                                                @Autowired ViolenciaRepository violenciaRepository,
                                                @Autowired PsicoativoRepository psicoativoRepository,
-                                               @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository) {
+                                               @Autowired ConflitoFamiliarRepository conflitoFamiliarRepository,
+                                               @Autowired AtividadeLazerRepository atividadeLazerRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -319,6 +320,33 @@ public class AppServidorApplication extends SpringBootServletInitializer {
 
             ///
 
+            AtividadeLazer nenhumaAtividadeLazer =  new AtividadeLazer();
+            nenhumaAtividadeLazer.setId(1);
+            nenhumaAtividadeLazer.setAtividadeLazer("Nenhuma atividade");
+
+            AtividadeLazer manuais = new AtividadeLazer();
+            manuais.setId(2);
+            manuais.setAtividadeLazer("Atividades Manuais");
+
+            AtividadeLazer sociais = new AtividadeLazer();
+            sociais.setId(3);
+            sociais.setAtividadeLazer("Atividades Sociais");
+
+            AtividadeLazer fisicas_esportivas = new AtividadeLazer();
+            fisicas_esportivas.setId(4);
+            fisicas_esportivas.setAtividadeLazer("Atividades Físicas ou Esportivas");
+
+            AtividadeLazer culturais = new AtividadeLazer();
+            culturais.setId(5);
+            culturais.setAtividadeLazer("Atividades Culturais");
+
+            AtividadeLazer outrasAtividadesLazer = new AtividadeLazer();
+            outrasAtividadesLazer.setId(6);
+            outrasAtividadesLazer.setAtividadeLazer("Outras");
+
+            ///
+
+
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -334,6 +362,7 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             violenciaRepository.saveAll(Arrays.asList(nenhumaViolencia, fisica, verbal, psicologica, sexual, patrimonial, outraViolencia));
             psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo, alcool, cigarro, drogasIlicitas, outroPsicoativo));
             conflitoFamiliarRepository.saveAll(Arrays.asList(naoConflito, simConflito));
+            atividadeLazerRepository.saveAll(Arrays.asList(nenhumaAtividadeLazer,manuais,sociais,fisicas_esportivas,culturais, outrasAtividadesLazer));
 
         };
     }

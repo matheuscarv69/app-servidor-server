@@ -34,6 +34,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final ViolenciaRepository violenciaRepository;
     private final PsicoativoRepository psicoativoRepository;
     private final ConflitoFamiliarRepository conflitoFamiliarRepository;
+    private final AtividadeLazerRepository atividadeLazerRepository;
 
     @Override
     @Transactional
@@ -95,6 +96,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.setConflitoFamiliar(persistConflitoFamiliar(dto));
 
         // atividades lazer
+        List<AtividadeLazer> listAtividadeLazer = convertIndexAtividadeLazer(dto);
+
 
         ///
 
@@ -107,26 +110,12 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.getDoencaCronicas().addAll(listDoenca);
         formSocial.getViolencias().addAll(listViolencia);
         formSocial.getPsicoativos().addAll(listPsicoativo);
+        formSocial.getAtividadesLazer().addAll(listAtividadeLazer);
         repository.save(formSocial);
 
         return formSocial;
 
 
-//        formSocial.setAtividadesLazer(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadesLazer())));
-//        if (Integer.parseInt(dto.getAtividadesLazer()) == 1 && dto.getAtividadeLazerCadastradas().isEmpty()) {
-//            throw new RegraNegocioException("Campo Atividades Lazer Cadastradas é obrigatório.");
-//        } else if (Integer.parseInt(dto.getAtividadesLazer()) == 2 && dto.getAtividadeLazerCadastradas().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Atividades Lazer deve estar com (Sim == 1) selecionado");
-//        } else if (dto.getAtividadeLazerCadastradas().contains("5") && dto.getOutrasAtividadeLazerDesc().isEmpty()) {
-//            throw new RegraNegocioException("Campo Outras Atividades Lazer Descrição deve estar preenchido");
-//        } else if (!dto.getAtividadeLazerCadastradas().contains("5") && dto.getOutrasAtividadeLazerDesc().isEmpty() == false) {
-//            throw new RegraNegocioException("Campo Atividades Lazer Cadastradas deve estar preenchido com (Outras == 5)");
-//        } else {
-//            List<AtividadeLazerCadastradas> listAtivLazeradastradas = converterCodeAtivLazerCadParaList(dto.getAtividadeLazerCadastradas());
-//            formSocial.setAtividadeLazerCadastradas(listAtivLazeradastradas);
-//            formSocial.setOutrasAtividadeLazerDesc(dto.getOutrasAtividadeLazerDesc());
-//        }
-//
 //        formSocial.setAtividadeFisica(Decisao.getDecisaoCode(Integer.parseInt(dto.getAtividadeFisica())));
 //        if (Integer.parseInt(dto.getAtividadeFisica()) == 1 && dto.getAtividadeFisicaDesc().isEmpty()) {
 //            throw new RegraNegocioException("Campo Atividade Física Descrição é obrigatório.");
@@ -502,6 +491,41 @@ public class FormSocialServiceImpl implements FormSocialService {
         }
 
         return conflitoFamiliar;
+    }
+
+    public List<AtividadeLazer> convertIndexAtividadeLazer(FormSocialDTO dto){
+        List<AtividadeLazer> listAtividadeLazer = new ArrayList<>();
+
+        for (Integer index : dto.getAtividadeLazer()) {
+            AtividadeLazer atividadeLazer = new AtividadeLazer();
+
+            if (index < 1 || index > 6) {
+                throw new AtividadeLazerException("Algum dos ID's das Atividades Lazer é inválido. (1-6)");
+            } else if (index == 1 && dto.getAtividadeLazer().size() > 1) {
+                throw new AtividadeLazerException("O ID 1 (Nenhum) está selecionado, por isso não é possível adicionar os outras Atividades Lazer disponíveis (1-6)");
+            } else if (index == 6 && dto.getOutraAtividadeLazer().isEmpty()) {
+                throw new AtividadeLazerException("O ID 6 (Outra) está selecionado e o campo Outra Atividade Lazer está vazio, preencha-o ");
+            } else if (!dto.getAtividadeLazer().contains(6) && !dto.getOutraAtividadeLazer().isEmpty()) {
+                throw new AtividadeLazerException("O ID 6 (Outra) não está selecionado, selecione-o para poder preencher o campo Outra Atividade Lazer");
+            }
+
+            Optional<AtividadeLazer> atividadeLazerBD = atividadeLazerRepository.findById(index);
+
+            if (atividadeLazerBD.isPresent() && atividadeLazerBD.get().getId() != 6) {
+                atividadeLazer.setId(atividadeLazerBD.get().getId());
+                atividadeLazer.setAtividadeLazer(atividadeLazerBD.get().getAtividadeLazer());
+
+                listAtividadeLazer.add(atividadeLazer);
+            }
+
+            if (atividadeLazerBD.get().getId() == 6) {
+                atividadeLazer.setAtividadeLazer(dto.getOutraAtividadeLazer());
+                atividadeLazerRepository.save(atividadeLazer);
+                listAtividadeLazer.add(atividadeLazer);
+            }
+        }
+
+        return listAtividadeLazer;
     }
 
 //

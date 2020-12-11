@@ -151,4 +151,13 @@ public class FormSocialDTO {
     @NotNull(message = "{campo.conflito-familiar.obrigatorio}")
     private Integer conflitoFamiliar;
 
+    @ApiModelProperty(value = "Atividade Lazer: [index]: \n 1 - Nenhuma, 2 - Atividades Manuais, 3 - Atividades Sociais," +
+            " 4 - Atividades Físicas ou esportivas, 5 - Atividades Culturais, 6 - Outras(Se selecionado, é preciso preencher" +
+            " o campo: Outra Atividade Lazer)", position = 30, required = true)
+    @NotEmpty(message = "{campo.atividade-lazer-desc.obrigatorio}")
+    private List<Integer> atividadeLazer;
+
+    @ApiModelProperty(value = "Outra Atividade Lazer: text ", position = 31)
+    private String outraAtividadeLazer;
+
 }

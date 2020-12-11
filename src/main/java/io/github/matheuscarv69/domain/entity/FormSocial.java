@@ -119,4 +119,11 @@ public class FormSocial {
     @JoinColumn(name = "conflito_familiar_id")
     private ConflitoFamiliar conflitoFamiliar;
 
+    @ManyToMany
+    @JoinTable(schema = "form", name = "form_atividade_lazer",
+            joinColumns = @JoinColumn(name = "form_id"),
+            inverseJoinColumns = @JoinColumn(name = "atividade_lazer_id"))
+    private List<AtividadeLazer> atividadesLazer = new ArrayList<>();
+
+
 }
