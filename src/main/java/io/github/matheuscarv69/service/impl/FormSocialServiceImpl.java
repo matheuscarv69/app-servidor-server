@@ -32,6 +32,7 @@ public class FormSocialServiceImpl implements FormSocialService {
     private final AcompMedicoRepository acompMedicoRepository;
     private final SuicidioFamiliaRepository suicidioFamiliaRepository;
     private final ViolenciaRepository violenciaRepository;
+    private final PsicoativoRepository psicoativoRepository;
 
     @Override
     @Transactional
@@ -86,6 +87,10 @@ public class FormSocialServiceImpl implements FormSocialService {
         // violencias
         List<Violencia> listViolencia = convertIndexViolencia(dto);
 
+        // psicoativos
+        List<Psicoativo> listPsicoativo = convertIndexPsicoativo(dto);
+
+        // conflito familiar
 
         ///
 
@@ -97,6 +102,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         formSocial.getProgramasSociais().addAll(listProgramas);
         formSocial.getDoencaCronicas().addAll(listDoenca);
         formSocial.getViolencias().addAll(listViolencia);
+        formSocial.getPsicoativos().addAll(listPsicoativo);
         repository.save(formSocial);
 
         return formSocial;
@@ -458,6 +464,42 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         return listViolencia;
     }
+
+    public List<Psicoativo> convertIndexPsicoativo(FormSocialDTO dto) {
+        List<Psicoativo> listPsicoativo = new ArrayList<>();
+
+        for (Integer index : dto.getPsicoativo()) {
+            Psicoativo psicoativo = new Psicoativo();
+
+            if (index < 1 || index > 5) {
+                throw new PsicoativoException("Algum dos ID's dos Psicoativos é inválido. (1-5)");
+            } else if (index == 1 && dto.getPsicoativo().size() > 1) {
+                throw new PsicoativoException("O ID 1 (Nenhum) está selecionado, por isso não é possível adicionar os outros Psicoativos disponíveis (1-5)");
+            } else if (index == 5 && dto.getOutroPsicoativo().isEmpty()) {
+                throw new PsicoativoException("O ID 5 (Outro) está selecionado e o campo Outro Psicoativo está vazio, preencha-o ");
+            } else if (!dto.getPsicoativo().contains(5) && !dto.getOutroPsicoativo().isEmpty()) {
+                throw new PsicoativoException("O ID 5 (Outro) não está selecionado, selecione-o para poder preencher o campo Outro Psicoativo");
+            }
+
+            Optional<Psicoativo> psicoativoBD = psicoativoRepository.findById(index);
+
+            if (psicoativoBD.isPresent() && psicoativoBD.get().getId() != 5) {
+                psicoativo.setId(psicoativoBD.get().getId());
+                psicoativo.setPsicoativo(psicoativoBD.get().getPsicoativo());
+
+                listPsicoativo.add(psicoativo);
+            }
+
+            if (psicoativoBD.get().getId() == 5) {
+                psicoativo.setPsicoativo(dto.getOutroPsicoativo());
+                psicoativoRepository.save(psicoativo);
+                listPsicoativo.add(psicoativo);
+            }
+        }
+
+        return listPsicoativo;
+    }
+
 
 //
 //    public InfoFormSocialDTO converterFormInfo(FormSocial form){

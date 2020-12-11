@@ -135,5 +135,12 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
+    @ExceptionHandler(PsicoativoException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErrors handlePsicoativoException(PsicoativoException ex) {
+        String mensagemErro = ex.getMessage();
+
+        return new ApiErrors(mensagemErro);
+    }
 
 }

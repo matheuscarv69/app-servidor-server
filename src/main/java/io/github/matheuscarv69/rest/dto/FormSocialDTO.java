@@ -135,7 +135,15 @@ public class FormSocialDTO {
     @NotEmpty(message = "{campo.violencia-desc.obrigatorio}")
     private List<Integer> violencia;
 
-    @ApiModelProperty(value = "Outro Violência: text", position = 26)
+    @ApiModelProperty(value = "Outra Violência: text", position = 26)
     private String outraViolencia;
 
+
+    @ApiModelProperty(value = "Psicoativos: [index]: \n 1 - Nenhum, 2 - Álcool, 3 - Cigarro, 4 - Drogas Ilicítas, " +
+            "5 - Outros(Se selecionado, é preciso preencher o campo: Outro Psicoativo)", position = 27, required = true)
+    @NotEmpty(message = "{campo.psicoativos-desc.obrigatorio}")
+    private List<Integer> psicoativo;
+
+    @ApiModelProperty(value = "Outro Psicoativo: text ", position = 27)
+    private String outroPsicoativo;
 }

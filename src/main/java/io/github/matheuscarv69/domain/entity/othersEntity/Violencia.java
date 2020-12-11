@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,6 +26,6 @@ public class Violencia {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "violencias")
-    private List<FormSocial> form;
+    private List<FormSocial> form = new ArrayList<>() ;
 
 }

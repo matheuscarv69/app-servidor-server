@@ -109,5 +109,10 @@ public class FormSocial {
     inverseJoinColumns = @JoinColumn(name = "violencia_id"))
     private List<Violencia> violencias = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(schema = "form", name = "form_psicoativos",
+    joinColumns = @JoinColumn(name = "form_id"),
+    inverseJoinColumns = @JoinColumn(name = "psicoativos_id"))
+    private List<Psicoativo> psicoativos = new ArrayList<>() ;
 
 }

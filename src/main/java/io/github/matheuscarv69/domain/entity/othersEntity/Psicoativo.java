@@ -15,18 +15,16 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(schema = "form")
-public class DoencaCronica {
+public class Psicoativo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 40)
-    private String doencaCronica;
+    @Column(length = 100)
+    private String psicoativo;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "doencaCronicas")
-    private List<FormSocial> form = new ArrayList<>() ;
-
-
+    @ManyToMany(mappedBy = "psicoativos")
+    private List<FormSocial> form = new ArrayList<>();
 }

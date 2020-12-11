@@ -27,7 +27,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
                                                @Autowired DeficienteFamiliaRepository deficienteFamiliaRepository,
                                                @Autowired AcompMedicoRepository acompMedicoRepository,
                                                @Autowired SuicidioFamiliaRepository suicidioFamiliaRepository,
-                                               @Autowired ViolenciaRepository violenciaRepository) {
+                                               @Autowired ViolenciaRepository violenciaRepository,
+                                               @Autowired PsicoativoRepository psicoativoRepository) {
         return args -> {
             EstadoCivil solteiro = new EstadoCivil();
             solteiro.setId(1);
@@ -283,10 +284,28 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             outraViolencia.setId(7);
             outraViolencia.setViolencia("Outra");
 
+
+//1 - Álcool, 2 - Cigarro, 3 - Drogras Ilicítas, 4 - Outros(Descrito na propriedade outrosPsicoativosDescricao)
             ///
+            Psicoativo nenhumPsicoativo = new Psicoativo();
+            nenhumPsicoativo.setId(1);
+            nenhumPsicoativo.setPsicoativo("Nenhum");
 
+            Psicoativo alcool = new Psicoativo();
+            alcool.setId(2);
+            alcool.setPsicoativo("Álcool");
 
+            Psicoativo cigarro = new Psicoativo();
+            cigarro.setId(3);
+            cigarro.setPsicoativo("Cigarro");
 
+            Psicoativo drogasIlicitas = new Psicoativo();
+            drogasIlicitas.setId(4);
+            drogasIlicitas.setPsicoativo("Drogas Ilicítas");
+
+            Psicoativo outroPsicoativo = new Psicoativo();
+            outroPsicoativo.setId(5);
+            outroPsicoativo.setPsicoativo("Outro");
 
             ///
             estadoCivilRepository.saveAll(Arrays.asList(solteiro, casado, uniaoEstavel, separado, divorciado, viuvo));
@@ -300,6 +319,8 @@ public class AppServidorApplication extends SpringBootServletInitializer {
             acompMedicoRepository.saveAll(Arrays.asList(naoAcompMedico, simAcompMedico));
             suicidioFamiliaRepository.saveAll(Arrays.asList(naoSuicidio, simSuicidio));
             violenciaRepository.saveAll(Arrays.asList(nenhumaViolencia, fisica, verbal, psicologica, sexual, patrimonial, outraViolencia));
+            psicoativoRepository.saveAll(Arrays.asList(nenhumPsicoativo,alcool,cigarro,drogasIlicitas,outroPsicoativo));
+
         };
     }
 
