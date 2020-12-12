@@ -67,13 +67,13 @@ Você pode testar a API usando o [Insomnia](https://insomnia.rest/download/) e i
 
 Neste [arquivo](https://liveestacio-my.sharepoint.com/:x:/g/personal/201901296441_alunos_estacio_br/ETja0J4yZqdDiXzl0bvakHoB9PGyl9Pnh1NrDXd-aHd25A?e=hfLNPg) é possível visualizar todos os ID's referentes às propriedades para realizar a inserção de forma correta. 
 
-![Swagger-saveform](https://imgur.com/Jl591mr)
+![Swagger-saveform](https://i.imgur.com/Jl591mr.png)
 ### Insomnia
-![save-insomnia](https://imgur.com/WqZR1ko)
+![save-insomnia](https://i.imgur.com/WqZR1ko.png)
 ### 🔎 Buscar
 Consiste basicamente em fazer mandar um requisição do tipo GET para o mesmo end-point: /api/formsocial.
 
-![get-Insomnia](https://imgur.com/qLWHyTg)
+![get-Insomnia](https://i.imgur.com/qLWHyTg.png)
 
 ## 🛠 Tecnologias
 As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
