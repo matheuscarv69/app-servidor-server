@@ -63,15 +63,17 @@ Temos dois métodos no controller do Formulário Social: Salvar e Buscar formul�
 ### 💾 Salvar
 Esse método recebe um arquivo .JSON com os dados do formulário preenchido e salva na base de dados.
 
-Você pode testar a API usando o [Insomnia](https://insomnia.rest/download/) e importando este [arquivo](https://liveestacio-my.sharepoint.com/:u:/g/personal/201901296441_alunos_estacio_br/Ea6R9rpwqt5MsMXp0GpjulsBhnkMZXJtlJ23_HP-XXQz4w?e=nnphGV), ou pode usar o próprio Swagger clicando em Try it Out e preenchendo os dados.
+Você pode testar a API usando o [Insomnia](https://insomnia.rest/download/) e importando este [arquivo](https://liveestacio-my.sharepoint.com/:x:/g/personal/201901296441_alunos_estacio_br/ETja0J4yZqdDiXzl0bvakHoB9PGyl9Pnh1NrDXd-aHd25A?e=TBqBiC), ou pode usar o próprio Swagger clicando em Try it Out e preenchendo os dados.
 
-![Swagger-saveform](https://i.imgur.com/vKWRvUs.png)
+Neste [arquivo](https://liveestacio-my.sharepoint.com/:x:/g/personal/201901296441_alunos_estacio_br/ETja0J4yZqdDiXzl0bvakHoB9PGyl9Pnh1NrDXd-aHd25A?e=hfLNPg) é possível visualizar todos os ID's referentes às propriedades para realizar a inserção de forma correta. 
+
+![Swagger-saveform](https://imgur.com/Jl591mr)
 ### Insomnia
-![save-insomnia](https://i.imgur.com/GNWGELX.png)
+![save-insomnia](https://imgur.com/WqZR1ko)
 ### 🔎 Buscar
 Consiste basicamente em fazer mandar um requisição do tipo GET para o mesmo end-point: /api/formsocial.
 
-![get-Insomnia](https://i.imgur.com/KutChih.png)
+![get-Insomnia](https://imgur.com/qLWHyTg)
 
 ## 🛠 Tecnologias
 As seguintes tecnologias foram utilizadas no desenvolvimento do projeto:
