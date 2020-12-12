@@ -69,7 +69,7 @@ Neste [arquivo](https://liveestacio-my.sharepoint.com/:x:/g/personal/20190129644
 
 ![Swagger-saveform](https://i.imgur.com/Jl591mr.png)
 ### Insomnia
-![save-insomnia](https://i.imgur.com/WqZR1ko.png)
+![save-insomnia](https://i.imgur.com/zMceHt8.png)
 ### 🔎 Buscar
 Consiste basicamente em fazer mandar um requisição do tipo GET para o mesmo end-point: /api/formsocial.
 
