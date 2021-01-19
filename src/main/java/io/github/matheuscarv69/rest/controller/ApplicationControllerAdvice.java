@@ -39,17 +39,9 @@ public class ApplicationControllerAdvice {
 
     }
 
-    @ExceptionHandler(RegraNegocioException.class)
+    @ExceptionHandler(BusinessRuleException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleCampoInvalidoException(RegraNegocioException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(ListIsEmptyException.class)
-    @ResponseStatus(OK)
-    public ApiErrors handleListIsEmptyException(ListIsEmptyException ex) {
+    public ApiErrors handleCampoInvalidoException(BusinessRuleException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
@@ -63,123 +55,37 @@ public class ApplicationControllerAdvice {
         return new ApiErrors(mensagemErro);
     }
 
-    @ExceptionHandler(EstadoCivilException.class)
+    @ExceptionHandler(StateCivilException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleEstadoCivilException(EstadoCivilException ex) {
+    public ApiErrors handleEstadoCivilException(StateCivilException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
     }
 
-    @ExceptionHandler(EscolaridadeException.class)
+    @ExceptionHandler(SchoolingException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleEscolaridadeException(EscolaridadeException ex) {
+    public ApiErrors handleEscolaridadeException(SchoolingException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
     }
 
-    @ExceptionHandler(ResidenciaException.class)
+    @ExceptionHandler(ResidenceException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleResidenciaException(ResidenciaException ex) {
+    public ApiErrors handleResidenciaException(ResidenceException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
     }
 
-    @ExceptionHandler(GrauParentescoException.class)
+    @ExceptionHandler(KinshipException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleGrauParentescoException(GrauParentescoException ex) {
+    public ApiErrors handleGrauParentescoException(KinshipException ex) {
         String mensagemErro = ex.getMessage();
 
         return new ApiErrors(mensagemErro);
     }
 
-    @ExceptionHandler(BeneficioException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleBeneficioException(BeneficioException ex) {
-        String mensagemErro = ex.getMessage();
 
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(ProgramaSocialException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleProgramaSocialException(ProgramaSocialException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(DoencaCronicaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleDoencaCronicaException(DoencaCronicaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(DeficienteFamiliaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleDeficienteFamiliaException(DeficienteFamiliaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(ViolenciaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleViolenciaException(ViolenciaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(PsicoativoException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handlePsicoativoException(PsicoativoException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(ConflitoFamiliarException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleConflitoFamiliarException(ConflitoFamiliarException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(AtividadeLazerException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleAtividadeLazerException(AtividadeLazerException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(AtividadeFisicaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleAtividadeFisicaException(AtividadeFisicaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(QualidadeVidaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleQualidadeVidaException(QualidadeVidaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
-
-    @ExceptionHandler(VacinaException.class)
-    @ResponseStatus(BAD_REQUEST)
-    public ApiErrors handleVacinaException(VacinaException ex) {
-        String mensagemErro = ex.getMessage();
-
-        return new ApiErrors(mensagemErro);
-    }
 }

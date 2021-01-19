@@ -1,13 +1,13 @@
 package io.github.matheuscarv69.rest.dto;
 
-import io.github.matheuscarv69.domain.entity.othersEntity.DeficienteFamilia;
-import io.github.matheuscarv69.rest.dto.othersEntity.*;
+import io.github.matheuscarv69.domain.entity.fields.Kinship;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,30 +16,35 @@ import java.util.List;
 public class InfoFormSocialDTO {
 
     private Integer id;
-    private String nome;
-    private Integer idade;
-    private String dataNascismento;
-    private String dataEntrevista;
-    private String telefone;
+    private String fullName;
+    private String phoneNumber;
+    private Integer age;
     private String email;
-    private String funcaoExerc;
-    private String tempoFuncaoExerc;
-    private String estadoCivil;
-    private String escolaridade;
-    private Integer numeroPessoasFam;
-    private List<GrauParentescoDTO> grauParentesco;
-    private String residencia;
-    private List<BeneficioDTO> beneficio;
-    private List<ProgramaSocialDTO> programaSocial;
-    private List<DoencaCronicaDTO> doencaCronica;
-    private DeficienteFamiliaDTO deficienteFamilia;
-    private String acompMedico;
-    private SuicidioFamiliaDTO suicidioFamilia;
-    private List<ViolenciaDTO> violencia;
-    private List<PsicoativoDTO> psicoativos;
-    private String conflitoFamiliar;
-    private List<AtividadeLazerDTO> atividadesLazer;
-    private String atividadeFisica;
-    private String qualidadeVida;
-    private String vacinas;
+    private String interviewDate;
+    private String birthDate;
+    private String occupation;
+    private String occupationYears;
+    private String stateCivil;
+    private String schooling;
+    private Integer amountPeople;
+    private Set<Kinship> kinships = new HashSet<>();
+    private String residence;
+    private String socialBenefit;
+    private String socialProgram;
+    private String chronicDiseases;
+    private String handicappedFamily;
+    private String medicalMonitoring;
+    private String suicideFamily;
+    private String sufferedViolence;
+    private String psychoactiveSubstances;
+    private Boolean familyConflict;
+
+    private String manualActivity;
+    private String socialActivity;
+    private String physicalActivity;
+    private String culturalActivity;
+
+    private String vaccinesUpToDate;
+    private String comments;
+
 }
