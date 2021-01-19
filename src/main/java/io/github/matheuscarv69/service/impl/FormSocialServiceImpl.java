@@ -7,7 +7,6 @@ import io.github.matheuscarv69.domain.repository.fieldsRepositories.*;
 import io.github.matheuscarv69.exceptions.*;
 import io.github.matheuscarv69.rest.dto.FieldDTO;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
-import io.github.matheuscarv69.rest.dto.InfoFormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import io.github.matheuscarv69.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -78,21 +78,21 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         formSocial.setVaccinesUpToDate(dto.getVaccinesUpToDate());
         formSocial.setComments(dto.getComments());
-        
+
         repository.save(formSocial);
 
         return formSocial;
     }
 
     @Override
-    public List<InfoFormSocialDTO> buscarForms() {
+    public List<FormSocialDTO> buscarForms() {
         List<FormSocial> listForms = repository.findAll();
 
-        List<InfoFormSocialDTO> listInfoForm = new ArrayList<>();
-//
-//        for (FormSocial form : listForms) {
-//            listInfoForm.add(convertFormSocialInfo(form));
-//        }
+        List<FormSocialDTO> listInfoForm = new ArrayList<>();
+
+        for (FormSocial form : listForms) {
+            listInfoForm.add(formSocialToDTO(form));
+        }
 
         return listInfoForm;
     }
@@ -176,11 +176,11 @@ public class FormSocialServiceImpl implements FormSocialService {
 
             Kinship kinship = new Kinship();
 
-            Optional<Kinship> KinshipBD = kinshipRepository.findById(index.getId());
+            Optional<Kinship> kinshipBD = kinshipRepository.findById(index.getId());
 
-            if (KinshipBD.isPresent()) {
-                kinship.setId(KinshipBD.get().getId());
-                kinship.setKinship(KinshipBD.get().getKinship());
+            if (kinshipBD.isPresent()) {
+                kinship.setId(kinshipBD.get().getId());
+                kinship.setKinship(kinshipBD.get().getKinship());
                 kinshipSet.add(kinship);
             }
         }
@@ -189,99 +189,48 @@ public class FormSocialServiceImpl implements FormSocialService {
     }
 
 
-//    public InfoFormSocialDTO convertFormSocialInfo(FormSocial form) {
-//
-//        List<KinshipDTO> listKinship = new ArrayList<>();
-//        for (Kinship grau : form.getKinships()) {
-//            KinshipDTO KinshipDTO = new KinshipDTO();
-//            KinshipDTO.setKinship(grau.getKinship());
-//            listKinship.add(KinshipDTO);
-//        }
-//
-//        List<BeneficioDTO> listBeneficios = new ArrayList<>();
-//        for (Beneficio beneficio : form.getBeneficios()) {
-//            BeneficioDTO beneficioDTO = new BeneficioDTO();
-//            beneficioDTO.setBeneficio(beneficio.getBeneficio());
-//            listBeneficios.add(beneficioDTO);
-//        }
-//
-//        List<ProgramaSocialDTO> listProgramas = new ArrayList<>();
-//        for (ProgramaSocial programa : form.getProgramasSociais()) {
-//            ProgramaSocialDTO programaSocialDTO = new ProgramaSocialDTO();
-//            programaSocialDTO.setProgramaSocial(programa.getProgramaSocial());
-//            listProgramas.add(programaSocialDTO);
-//        }
-//
-//        List<DoencaCronicaDTO> listDoencas = new ArrayList<>();
-//        for (DoencaCronica doenca : form.getDoencaCronicas()) {
-//            DoencaCronicaDTO doencaDTO = new DoencaCronicaDTO();
-//            doencaDTO.setDoencaCronica(doenca.getDoencaCronica());
-//            listDoencas.add(doencaDTO);
-//        }
-//
-//        DeficienteFamiliaDTO deficienteFamiliaDTO = new DeficienteFamiliaDTO();
-//        deficienteFamiliaDTO.setPessoa(form.getDeficienteFamilia().getPessoa());
-//        deficienteFamiliaDTO.setDeficiencia(form.getDeficienteFamilia().getDeficiencia());
-//
-//        SuicidioFamiliaDTO suicidioFamiliaDTO = new SuicidioFamiliaDTO();
-//        suicidioFamiliaDTO.setSuicidio(form.getSuicidioFamilia().getSuicidio());
-//        if (form.getSuicidioFamilia().getKinshipSuicidio() == null) {
-//            suicidioFamiliaDTO.setKinshipSuicidio("Não há");
-//        } else {
-//            suicidioFamiliaDTO.setKinshipSuicidio(form.getSuicidioFamilia()
-//                    .getKinshipSuicidio().getKinship());
-//        }
-//
-//        List<ViolenciaDTO> listViolencias = new ArrayList<>();
-//        for (Violencia violencia : form.getViolencias()) {
-//            ViolenciaDTO violenciaDTO = new ViolenciaDTO();
-//            violenciaDTO.setViolencia(violencia.getViolencia());
-//            listViolencias.add(violenciaDTO);
-//        }
-//
-//        List<PsicoativoDTO> listPsicoativos = new ArrayList<>();
-//        for (Psicoativo psicoativo : form.getPsicoativos()) {
-//            PsicoativoDTO psicoativoDTO = new PsicoativoDTO();
-//            psicoativoDTO.setPsicoativo(psicoativo.getPsicoativo());
-//            listPsicoativos.add(psicoativoDTO);
-//        }
-//
-//        List<AtividadeLazerDTO> listAtividadeLazer = new ArrayList<>();
-//        for (AtividadeLazer atividadeLazer : form.getAtividadesLazer()) {
-//            AtividadeLazerDTO atividadeLazerDTO = new AtividadeLazerDTO();
-//            atividadeLazerDTO.setAtividadeLazer(atividadeLazer.getAtividadeLazer());
-//            listAtividadeLazer.add(atividadeLazerDTO);
-//        }
-//
-//        return InfoFormSocialDTO.builder()
-//                .id(form.getId())
-//                .nome(form.getNome())
-//                .idade(DateUtil.calculaIdade(form.getDataNascimento()))
-//                .dataNascismento(DateUtil.formatter.format(form.getDataNascimento()))
-//                .dataEntrevista(DateUtil.formatter.format(form.getDataEntrevista()))
-//                .telefone(form.getTelefone())
-//                .email(form.getEmail())
-//                .funcaoExerc(form.getFuncaoExerc())
-//                .tempoFuncaoExerc(form.getTempoFuncaoExerc())
-//                .estadoCivil(form.getEstadoCivil().getEstadoCivil())
-//                .Schooling(form.getSchooling().getSchooling())
-//                .numeroPessoasFam(form.getNumeroPessoasFam())
-//                .Kinship(listKinship)
-//                .residencia(form.getResidencia().getResidencia())
-//                .beneficio(listBeneficios)
-//                .programaSocial(listProgramas)
-//                .doencaCronica(listDoencas)
-//                .deficienteFamilia(deficienteFamiliaDTO)
-//                .acompMedico(form.getAcompMedico().getEspecialidadeMedica())
-//                .suicidioFamilia(suicidioFamiliaDTO)
-//                .violencia(listViolencias)
-//                .psicoativos(listPsicoativos)
-//                .conflitoFamiliar(form.getConflitoFamiliar().getConflito())
-//                .atividadesLazer(listAtividadeLazer)
-//                .atividadeFisica(form.getAtividadeFisica().getAtividadeFisica())
-//                .qualidadeVida(form.getQualidadeVida().getQualidadeVida())
-//                .vacinas(form.getVacina().getVacina())
-//                .build();
-//    }
+    public FormSocialDTO formSocialToDTO(FormSocial form) {
+
+        FormSocialDTO info = FormSocialDTO
+                .builder()
+                .id(form.getId())
+                .fullName(form.getFullName())
+                .age(DateUtil.calculaIdade(form.getBirthDate()))
+                .birthDate(DateUtil.formatter.format(form.getBirthDate()))
+                .interviewDate(DateUtil.formatter.format(form.getInterviewDate()))
+                .phoneNumber(form.getPhoneNumber())
+                .email(form.getEmail())
+                .occupation(form.getOccupation())
+                .occupationYears(form.getOccupationYears())
+                .stateCivil(FieldDTO.builder().id(form.getStateCivil().getId()).value(form.getStateCivil().getStateCivil()).build())
+                .schooling(FieldDTO.builder().id(form.getSchooling().getId()).value(form.getSchooling().getSchooling()).build())
+                .amountPeople(form.getAmountPeople())
+                .kinship(form.getKinships().stream().map(k ->
+                        FieldDTO.builder()
+                                .id(k.getId())
+                                .value(k.getKinship())
+                                .build())
+                        .collect(Collectors.toSet()))
+                .residence(FieldDTO.builder().id(form.getResidence().getId()).value(form.getResidence().getResidence()).build())
+                .socialBenefit(form.getSocialBenefit())
+                .socialProgram(form.getSocialProgram())
+                .chronicDiseases(form.getChronicDiseases())
+                .handicappedFamily(form.getHandicappedFamily())
+                .medicalMonitoring(form.getMedicalMonitoring())
+                .suicideFamily(form.getSuicideFamily())
+                .sufferedViolence(form.getSufferedViolence())
+                .psychoactiveSubstances(form.getPsychoactiveSubstances())
+                .familyConflict(form.getFamilyConflict())
+                .manualActivity(form.getManualActivity())
+                .socialActivity(form.getSocialActivity())
+                .physicalActivity(form.getPhysicalActivity())
+                .culturalActivity(form.getCulturalActivity())
+                .qualityLife(FieldDTO.builder().id(form.getQualityLife().getId()).value(form.getQualityLife().getQualityLife()).build())
+                .vaccinesUpToDate(form.getVaccinesUpToDate())
+                .comments(form.getComments())
+                .build();
+
+        return info;
+    }
 
 }

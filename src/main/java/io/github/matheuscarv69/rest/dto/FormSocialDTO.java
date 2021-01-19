@@ -19,6 +19,10 @@ import java.util.Set;
 @Builder
 public class FormSocialDTO {
 
+    private Integer id;
+    private Integer age;
+    private String interviewDate;
+
     @ApiModelProperty(value = "Nome do entrevistado: text", position = 1, required = true)
     @NotEmpty(message = "{campo.nome.obrigatorio}")
     private String fullName;

@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +32,7 @@ public class FormSocial {
     @Column(length = 15)
     private String phoneNumber;
 
-    @Column(length = 70)
+    @Column(length = 100)
     @Email
     private String email;
 
@@ -83,12 +85,11 @@ public class FormSocial {
 
     private String suicideFamily;
 
-    private String sufferedViolence ;
+    private String sufferedViolence;
 
-    private String psychoactiveSubstances ;
+    private String psychoactiveSubstances;
 
     private Boolean familyConflict;
-
 
     private String manualActivity;
 
@@ -97,7 +98,6 @@ public class FormSocial {
     private String physicalActivity;
 
     private String culturalActivity;
-
 
     @OneToOne
     @JoinColumn(name = "quality_life_id")
