@@ -13,7 +13,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("api/formsocial")
+@RequestMapping("/formsocial")
 @Api(value = "Api Formulário Anamnese Social")
 public class FormSocialController {
 
