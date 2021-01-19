@@ -2,7 +2,6 @@ package io.github.matheuscarv69.rest.controller;
 
 import io.github.matheuscarv69.domain.entity.FormSocial;
 import io.github.matheuscarv69.rest.dto.FormSocialDTO;
-import io.github.matheuscarv69.rest.dto.InfoFormSocialDTO;
 import io.github.matheuscarv69.service.FormSocialService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,11 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("formsocial")
+=======
+@RequestMapping("/formsocial")
+>>>>>>> refatoring
 @Api(value = "Api Formulário Anamnese Social")
 public class FormSocialController {
 
@@ -41,11 +44,9 @@ public class FormSocialController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "Formulários encontrados com sucesso"),
     })
-    public List<InfoFormSocialDTO> buscarTodos() {
+    public List<FormSocialDTO> buscarTodos() {
         return service.buscarForms();
     }
-
-
 
 
 }

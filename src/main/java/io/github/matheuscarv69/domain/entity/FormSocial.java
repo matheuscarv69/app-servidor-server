@@ -1,7 +1,7 @@
 package io.github.matheuscarv69.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.matheuscarv69.domain.entity.othersEntity.*;
+import io.github.matheuscarv69.domain.entity.fields.*;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,115 +26,85 @@ public class FormSocial {
     private Integer id;
 
     @ApiModelProperty(value = "Nome da pessoa")
-    @Column(name = "nome", length = 100)
-    private String nome;
+    @Column(length = 100)
+    private String fullName;
 
     @Column(length = 15)
-    private String telefone;
+    private String phoneNumber;
 
-    @Column(length = 70)
+    @Column(length = 100)
     @Email
     private String email;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dataEntrevista;
+    private Date interviewDate;
 
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dataNascimento;
+    private Date birthDate;
 
     @Column(length = 50)
-    private String funcaoExerc;
+    private String occupation;
 
     @Column(length = 40)
-    private String tempoFuncaoExerc;
+    private String occupationYears;
 
     @OneToOne
-    @JoinColumn(name = "estado_civil_id")
-    private EstadoCivil estadoCivil;
+    @JoinColumn(name = "state_civil_id")
+    private StateCivil stateCivil;
 
     @OneToOne
-    @JoinColumn(name = "escolaridade_id")
-    private Escolaridade escolaridade;
+    @JoinColumn(name = "schooling_id")
+    private Schooling schooling;
 
     @Column
-    private Integer numeroPessoasFam;
+    private Integer amountPeople;
 
     @ManyToMany
-    @JoinTable(schema = "form", name = "form_grauparentesco",
+    @JoinTable(schema = "form", name = "form_kinship",
             joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "grauparentesco_id"))
-    private List<GrauParentesco> grauParentescos = new ArrayList<>();
+            inverseJoinColumns = @JoinColumn(name = "kinship_id"))
+    private Set<Kinship> kinships = new HashSet<>();
 
     @OneToOne
-    @JoinColumn(name = "residencia_id")
-    private Residencia residencia;
+    @JoinColumn(name = "residence_id")
+    private Residence residence;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_beneficios",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "beneficios_id"))
-    private List<Beneficio> beneficios = new ArrayList<>();
+    private String socialBenefit;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_programa_social",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "programaSocial_id"))
-    private List<ProgramaSocial> programasSociais = new ArrayList<>();
+    private String socialProgram;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_doenca_cronica",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "doencaCronica_id"))
-    private List<DoencaCronica> doencaCronicas = new ArrayList<>();
+    private String chronicDiseases;
 
-    @OneToOne
-    @JoinColumn(name = "deficiente_familia_id")
-    private DeficienteFamilia deficienteFamilia;
+    private String handicappedFamily;
 
-    @OneToOne
-    @JoinColumn(name = "acomp_medico_id")
-    private AcompMedico acompMedico;
+    private String medicalMonitoring;
 
-    @OneToOne
-    @JoinColumn(name = "suicidio_familia_id")
-    private SuicidioFamilia suicidioFamilia;
+    private String suicideFamily;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_violencias",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "violencia_id"))
-    private List<Violencia> violencias = new ArrayList<>();
+    private String sufferedViolence;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_psicoativos",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "psicoativos_id"))
-    private List<Psicoativo> psicoativos = new ArrayList<>();
+    private String psychoactiveSubstances;
+
+    private Boolean familyConflict;
+
+    private String manualActivity;
+
+    private String socialActivity;
+
+    private String physicalActivity;
+
+    private String culturalActivity;
 
     @OneToOne
-    @JoinColumn(name = "conflito_familiar_id")
-    private ConflitoFamiliar conflitoFamiliar;
+    @JoinColumn(name = "quality_life_id")
+    private QualityLife qualityLife;
 
-    @ManyToMany
-    @JoinTable(schema = "form", name = "form_atividade_lazer",
-            joinColumns = @JoinColumn(name = "form_id"),
-            inverseJoinColumns = @JoinColumn(name = "atividade_lazer_id"))
-    private List<AtividadeLazer> atividadesLazer = new ArrayList<>();
+    private Boolean vaccinesUpToDate;
 
-    @OneToOne
-    @JoinColumn(name = "atividade_fisica_id")
-    private AtividadeFisica atividadeFisica;
-
-    @OneToOne
-    @JoinColumn(name = "qualidade_vida_id")
-    private QualidadeVida qualidadeVida;
-
-    @OneToOne
-    @JoinColumn(name = "vacina_id")
-    private Vacina vacina;
+    private String comments;
 
 }
