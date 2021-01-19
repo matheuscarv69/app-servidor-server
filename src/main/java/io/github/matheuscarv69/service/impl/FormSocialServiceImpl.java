@@ -102,7 +102,7 @@ public class FormSocialServiceImpl implements FormSocialService {
         StateCivil stateCivil = new StateCivil();
 
         if (stateCivilDTO.getId() < 1 || stateCivilDTO.getId() > 6) {
-            throw new StateCivilException("ID do Estado Civil é inválido. (1-6)");
+            throw new StateCivilException(" ID do Estado Civil é inválido. (1-6)");
         }
 
         Optional<StateCivil> estadoBD = stateCivilRepository.findById(stateCivilDTO.getId());
