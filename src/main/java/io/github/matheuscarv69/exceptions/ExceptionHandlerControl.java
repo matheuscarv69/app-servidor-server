@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 
 @ControllerAdvice
-public class TesteExceptionHandler {
+public class ExceptionHandlerControl {
 
     @ExceptionHandler(BusinessRuleException.class)
     public ResponseEntity<StandardError> businessRuleInvalid(BusinessRuleException e, HttpServletRequest request) {

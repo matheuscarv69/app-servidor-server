@@ -150,19 +150,19 @@ public class TestConfig implements CommandLineRunner {
         ///
 
         QualityLife excelenteQualidade = new QualityLife();
-        excelenteQualidade.setId(1);
+        excelenteQualidade.setId(4);
         excelenteQualidade.setQualityLife("Excelente");
 
         QualityLife boaQualidade = new QualityLife();
-        boaQualidade.setId(2);
+        boaQualidade.setId(3);
         boaQualidade.setQualityLife("Boa");
 
         QualityLife regularQualidade = new QualityLife();
-        regularQualidade.setId(3);
+        regularQualidade.setId(2);
         regularQualidade.setQualityLife("Regular");
 
         QualityLife ruimQualidade = new QualityLife();
-        ruimQualidade.setId(4);
+        ruimQualidade.setId(1);
         ruimQualidade.setQualityLife("Ruim");
 
         ///

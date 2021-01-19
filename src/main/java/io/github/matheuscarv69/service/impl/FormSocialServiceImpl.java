@@ -46,8 +46,8 @@ public class FormSocialServiceImpl implements FormSocialService {
         FormSocial formSocial = new FormSocial();
 
         formSocial.setFullName(dto.getFullName());
-        formSocial.setPhoneNumber(dto.getPhoneNumber());
-        formSocial.setEmail(dto.getEmail());
+        formSocial.setPhoneNumber(dto.getPhoneNumber() != null ? dto.getPhoneNumber() : null);
+        formSocial.setEmail(dto.getEmail() != null ? dto.getEmail() : null);
         formSocial.setInterviewDate(new Date());
         Date birthDate = DateUtil.formataStringData(dto.getBirthDate());
         formSocial.setBirthDate(birthDate);
@@ -59,25 +59,22 @@ public class FormSocialServiceImpl implements FormSocialService {
         Set<Kinship> kinshipSet = convertIndexKinship(dto.getKinship());
         formSocial.getKinships().addAll(kinshipSet); // association objects
         formSocial.setResidence(instantiateResidence(dto.getResidence()));
-        formSocial.setSocialBenefit(dto.getSocialBenefit());
-        formSocial.setSocialProgram(dto.getSocialProgram());
-        formSocial.setChronicDiseases(dto.getChronicDiseases());
-        formSocial.setHandicappedFamily(dto.getHandicappedFamily());
-        formSocial.setMedicalMonitoring(dto.getMedicalMonitoring());
-        formSocial.setSuicideFamily(dto.getSuicideFamily());
-        formSocial.setSufferedViolence(dto.getSufferedViolence());
-        formSocial.setPsychoactiveSubstances(dto.getPsychoactiveSubstances());
+        formSocial.setSocialBenefit(dto.getSocialBenefit() != null ? dto.getSocialBenefit() : null);
+        formSocial.setSocialProgram(dto.getSocialProgram() != null ? dto.getSocialProgram() : null);
+        formSocial.setChronicDiseases(dto.getChronicDiseases() != null ? dto.getChronicDiseases() : null);
+        formSocial.setHandicappedFamily(dto.getHandicappedFamily() != null ? dto.getHandicappedFamily() : null);
+        formSocial.setMedicalMonitoring(dto.getMedicalMonitoring() != null ? dto.getMedicalMonitoring() : null);
+        formSocial.setSuicideFamily(dto.getSuicideFamily() != null ? dto.getSuicideFamily() : null);
+        formSocial.setSufferedViolence(dto.getSufferedViolence() != null ? dto.getSufferedViolence() : null);
+        formSocial.setPsychoactiveSubstances(dto.getPsychoactiveSubstances() != null ? dto.getPsychoactiveSubstances() : null);
         formSocial.setFamilyConflict(dto.getFamilyConflict());
-
-        formSocial.setManualActivity(dto.getManualActivity());
-        formSocial.setSocialActivity(dto.getSocialActivity());
-        formSocial.setPhysicalActivity(dto.getPhysicalActivity());
-        formSocial.setCulturalActivity(dto.getCulturalActivity());
-
+        formSocial.setManualActivity(dto.getManualActivity() != null ? dto.getManualActivity() : null);
+        formSocial.setSocialActivity(dto.getSocialActivity() != null ? dto.getSocialActivity() : null);
+        formSocial.setPhysicalActivity(dto.getPhysicalActivity() != null ? dto.getPhysicalActivity() : null);
+        formSocial.setCulturalActivity(dto.getCulturalActivity() != null ? dto.getCulturalActivity() : null);
         formSocial.setQualityLife(instantiateQualityLife(dto.getQualityLife()));
-
         formSocial.setVaccinesUpToDate(dto.getVaccinesUpToDate());
-        formSocial.setComments(dto.getComments());
+        formSocial.setComments(dto.getComments() != null ? dto.getComments() : null);
 
         repository.save(formSocial);
 
@@ -187,7 +184,6 @@ public class FormSocialServiceImpl implements FormSocialService {
 
         return kinshipSet;
     }
-
 
     public FormSocialDTO formSocialToDTO(FormSocial form) {
 
